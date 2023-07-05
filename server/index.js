@@ -2,13 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const userRoutes = require("./src/routes/user");
-
+const productRouter = require("./src/routes/products")
 const app = express();
 const port = process.env.PORT || 3001;
 
 //middleware
 app.use(express.json());
 app.use("/", userRoutes);
+app.use("/products", productRouter)
 
 //routes
 app.get("/", (req, res) => {
