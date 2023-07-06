@@ -19,6 +19,36 @@ router.get("/", (req, res) => {
   });
 });
 
+//ruta para buscar por id
+router.get("/:id", (req, res) => {
+  const productId = parseInt(req.params.id);
+
+  // Leer el archivo db.json
+  fs.readFile(path.join(__dirname, "../api/db.json"), "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Error al obtener el producto" });
+    }
+
+    try {
+      const db = JSON.parse(data);
+      const products = db.products;
+
+      // Buscar el producto por su ID
+      const product = products.find((product) => product.id === productId);
+
+      if (!product) {
+        return res.status(404).json({ error: "Producto no encontrado" });
+      }
+
+      res.json({ product });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Error al obtener el producto" });
+    }
+  });
+});
+
 // Ruta para buscar productos por nombre
 router.get("/search", (req, res) => {
     const keyword = req.query.keyword;
