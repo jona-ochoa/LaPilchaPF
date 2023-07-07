@@ -10,17 +10,16 @@ const buyOrderSchema = mongoose.Schema({
       'canceled',
       'completed',
     ],
-    required: true,
+    required: false,
     default: 'shopping_cart',
   },
   total: {
     type: Number,
-    required: true,
+    required: false,
   },
-  items: {
+  products: {
     type: [String],
   },
-  products: [{ type: Schema.Types.ObjectId, ref: 'Product' }]
 });
 
 module.exports = mongoose.model("BuyOrder", buyOrderSchema);
