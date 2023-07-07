@@ -17,7 +17,7 @@ router.get("/search", (req, res) => {
   products
     .find({ $text: { $search: keyword } })
     .then((filteredProducts) => res.json({ products: filteredProducts }))
-    .catch((error) => res.status(500).json({ error: "Error al obtener los productos" }));
+    .catch((error) => res.status(400).json({ error: "Error al obtener los productos" }));
 });
 
 // Ruta para buscar por id
