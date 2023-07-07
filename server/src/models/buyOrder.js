@@ -18,9 +18,9 @@ const buyOrderSchema = mongoose.Schema({
     required: true,
   },
   items: {
-    type: [String], // Array de string
+    type: [String],
   },
-  // products: [{ type: Schema.Types.ObjectId, ref: 'Product' }]
+  products: [{ type: Schema.Types.ObjectId, ref: 'Product' }]
 });
 
 module.exports = mongoose.model("BuyOrder", buyOrderSchema);
