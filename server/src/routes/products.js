@@ -35,6 +35,36 @@ router.get("/:id", (req, res) => {
     .catch((error) => res.status(500).json({ error: `Error al obtener el producto con id ${productId}` }));
 });
 
+
+// Ruta para crear un nuevo producto
+router.post("/", (req, res) => {
+  const { title, price, description, category, image, rating } = req.body;
+
+  // Validar que se proporcionen todos los campos requeridos
+  if (!title || !price || !description || !category || !image) {
+    return res.status(400).json({ error: "Por favor, proporcione todos los campos requeridos" });
+  }
+
+  // Crear un nuevo objeto de producto
+  const newProduct = new products({
+    title,
+    price,
+    description,
+    category,
+    image,
+    rating,
+  });
+
+  // Guardar el producto en la base de datos
+  newProduct
+    .save()
+    .then((product) => {
+      res.status(201).json({ message: "Producto creado exitosamente", product });
+    })
+    .catch((error) => res.status(400).json({ error: "Error al crear el producto" }));
+});
+
+
 module.exports = router;
 
 /* router.get("/search", (req, res) => {
