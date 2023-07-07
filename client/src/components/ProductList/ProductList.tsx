@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import ProductCard from "../ProductCard/ProductCard";
-// import data from '../../../public/db.json'
+import data from '../../../public/db.json'
 
 const ProductList = () => {
 
