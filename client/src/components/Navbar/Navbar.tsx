@@ -1,21 +1,20 @@
 import React from 'react';
 import SearchBar from '../SearchBar/SearchBar';
-import Footer from '../Footer/Footer';
+import Image from 'next/image';
 
 const Navbar: React.FC = () => {
   return (
-    <><div className="flex flex-wrap place-items-center h-screen">
-          <section className="relative mx-auto">
+    <div className="flex flex-wrap place-items-top h-screen">
+      <section className="relative mx-auto">
+        <nav className="flex justify-between bg-gray-900 text-white w-screen">
+          <div className="px-5 xl:px-12 py-6 flex w-full items-center">
+            <a className="flex items-center" href="#">
+              <Image src="/logoWhite.png" alt="LaPilcha" width={70} height={20} />
+            </a>
 
-              <nav className="flex justify-between bg-gray-900 text-white w-screen">
-                  <div className="px-5 xl:px-12 py-6 flex w-full items-center">
-                      <a className="text-3xl font-bold font-heading" href="#">
-                          LaPilcha
-                      </a>
-
-                      <div className="flex flex-grow justify-center">
-                <SearchBar />
-              </div>
+            <div className="flex flex-grow justify-center">
+              <SearchBar />
+            </div>
 
                       <div className="hidden xl:flex items-center space-x-5 items-center">
                           <a className="hover:text-gray-200" href="#">
@@ -61,10 +60,7 @@ const Navbar: React.FC = () => {
               </nav>
 
           </section>
-          <div>
-            <Footer/>
-          </div>
-      </div></>
+      </div>
 )
 }
 

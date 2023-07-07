@@ -1,15 +1,17 @@
 import React from 'react';
+import Image from 'next/image';
+
 const Footer: React.FC = () => {
     return (
-<footer className="bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100">
-  <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <footer className="bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100">
+        <div className="max-w-screen-xl px-4 py-8 mx-auto sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
       <div>
-      <img src="#" className="mr-5 h-6 sm:h-9" alt="logo" />
-        <p className="max-w-xs mt-4 text-sm text-gray-600">
-          Aca iría un texto o frase de la marca.
-        </p>
-        <div className="flex mt-8 space-x-6 text-gray-600">
+      <Image src="/logoBlack.png" alt="LaPilcha" width={70} height={20} />
+            <p className="max-w-xs mt-4 text-sm text-gray-600">
+              Aca iría un texto o frase de la marca.
+            </p>
+            <div className="flex mt-6 space-x-6 text-gray-600">
           <a className="hover:opacity-75"  target="_blank" rel="noreferrer">
             <span className="sr-only"> Facebook </span>
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -36,7 +38,8 @@ const Footer: React.FC = () => {
           </a>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="col-span-3">
+            <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="font-medium">
             Company
@@ -46,18 +49,6 @@ const Footer: React.FC = () => {
             <a className="hover:opacity-75" > Meet the Team </a>
             <a className="hover:opacity-75" > History </a>
             <a className="hover:opacity-75" > Careers </a>
-          </nav>
-        </div>
-        <div>
-          <p className="font-medium">
-            Services
-          </p>
-          <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-            <a className="hover:opacity-75" > 1on1 Coaching </a>
-            <a className="hover:opacity-75" > Company Review </a>
-            <a className="hover:opacity-75" > Accounts Review </a>
-            <a className="hover:opacity-75" > HR Consulting </a>
-            <a className="hover:opacity-75" > SEO Optimisation </a>
           </nav>
         </div>
         <div>
@@ -81,10 +72,22 @@ const Footer: React.FC = () => {
             <a className="hover:opacity-75" > Accessibility </a>
           </nav>
         </div>
+          <div className="relative w-full h-80">
+          <iframe
+            className="absolute top-0 left-0 w-110 h-full"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.973409169303!2d-58.48099078474257!3d-34.57910318046118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca51a586c529%3A0x89b02bf38d7e2e9f!2sAv%20Triunvirato%204548%2C%20C1431%20CABA!5e0!3m2!1sen!2sus!4v1648482801994!5m2!1sen!2sus"
+            frameBorder="0"
+            style={{ border: 0 }}
+            allowFullScreen
+            aria-hidden="false"
+            tabIndex={0}
+          ></iframe>
+</div>
+        </div>
       </div>
     </div>
-    <p className="mt-8 text-xs text-gray-800">
-      © 2023 La Pilcha
+    <p className="mt-6 text-xs text-gray-800 text-center">
+      © 2023 La Pilcha | Todos los derechos reservados
     </p>
   </div>
 </footer>
