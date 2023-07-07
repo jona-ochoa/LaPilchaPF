@@ -1,22 +1,23 @@
 const mongoose = require("mongoose");
 
 const productSchema = mongoose.Schema({
-    id: {
-        type: String,
-        allowNull: false,
-        primaryKey: true
-      },
-      title: {
-        type: String,
-        required: true,
-      },
+  id: {
+    type: String,
+    allowNull: false,
+    primaryKey: true,
+    unique:true
+  },
+  title: {
+    type: String,
+    required: true,
+  },
   price: {
     type: String,
     required: true,
   },
   description: {
     type: String,
-    requires: true,
+    required: true,
   },
   category: {
     type: String,
@@ -31,5 +32,6 @@ const productSchema = mongoose.Schema({
     required: false,
   },
 });
+productSchema.index({ title: "text" }); // Definir índice de texto en el campo "title"
 
 module.exports = mongoose.model("Product", productSchema);
