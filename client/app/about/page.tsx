@@ -1,5 +1,5 @@
 import React from "react";
-import AboutCard from "../src/components/AboutCard/AboutCard";
+import AboutCard from "../../components/AboutCard";
 
 const About: React.FC = () => {
   const aboutCards = Array.from({ length: 8 }, (_, index) => (
