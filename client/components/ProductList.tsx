@@ -1,8 +1,8 @@
 //mapeo de cards para catálogo
-
+"use client"
 import React, { useState } from "react";
-import ProductCard from "../ProductCard/ProductCard";
-import data from '../../../public/db.json'
+import ProductCard from "./ProductCard";
+import data from '../public/db.json'
 
 const ProductList = () => {
 
