@@ -1,5 +1,5 @@
 import { useGetProductsByIdQuery } from '../../GlobalRedux/api/productsApi';
-import { products } from "../../GlobalRedux/api/productsApi";
+import { Product } from "../../GlobalRedux/api/productsApi";
 import Detail from '../../components/Detail';
 
 const ProductDetailPage = ({ id }) => {
@@ -9,7 +9,7 @@ const ProductDetailPage = ({ id }) => {
   if (isLoading || isFetching) return <p>Loading...</p>;
   if (error) return <p>Error fetching products</p>;
 
-  const product = data as products;
+  const product = data as Product;
 
   return (
     <Detail

@@ -1,11 +1,11 @@
 import React from 'react';
-import { products } from '../GlobalRedux/api/productsApi';
+import { Product } from '../GlobalRedux/api/productsApi';
 
 
  
 
   
-  const Detail: React.FC<products> = ({ id, title, price, image, description, rating, category }) => {
+  const Detail: React.FC<Product> = ({ id, title, price, image, description, rating, category }) => {
 
     return(
   

@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+"use client"
+
+import React from "react";
+import { useState } from "react";
 import ProductCard from "./ProductCard";
 import { useGetProductsQuery } from "../GlobalRedux/api/productsApi";
-import { products } from '../GlobalRedux/api/productsApi';
+import { Product } from '../GlobalRedux/api/productsApi';
 
 const ProductList = () => {
     
@@ -9,7 +12,7 @@ const ProductList = () => {
   if (isLoading || isFetching) return <p>Loading...</p>;
   if (error) return <p>Error fetching products</p>;
 
-  const product = data as products[];
+  const product = data as Product[];
 
 
   const productsPerPage = 8;
