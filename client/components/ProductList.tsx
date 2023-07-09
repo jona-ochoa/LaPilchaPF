@@ -1,10 +1,14 @@
 //mapeo de cards para catálogo
 "use client"
+
 import React, { useState } from "react";
 import ProductCard from "./ProductCard";
-import data from '../public/db.json'
+import { useAppDispatch, useAppSelector } from "../src/GlobalRedux/hooks";
 
 const ProductList = () => {
+
+    useAppSelector(state => state.productsReducer.products)
+    const dispatch = useAppDispatch();
 
     //paginado
     const productsPerPage = 8;
