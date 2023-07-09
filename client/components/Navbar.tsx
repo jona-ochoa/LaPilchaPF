@@ -1,4 +1,6 @@
-import React from 'react';
+"use client"
+
+import React from 'react';    
 import SearchBar from './SearchBar';
 import Image from 'next/image';
 
@@ -10,8 +12,8 @@ const Navbar: React.FC = () => {
           <Image src="/logoWhite.png" alt="LaPilcha" width={70} height={20} />
         </a>
 
-        <div className="flex flex-grow justify-center">
-              <SearchBar />
+        <div className="flex flex-grow justify-center">  
+              <SearchBar />    
             </div>
 
         <div className="hidden xl:flex items-center space-x-5">

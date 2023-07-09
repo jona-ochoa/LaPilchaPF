@@ -1,24 +1,21 @@
-import Navbar from "../../components/Navbar"
-import Footer from "../../components/Footer"
-import ProductsPage from "./products/page"
-import { useAppDispatch, useAppSelector } from "../GlobalRedux/hooks";
+"use client"
 
-
-
-
-
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import ProductsPage from "./products/page";
+import RootLayout from "./layout";
+import "./globals.css";
 
 export default function HomePage() {
-
-
-
   return (
-<div> 
+    <div>
+      <RootLayout>
 
-    <Navbar/>
-    <ProductsPage/>
-    <Footer/>
-
-</div>
-  )
+        <Navbar/>
+        <ProductsPage />
+        <Footer/>
+        
+      </RootLayout>
+    </div>
+  );
 }
