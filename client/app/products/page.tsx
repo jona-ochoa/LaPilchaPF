@@ -8,7 +8,7 @@ const ProductsPage = () => {
         <div className="bg-gray-100 p-2 pt-10 m-5">
         <h1 className="text-6xl font-bold text-center mb-8">Products</h1> 
         </div>
-            <ProductList />
+            <ProductList/>
         </div>
     )
 }

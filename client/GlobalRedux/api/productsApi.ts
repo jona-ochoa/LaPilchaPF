@@ -1,19 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-interface products {
+export type products = {
     id: string;
     title: string;
-    price: number;
+    price: string;
     description: string;
     image: string;
     category: string;
-    rating: Rating[];
-  }
-  
-  interface Rating {
-    rate: number;
-    count: number;
-  }  
+    rating: any 
+}
 
 const productsApi = createApi({
     reducerPath: "productsApi",
@@ -24,14 +19,16 @@ const productsApi = createApi({
         getProducts: builder.query<products[],null>({
             query: () => `/products`,
         }),
-        getProductsById: builder.query<products, { id: any }>({
+        getProductsById: builder.query<products, { id: string }>({
             query: ({id}) => `/products/${id}`,
         }),
         getProductsByTitle: builder.query<products, { title: string }>({
-            query: ({title}) => `/products/${title}`,
+            query: ({title}) => `/products/search?keyword=${title}`,
         }),
-    }),
-
+      /*   postProducts: builder.mutation<products, null>({
+            query: () => `/products`,
+    }) */
+    })
 })
 
-export const { useGetProductsQuery, useGetProductsByIdQuery, useGetProductsByTitleQuery } = productsApi 
+export const { useGetProductsQuery, useGetProductsByIdQuery, useGetProductsByTitleQuery, /* usePostProductsMutation */ } = productsApi

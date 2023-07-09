@@ -8,10 +8,10 @@ export const productsSlice = createSlice({
     name: "products",
     initialState,
     reducers: {
-        getProducts: () => {}
+     
 }
 })
 
 
-export const { getProducts }  = productsSlice.actions
+export const {  }  = productsSlice.actions
 export default productsSlice.reducer
