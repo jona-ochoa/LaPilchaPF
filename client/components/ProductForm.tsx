@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -5,6 +6,7 @@ import * as Yup from 'yup';
 const ProductForm = () => {
 
     //estalo local momentáneo hasta tener los globales
+    
     const [productPreview, setProductPreview] = useState(null);
 
     const validationSchema = Yup.object().shape({
@@ -102,7 +104,7 @@ const ProductForm = () => {
                 <div>
                     <label className="block text-sm font-semibold leading-6 text-gray-900" htmlFor="price">Price: </label>
                     <div className="mt-2.5">
-                    <Field  type='text' id='price' name='price' className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" onChange={(e) => handleInputChange(e, setFieldValue)}/>
+                    <Field  type='text' id='price' name='price' placeholder='$' className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" onChange={(e) => handleInputChange(e, setFieldValue)}/>
                     </div>
                     <ErrorMessage name="price" component='div' className="text-red-600"/>
                     
