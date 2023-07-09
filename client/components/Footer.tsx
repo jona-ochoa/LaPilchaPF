@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer: React.FC = () => {
     return (
@@ -45,7 +46,9 @@ const Footer: React.FC = () => {
             Company
           </p>
           <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-            <a className="hover:opacity-75" > About </a>
+            <Link href='/about'>
+              <div className="hover:opacity-75" > About </div>
+            </Link>
             <a className="hover:opacity-75" > Meet the Team </a>
             <a className="hover:opacity-75" > History </a>
             <a className="hover:opacity-75" > Careers </a>
