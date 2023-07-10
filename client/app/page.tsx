@@ -1,21 +1,26 @@
+
 "use client"
 
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import ProductsPage from "./products/page";
-import RootLayout from "./layout";
-import "./globals.css";
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import ProductsPage from './products/page';
+import RootLayout from './layout';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import './globals.css';
 
-export default function HomePage() {
+const HomePage = () => {
   return (
-    <div>
-      <RootLayout>
-
-        <Navbar/>
-        <ProductsPage />
-        <Footer/>
-        
-      </RootLayout>
+    <Router>   
+    <div>  
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<ProductsPage />} />
+      </Routes>
+      <Footer />
     </div>
+  </Router>
   );
 }
+
+export default HomePage;

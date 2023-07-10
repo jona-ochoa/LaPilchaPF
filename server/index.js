@@ -4,10 +4,12 @@ require("dotenv").config();
 const userRoutes = require("./src/routes/user");
 const productRouter = require("./src/routes/products")
 const buyOrderRouter = require("./src/routes/buyOrder")
+const cors = require("cors")
 const app = express();
 const port = process.env.PORT || 3001;
 
 //middleware
+app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use("/", userRoutes);
 app.use("/products", productRouter)

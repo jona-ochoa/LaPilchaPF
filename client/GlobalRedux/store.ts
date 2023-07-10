@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query/react';
+import { setupListeners } from '@reduxjs/toolkit/query';
 import { useDispatch } from 'react-redux';
 import { productsApi } from './api/productsApi';
 import productsReducer from "./features/productsSlice";
@@ -7,7 +7,7 @@ import productsReducer from "./features/productsSlice";
 export const store = configureStore({
   reducer: {
     [productsApi.reducerPath]: productsApi.reducer,
-    products: productsReducer,
+    productsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(productsApi.middleware),
