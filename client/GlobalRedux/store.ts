@@ -7,7 +7,7 @@ import productsReducer from "./features/productsSlice";
 export const store = configureStore({
   reducer: {
     [productsApi.reducerPath]: productsApi.reducer,
-    productsReducer,
+    products: productsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(productsApi.middleware),
