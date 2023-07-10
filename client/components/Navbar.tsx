@@ -7,8 +7,8 @@ import Link from 'next/link';
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="bg-gray-900 text-white">
-      <div className="mx-auto px-5 xl:px-12 py-6 flex items-center">
+    <nav className="">
+      <div className="bg-gray-900 text-white mx-auto px-5 xl:px-12 py-6 flex items-center">
         <a className="flex items-center" href="/">
           <Image src="/logoWhite.png" alt="LaPilcha" width={70} height={20} />
         </a>

@@ -1,8 +1,9 @@
 "use client"
+import React from 'react';
+import { useGetProductsByIdQuery } from '../../../GlobalRedux/api/productsApi';
+import { Product } from "../../../GlobalRedux/api/productsApi";
+import Detail from '../../../components/Detail';
 
-import { useGetProductsByIdQuery } from '../../GlobalRedux/api/productsApi';
-import { Product } from "../../GlobalRedux/api/productsApi";
-import Detail from '../../components/Detail';
 
 const ProductDetailPage = ({ id }) => {
 
@@ -15,7 +16,7 @@ const ProductDetailPage = ({ id }) => {
 
   return (
     <Detail
-      id={product.id}
+      _id={product._id}
       title={product.title}
       price={product.price}
       image={product.image}

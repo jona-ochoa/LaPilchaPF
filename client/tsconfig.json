@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "next/router": ["next/dist/client/router"],
+      "next/link": ["next/dist/client/link"]
+    },
     "target": "es5",
     "lib": [
       "dom",
@@ -30,7 +35,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, ".next/types/app/detail/page.tsx"  ],
   "exclude": [
     "node_modules"
   ]
