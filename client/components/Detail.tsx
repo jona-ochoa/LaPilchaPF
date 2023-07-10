@@ -1,10 +1,5 @@
-'use client'
 import React from 'react';
 import { Product } from '../GlobalRedux/api/productsApi';
-
-
- 
-
   
   const Detail: React.FC<Product> = ({ _id, title, price, image, description, rating, category }) => {
 
