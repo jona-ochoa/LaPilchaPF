@@ -21,7 +21,7 @@ const ProductForm: React.FC = () => {
         category: Yup.string().required('The product category is required'),
         image: Yup.mixed().required('Product image is required').test('fileType', 'The file must be an image', function (value: any) {
             if(!value) return true;
-            const fileType = value && value.type;
+            const fileType = value && value.type; 
             const validFileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
             if(fileType) {
                 return validFileTypes.includes(fileType)
