@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const products = require("../models/products");
+const bodyParser = require("body-parser");
+const app = express();
 
+app.use(bodyParser.json());
 // Ruta para obtener todos los productos
 router.get("/", (req, res) => {
   products
@@ -64,32 +67,50 @@ router.post("/", (req, res) => {
     .catch((error) => res.status(400).json({ error: "Error al crear el producto" }));
 });
 
+// Ruta para editar un producto por su ID
+router.put("/:id", (req, res) => {
+  const productId = req.params.id;
+
+  // Obtener los datos actualizados del producto desde el cuerpo de la solicitud
+  const { title, price, description, category, image, rating } = req.body;
+
+  // Construir el objeto con los campos actualizados
+  const updatedProduct = {
+    title,
+    price,
+    description,
+    category,
+    image,
+    rating,
+  };
+
+  // Actualizar el producto en la base de datos
+  products
+    .findByIdAndUpdate(productId, updatedProduct, { new: true })
+    .then((updatedProduct) => {
+      if (!updatedProduct) {
+        return res.status(404).json({ error: "Producto no encontrado" });
+      }
+      res.json({ message: "Producto actualizado exitosamente", product: updatedProduct });
+    })
+    .catch((error) => res.status(500).json({ error: `Error al actualizar el producto con ID ${productId}` }));
+});
+
+// Ruta para eliminar un producto por su ID
+router.delete("/:id", (req, res) => {
+  const productId = req.params.id;
+
+  products
+    .findByIdAndDelete(productId)
+    .then((deletedProduct) => {
+      if (!deletedProduct) {
+        return res.status(404).json({ error: "Producto no encontrado" });
+      }
+      res.json({ message: "Producto eliminado exitosamente" });
+    })
+    .catch((error) => res.status(500).json({ error: `Error al eliminar el producto con ID ${productId}` }));
+});
+
 
 module.exports = router;
 
-/* router.get("/search", (req, res) => {
-  const keyword = req.query.keyword;
-
-  // Leer el archivo db.json
-  fs.readFile(path.join(__dirname, "../api/db.json"), "utf8", (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "Error al obtener los productos" });
-    }
-
-    try {
-      const db = JSON.parse(data);
-      const products = db.products;
-
-      // Filtrar los productos que contengan la palabra clave en el título
-      const filteredProducts = products.filter((product) =>
-        product.title.toLowerCase().includes(keyword.toLowerCase())
-      );
-
-      res.json({ products: filteredProducts });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Error al obtener los productos" });
-    }
-  });
-}); */
