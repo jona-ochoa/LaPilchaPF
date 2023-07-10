@@ -11,7 +11,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="bg-gray-100 rounded-lg p-4 flex flex-col items-center">
-      <Link href={`/detail/${product._id}`}>
+      <Link href={`/products/${product._id}`}>
           <div className="group aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8 flex items-center">
             <img
               src={product.image}
