@@ -3,6 +3,7 @@
 import React from 'react';    
 import SearchBar from './SearchBar';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Navbar: React.FC = () => {
   return (
@@ -12,9 +13,24 @@ const Navbar: React.FC = () => {
           <Image src="/logoWhite.png" alt="LaPilcha" width={70} height={20} />
         </a>
 
-        <div className="flex flex-grow justify-center">  
+        <div className="flex-grow justify-center">  
               <SearchBar />    
             </div>
+
+          
+            <div className="flex items-center">
+            <Link href="/formProduct">
+  <button
+    type="button"
+    className="inline-block rounded border-2 border-neutral-50 px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-neutral-50 transition duration-150 ease-in-out hover:border-neutral-100 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-100 focus:border-neutral-100 focus:text-neutral-100 focus:outline-none focus:ring-0 active:border-neutral-200 active:text-neutral-200 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+    data-te-ripple-init
+  >
+    CARGAR PRODUCTO
+  </button>
+  </Link>
+  <div className="ml-4" />
+</div>
+      
 
         <div className="hidden xl:flex items-center space-x-5">
           <a className="hover:text-gray-200" href="#">
