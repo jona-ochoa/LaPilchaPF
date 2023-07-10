@@ -67,7 +67,7 @@ const ProductForm: React.FC = () => {
                 <div className='max-w-lg'>
                     <div className='p-6'>
                         <div className='mx-auto max-w-2xl text-center'>
-                            <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl pb-10'>Create product</h2>
+                            <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl pb-10'>Cargar Producto</h2>
                         </div>
 
                         <Formik initialValues={{
@@ -88,7 +88,7 @@ const ProductForm: React.FC = () => {
                                 <div className='grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2'>
 
                                     <div>
-                                        <label className='block text-sm font-semibold leading-6 text-gray-900' htmlFor='title'>Product name:</label>
+                                        <label className='block text-sm font-semibold leading-6 text-gray-900' htmlFor='title'>Nombre del Producto:</label>
                                         <div className='mt-2.5'>
                                             <Field className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6' 
                                             type='text' id='title' name='title' onChange={(e) => handleInputChange(e, setFieldValue)} />
@@ -97,7 +97,7 @@ const ProductForm: React.FC = () => {
                                     </div>
 
                                     <div>
-                                        <label className='block text-sm font-semibold leading-6 text-gray-900' htmlFor='price'>Price:</label>
+                                        <label className='block text-sm font-semibold leading-6 text-gray-900' htmlFor='price'>Precio:</label>
                                         <div className='mt-2.5'>
                                         <Field type='number' id='price' name='price' onChange={(e) => handleInputChange(e, setFieldValue)} placeholder='$'
                                             className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
@@ -106,7 +106,7 @@ const ProductForm: React.FC = () => {
                                     </div>
 
                                     <div className='sm:col-span-2'>
-                                        <label className='block text-sm font-semibold leading-6 text-gray-600' htmlFor='description'>Description: </label>
+                                        <label className='block text-sm font-semibold leading-6 text-gray-600' htmlFor='description'>Descripción: </label>
                                         <div className='mt-2.5'>
                                             <Field type='text' id='description' name='description' onChange={(e) => handleInputChange(e, setFieldValue)}
                                                 className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6' />
@@ -115,19 +115,19 @@ const ProductForm: React.FC = () => {
                                     </div>
 
                                     <div className='sm-col-span-2'>
-                                        <label className='block text-sm font-semibold leading-6 text-gray-600' htmlFor='category'>Category: </label>
+                                        <label className='block text-sm font-semibold leading-6 text-gray-600' htmlFor='category'>Categoría: </label>
                                         <div className='mt-2.5'>
                                             <Field as='select' id='category' name='category' onChange={(e) => handleInputChange(e, setFieldValue)}
                                                 className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'>
                                                 <option value=''></option>
-                                                <option value="women's clothing"> women's clothing</option>
-                                                <option value="men's clothing"> men's clothing</option>
+                                                <option value="women's clothing"> Ropa de Mujer</option>
+                                                <option value="men's clothing"> Ropa de Hombre</option>
                                             </Field>
                                         </div>
                                     </div>
 
                                     <div className='sm:col-span-2'>
-                                        <label htmlFor='image' className='block text-sm font-semibold leading-6 text-gray-600'>Product image:</label>
+                                        <label htmlFor='image' className='block text-sm font-semibold leading-6 text-gray-600'>Imagen del Producto:</label>
                                         <div>
                                             <input type='file' id='image' name='image' accept='image/*' onChange={(e) => handleFileChange(e, setFieldValue)}
                                                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />

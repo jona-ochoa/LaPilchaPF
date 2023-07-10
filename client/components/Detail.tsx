@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import { Product } from '../GlobalRedux/api/productsApi';
 
@@ -5,11 +6,11 @@ import { Product } from '../GlobalRedux/api/productsApi';
  
 
   
-  const Detail: React.FC<Product> = ({ id, title, price, image, description, rating, category }) => {
+  const Detail: React.FC<Product> = ({ _id, title, price, image, description, rating, category }) => {
 
     return(
   
-    <section className="text-gray-700 body-font overflow-hidden bg-white" key={id}>
+    <section className="text-gray-700 body-font overflow-hidden bg-white" key={_id}>
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <img alt="ecommerce" className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src={image} />

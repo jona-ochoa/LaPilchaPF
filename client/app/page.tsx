@@ -1,4 +1,3 @@
-
 "use client"
 
 import React from 'react';
@@ -10,14 +9,16 @@ import './globals.css';
 
 const HomePage = () => {
   return (
-       
+       <main>
+
     <div>  
-      <Navbar />
       <RootLayout>
+      <Navbar />
       <ProductsPage />
-      </RootLayout>
       <Footer />
+      </RootLayout>
     </div>
+       </main>
   
   );
 }
