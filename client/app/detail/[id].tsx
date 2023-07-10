@@ -1,3 +1,5 @@
+"use client"
+
 import { useGetProductsByIdQuery } from '../../GlobalRedux/api/productsApi';
 import { Product } from "../../GlobalRedux/api/productsApi";
 import Detail from '../../components/Detail';

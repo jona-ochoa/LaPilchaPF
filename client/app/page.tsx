@@ -1,25 +1,23 @@
-
 "use client"
-
-import React from 'react';
+import { AppProps } from 'next/app';
+import { Providers } from '../GlobalRedux/provider';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import ProductsPage from './products/page';
 import RootLayout from './layout';
 import './globals.css';
 
-const HomePage = () => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-       
-    <div>  
+    <Providers currentPath={null}>
       <Navbar />
-      <RootLayout>
-      <ProductsPage />
+      <RootLayout>  
+        <Component {...pageProps} />
       </RootLayout>
       <Footer />
-    </div>
-  
+    </Providers>
   );
-}
+};
 
-export default HomePage;
+export default MyApp;
+
+

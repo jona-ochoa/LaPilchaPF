@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 import { Product } from "../api/productsApi";
 
 interface ProductsState {
@@ -18,6 +19,8 @@ export const productsSlice = createSlice({
     },
   },
 });
+
+export const selectProducts = (state: RootState) => state.products.products; // Agrega esta función de selector
 
 export const { setProducts } = productsSlice.actions;
 export default productsSlice.reducer;
