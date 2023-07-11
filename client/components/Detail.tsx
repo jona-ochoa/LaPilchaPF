@@ -1,9 +1,39 @@
 import React from 'react';
 import { Product } from '../GlobalRedux/api/productsApi';
-  
-  const Detail: React.FC<Product> = ({ _id, title, price, image, description, rating, category }) => {
+import { useDispatch } from "react-redux";
+import { addToCarrito } from "../GlobalRedux/features/carritoSlice"
 
-    return(
+interface DetailProps {
+  _id: string;
+  title: string;
+  price: string;
+  image: string;
+  description: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+  category: string;
+}
+
+const Detail: React.FC<DetailProps> = ({ _id, title, price, image, description, rating, category }) => {
+  const dispatch = useDispatch();
+
+  const handleOnClick = () => {
+    const item: Product = {
+      _id,
+      title,
+      price,
+      image,
+      description,
+      rating,
+      category,
+    };
+
+    dispatch(addToCarrito(item));
+  };
+  
+     return(
   
     <section className="text-gray-700 body-font overflow-hidden bg-white" key={_id}>
       <div className="container px-5 py-24 mx-auto">
@@ -78,7 +108,7 @@ import { Product } from '../GlobalRedux/api/productsApi';
             </div>
             <div className="flex">
               <span className="title-font font-medium text-2xl text-gray-900">{price}</span>
-              <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Button</button>
+              <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded" onClick={handleOnClick}>COMPRAR</button>
             </div>
           </div>
         </div>
