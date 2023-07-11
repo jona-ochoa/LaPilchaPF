@@ -3,6 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { useDispatch } from 'react-redux';
 import { productsApi } from './api/productsApi';
 import productsReducer from "./features/productsSlice";
+import carritoReducer from "./features/carritoSlice"
 
 const middleware = getDefaultMiddleware().concat(productsApi.middleware);
 
@@ -10,6 +11,7 @@ export const store = configureStore({
   reducer: {
     [productsApi.reducerPath]: productsApi.reducer,
     products: productsReducer,
+    items: carritoReducer
   },
   middleware,
   devTools: process.env.NODE_ENV !== 'production',

@@ -20,7 +20,8 @@ export const productsSlice = createSlice({
   },
 });
 
-export const selectProducts = (state: RootState) => state.products.products; // Agrega esta función de selector
+export const selectProducts = (state: RootState) => state.products.products; 
 
 export const { setProducts } = productsSlice.actions;
+
 export default productsSlice.reducer;

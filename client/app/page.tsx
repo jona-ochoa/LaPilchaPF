@@ -10,7 +10,6 @@ import './globals.css';
 const HomePage = () => {
   return (
        <main>
-
     <div>  
       <RootLayout>
       <Navbar />
