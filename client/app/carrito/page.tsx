@@ -6,7 +6,7 @@ import Carrito from "../../components/Carrito"
 const CarritoPage = () => {
     return (
         <div>
-<Carrito></Carrito>
+<Carrito/>
         </div>
     )
 }
