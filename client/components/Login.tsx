@@ -93,7 +93,7 @@ const Login = () => {
               Ingresar
             </button>
             <p className="text-sm text-white">
-              Soy nuevo, <a href="#" className="text-blue-500">Registrarse</a>
+              Soy nuevo, <a href="/userForm" className="text-blue-500">Registrarse</a>
             </p>
           </div>
           <div className="mt-4 text-center">
