@@ -59,7 +59,9 @@ const Footer: React.FC = () => {
             Helpful Links
           </p>
           <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-            <a className="hover:opacity-75" > Contact </a>
+            <Link href='/FormContact'>
+             <div className="hover:opacity-75" > Contact </div>
+            </Link>
             <a className="hover:opacity-75" > FAQs </a>
             <a className="hover:opacity-75" > Live Chat </a>
           </nav>
