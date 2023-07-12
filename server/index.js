@@ -1,26 +1,28 @@
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const morgan = require("morgan");
 const userRoutes = require("./src/routes/user");
-const productRouter = require("./src/routes/products")
-const buyOrderRouter = require("./src/routes/buyOrder")
-const adminRouter = require("./src/routes/admin")
-const cors = require("cors")
+const productRouter = require("./src/routes/products");
+const buyOrderRouter = require("./src/routes/buyOrder");
+const adminRouter = require("./src/routes/admin");
+const paymenRoutes = require("./src/routes/payment");
+
+const cors = require("cors");
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3002;
 
 //middleware
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(morgan("dev"));
+app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
-app.use("/", userRoutes);
-app.use("/products", productRouter)
-app.use("/orders", buyOrderRouter)
-app.use("/admins", adminRouter)
 
 //routes
-app.get("/", (req, res) => {
-  res.send("Welcome to LaPilcha");
-});
+app.use("/", userRoutes);
+app.use("/products", productRouter);
+app.use("/orders", buyOrderRouter);
+app.use("/admins", adminRouter);
+app.use("/pay", paymenRoutes);
 
 //mongodb connection
 mongoose
