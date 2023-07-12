@@ -11,8 +11,8 @@ const Login = () => {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [formValues, setFormValues] = useState({
-      email: undefined,
-      password: undefined
+      email: "",
+      password: "",
     });
     const [error, setError] = useState("");
   

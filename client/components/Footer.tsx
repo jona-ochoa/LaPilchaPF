@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <div className="max-w-screen-xl px-4 py-8 mx-auto sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
       <div>
-      <Image src="/logoBlack.png" alt="LaPilcha" width={70} height={20} />
+      {/* <Image src="/logoBlack.png" alt="LaPilcha" width={70} height={20} /> */}
             <p className="max-w-xs mt-4 text-sm text-gray-600">
               Aca iría un texto o frase de la marca.
             </p>
