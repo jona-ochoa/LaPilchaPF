@@ -10,16 +10,20 @@ const buyOrderSchema = mongoose.Schema({
       'canceled',
       'completed',
     ],
-    required: false,
+    required: true,
     default: 'shopping_cart',
   },
   total: {
     type: Number,
-    required: false,
+    required: true,
   },
-  products: {
+  items: {
     type: [String],
+    required: true
   },
+},{
+  tymestamps: true, 
+  versionKey: false
 });
 
-module.exports = mongoose.model("BuyOrder", buyOrderSchema);
+module.exports = mongoose.model("BuyOrder", buyOrderSchema)
