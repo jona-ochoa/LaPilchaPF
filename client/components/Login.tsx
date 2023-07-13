@@ -50,6 +50,10 @@ const Login = () => {
       const { name, value } = event.target;
       setFormValues({ ...formValues, [name]: value });
     };
+
+    const handleLogin = (provider: string) => {
+    signIn(provider, { callbackUrl: '/' });
+  };
   
     return (
       <div className="bg-gray-900 mx-auto w-96 p-8 rounded-lg flex items-center justify-center">
@@ -93,7 +97,7 @@ const Login = () => {
               Ingresar
             </button>
             <p className="text-sm text-white">
-              Soy nuevo, <a href="/userForm" className="text-blue-500">Registrarse</a>
+              Soy nuevo, <a href="#" className="text-blue-500">Registrarse</a>
             </p>
           </div>
           <div className="mt-4 text-center">
@@ -102,7 +106,7 @@ const Login = () => {
               <button
                 className="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline mr-2"
                 type="button"
-                onClick={() => signIn("google", { callbackUrl })}
+                onClick={() => handleLogin('google')}
               >
                 <div className="flex items-center">
                   <Image src={googleLogo} alt="Google Logo" width={16} height={16} className="mr-2" />
@@ -112,7 +116,7 @@ const Login = () => {
               <button
                 className="bg-black hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline ml-2"
                 type="button"
-                onClick={() => signIn("github", { callbackUrl })}
+                onClick={() => handleLogin('github')}
               >
                 <div className="flex items-center">
                   <Image src={githubLogo} alt="GitHub Logo" width={16} height={16} className="mr-2" />

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Product } from '../GlobalRedux/api/productsApi';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCarrito } from "../GlobalRedux/features/carritoSlice"
+import { useLocalStorage } from 'hooks/useLocalstorage';
+import toast from 'react-hot-toast'
 
 interface DetailProps {
   _id: string;
@@ -16,8 +18,18 @@ interface DetailProps {
   category: string;
 }
 
-const Detail: React.FC<DetailProps> = ({ _id, title, price, image, description, rating, category }) => {
+
+const Detail: React.FC<DetailProps> = ({
+  _id,
+  title,
+  price,
+  image,
+  description,
+  rating,
+  category,
+}) => {
   const dispatch = useDispatch();
+  const [cartItems, setCartItems] = useLocalStorage<Product[]>('cartItems', []);
 
   const handleOnClick = () => {
     const item: Product = {
@@ -29,11 +41,13 @@ const Detail: React.FC<DetailProps> = ({ _id, title, price, image, description, 
       rating,
       category,
     };
-
+    toast.success('Producto agregado correctamente')
+    setCartItems([...cartItems, item]);
     dispatch(addToCarrito(item));
   };
   
-     return(
+
+  return (
   
     <section className="text-gray-700 body-font overflow-hidden bg-white" key={_id}>
       <div className="container px-5 py-24 mx-auto">
@@ -108,7 +122,7 @@ const Detail: React.FC<DetailProps> = ({ _id, title, price, image, description, 
             </div>
             <div className="flex">
               <span className="title-font font-medium text-2xl text-gray-900">{price}</span>
-              <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded" onClick={handleOnClick}>COMPRAR</button>
+              <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded" onClick={handleOnClick}>AGREGAR AL CARRITO</button>
             </div>
           </div>
         </div>
