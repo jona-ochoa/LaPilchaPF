@@ -1,50 +1,102 @@
 const mercadopago = require("mercadopago");
 require("dotenv").config();
 const MERCADOPAGO_TOKEN = process.env.MERCADOPAGO_TOKEN;
+const User = require("../models/user");
+const { ObjectId } = require("mongodb");
 
 const createOrder = async (req, res) => {
   mercadopago.configure({
     access_token: MERCADOPAGO_TOKEN,
   });
+  try {
+    const { name, email, surname, buyOrder } = req.body;
 
-  //Recibe info por req.body
-  //Solo dejar hasta 3 cuotas sin interes
-  //Pasar info de payer:{}
-  //tiene que pasar la notification url a un servidor https
-  // entorno configurado con ssl
-  // el ejecutable ngrok crea un tunel http, osea te da un donimio ssl en tu local host
-  // notification_url: "http://localhost:3002/webhook", tiene que ser un dominio https, no pude hacewr funcionar ngrok, intente con localhost.run y tampoco
-  const result = await mercadopago.preferences.create({
-    items: [
-      {
-        title: "Laptop DELL",
-        unit_price: 150,
+    const items = buyOrder;
+    const orderItems = [];
+
+    for (const item of items) {
+      const orderItem = {
+        id: item.id,
+        title: item.title,
+        unit_price: item.unit_price,
         currency_id: "ARS",
-        quantity: 1,
+        quantity: item.quantity,
+      };
+
+      orderItems.push(orderItem);
+    }
+
+    const buyerInfo = {
+      name: name,
+      surname: surname,
+      email: email,
+    };
+
+    /* [
+        {
+          title: "Laptop DELL",
+          unit_price: 150,
+          currency_id: "ARS",
+          quantity: 1,
+        },
+        {
+          title: "Televison samsung",
+          unit_price: 40,
+          currency_id: "ARS",
+          quantity: 2,
+        },
+      ]*/
+    const result = await mercadopago.preferences.create({
+      items: orderItems,
+      back_urls: {
+        pending: "http://localhost:3002/pay/pending",
+        success: "http://localhost:3002/pay/success",
+        failure: "http://localhost:3002/pay/failure",
       },
-    ],
-    back_urls: {
-      pending: "http://localhost:3002/pending",
-      success: "http://localhost:3002/success",
-      failure: "http://localhost:3002/failure",
-    },
-    notification_url: "https://bd97-179-0-233-188.ngrok-free.app/webhook",
-  });
-  console.log(result);
-  res.send(result.body);
+      notification_url: "https://44c8-179-0-233-162.ngrok-free.app/pay/webhook",
+      payment_methods: {
+        installments: 3, //hasta 3 cuotas
+      },
+      payer: buyerInfo,
+    });
+
+    res.status(200).send(result.body);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 };
 
 const reciveWebhook = async (req, res) => {
-  const payment = req.query;
-
   try {
+    const payment = req.query;
+
     if (payment.type === "payment") {
       const data = await mercadopago.payment.findById(payment["data.id"]);
-      console.log(data);
-      //aca guardar en historial en DB
+
+      const body = data.body;
+      const compra = {
+        idPay: body.id,
+        date: body.date_approved,
+        amount: body.transaction_amount,
+        paymentType: body.payment_type_id,
+      };
+
+      const usuarioId = body.additional_info.payer.last_name;
+
+      const usuarioObjectId = new ObjectId(usuarioId);
+      const usuario = await User.findById(usuarioObjectId);
+      if (usuario) {
+        usuario.buyhistory.push(compra);
+        await usuario.save();
+        console.log("Informacion correctamente guardada en la base de datos");
+      } else {
+        console.log("Usuario no encontrado en la base de datos");
+      }
     }
-    res.status(204).send("Todo OK");
+
+    res.status(200).json({ ok: "Todo OK" });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ error: error.message });
   }
 };
