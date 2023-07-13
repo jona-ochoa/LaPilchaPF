@@ -79,9 +79,11 @@ const Navbar: React.FC = () => {
   return (
     <nav>
       <div className="bg-gray-900 text-white mx-auto px-5 xl:px-12 py-6 flex items-center">
-        <a className="flex items-center" href="/">
-          {/* <Image src="/logoWhite.png" alt="LaPilcha" width={70} height={20} /> */}
-        </a>
+      <Link href="/">
+          <div className="text-2xl font-bela mr-4" style={{ fontFamily: 'Belanosima' }}>
+            LaPilcha
+          </div>
+        </Link>
 
         <div className="flex-grow justify-center">
           <SearchBar />

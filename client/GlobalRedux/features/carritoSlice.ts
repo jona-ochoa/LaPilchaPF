@@ -5,12 +5,13 @@ import { RootState } from "../store";
 import { Product } from "../api/productsApi";
 
 interface CarritoState {
+  jwt: string | null,
   items: Product[];
 }
 
 const initialState: CarritoState = {
   items: [],
-  
+  jwt: null
 };
 
 export const carritoSlice = createSlice({

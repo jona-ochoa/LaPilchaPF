@@ -5,7 +5,7 @@ import { Providers } from "../GlobalRedux/provider";
 import { SessionProvider } from "next-auth/react";
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer';
-
+import { Toaster } from "./Toaster"
 import "./globals.css";
 
 const inter = Inter({subsets: ['latin']})
@@ -16,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <SessionProvider>
       <Providers>
       <body className={inter.className}>
+      <Toaster position="bottom-right" reverseOrder={false}/>
       <Navbar />
        {children}
       <Footer />

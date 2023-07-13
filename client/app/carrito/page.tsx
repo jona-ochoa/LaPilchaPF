@@ -1,6 +1,6 @@
 
 import React from "react";
-import Carrito from "../../components/Carrito"
+import Carrito from "../../components/CarritoDeCompras"
 
 
 const CarritoPage = () => {
