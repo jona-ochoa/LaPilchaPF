@@ -1,11 +1,14 @@
 'use client'
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
-
 //redux ver acciones para user
-
+import { useAppDispatch } from "GlobalRedux/store";
+import { useCreateUserMutation, User } from "GlobalRedux/api/usersApi";
+import { addUser } from "GlobalRedux/features/usersSlice";
+//
+import { useRouter } from "next/navigation";
 
 interface UserForm {
     name: string,
@@ -16,11 +19,14 @@ interface UserForm {
 }
 
 const UserForm : React.FC = () => {
-
+    
+    const router = useRouter()
+    const [createUserMutation, { data }] = useCreateUserMutation();
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false); 
     const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+    const dispatch = useAppDispatch();
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().min(3, 'Too short').max(50, 'Too long').required('Name is required'),
@@ -31,20 +37,34 @@ const UserForm : React.FC = () => {
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,15}$/,
         'Password must contain at least one uppercase letter, one lowercase letter and one number')
         .required('Password is required'),
-        image: Yup.mixed().notRequired().test('fileType', 'The file must be an image', function(value: any) {
-            if(!value) return true;
-            const fileType = value && value.type;
-            const validFileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            if(fileType) {
-                return validFileTypes.includes(fileType)
-            }
-            return false
-        })
+        
     })
 
-    const handleSubmit = (values: UserForm) => {
-        console.log('Form values: ', values);
-        setShowSuccessAlert(true);
+    const handleSubmit = async (values: UserForm, {resetForm}: FormikHelpers<UserForm>) => {
+        try {
+            const { name, lastname, email, password, image } = values;
+
+            const newUser: Partial<User> = {
+                name,
+                lastname,
+                email,
+                password,
+                image: selectedImage || null
+            }
+
+            const result = await createUserMutation(newUser)
+            if('data' in result) {
+                const { data } = result;
+                console.log('User created: ', data);
+                dispatch(addUser(data));
+                setShowSuccessAlert(true);
+            } else {
+                console.error('no data returned from createUserMutation', result.error)
+            }
+        } catch (error) {
+            console.error('Otra vez errorrr ', error)
+        }    
+        resetForm();
     }
 
     const renderImageOptions = () => {
