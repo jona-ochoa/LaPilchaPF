@@ -48,7 +48,10 @@ const Login = () => {
   
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
-      setFormValues({ ...formValues, [name]: value });
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        [name]: value,
+      }));
     };
 
     const handleLogin = (provider: string) => {
@@ -69,9 +72,10 @@ const Login = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="email"
               type="email"
+              name='email'
               placeholder="Ingresa tu email"
               value={formValues.email}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               required
             />
           </div>
@@ -83,21 +87,22 @@ const Login = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
+              name='password'
               placeholder="Ingresa tu password"
               value={formValues.password}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               required
             />
           </div>
           <div className="flex items-center justify-between">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
+              type="submit" disabled={loading}
             >
-              Ingresar
+              {loading ? 'Ingresando...' : 'Ingresar'}
             </button>
             <p className="text-sm text-white">
-              Soy nuevo, <a href="/userForm" className="text-blue-500">Registrarse</a>
+              Soy nuevo, {''} <a href="/userForm" className="text-blue-500">Registrarse</a>
             </p>
           </div>
           <div className="mt-4 text-center">
