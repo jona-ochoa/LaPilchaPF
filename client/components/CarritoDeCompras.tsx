@@ -29,7 +29,8 @@ const CarritoDeCompras = () => {
   }
 
   // Suma de los precios
-  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+  const total = cartItems.reduce((sum, item) => sum + Number(item.price), 0);
+
 
   return (
     <div>
@@ -69,7 +70,7 @@ const CarritoDeCompras = () => {
         <div className="flex justify-between">
           <p className="text-lg font-bold">Total:</p>
           <div>
-            <p className="mb-1 text-lg font-bold">${total + 4.99} USD</p>
+            <p className="mb-1 text-lg font-bold">${(total + 4.99).toFixed(2)} USD</p>
             <p className="text-sm text-gray-700">incluyendo VAT</p>
           </div>
         </div>
