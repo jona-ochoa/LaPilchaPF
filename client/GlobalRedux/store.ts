@@ -3,7 +3,6 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { useDispatch } from 'react-redux';
 import { productsApi } from './api/productsApi';
 import productsReducer from "./features/productsSlice";
-import carritoReducer from "./features/carritoSlice";
 import { usersApi } from './api/usersApi';
 import userSlice from './features/usersSlice';
 
