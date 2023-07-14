@@ -18,7 +18,7 @@ export const store = configureStore({
     [productsApi.reducerPath]: productsApi.reducer,
     products: productsReducer,
     items: carritoReducer,
-    favoritos: favoritosReducer
+    favoritos: favoritosReducer,
     user: userSlice,
     [usersApi.reducerPath]: usersApi.reducer
   },
