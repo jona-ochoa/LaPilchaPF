@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
       <div>
       {/* <Image src="/logoBlack.png" alt="LaPilcha" width={70} height={20} /> */}
             <p className="max-w-xs mt-4 text-sm text-gray-600">
-              Aca iría un texto o frase de la marca.
+              LaPilcha
             </p>
             <div className="flex mt-6 space-x-6 text-gray-600">
           <a className="hover:opacity-75"  target="_blank" rel="noreferrer">
