@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../GlobalRedux/store';
+import { RootState, AppDispatch } from '../GlobalRedux/store';
 import { Product } from '../GlobalRedux/api/productsApi';
-import { useGetProductsQuery } from '../GlobalRedux/api/productsApi';
-import { addToFavorites, removeFromFavorites } from "../GlobalRedux/features/favoritoSlice";
-import { setProducts } from '../GlobalRedux/features/productsSlice';
 import ProductCard from './ProductCard';
+import { addToFavorites, removeFromFavorites } from '../GlobalRedux/features/favoritoSlice';
+import { setProducts } from '../GlobalRedux/features/productsSlice';
 import { useLocalStorage } from '../hooks/useLocalstorage';
 import toast from 'react-hot-toast'
 import { addToCarrito, removeFromCarrito } from "../GlobalRedux/features/carritoSlice"
@@ -13,25 +12,20 @@ import { BsFillCartCheckFill, BsFillCartDashFill } from 'react-icons/bs'
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md'
 
 const ProductList: React.FC = () => {
-  const [favoriteItems, setFavoriteItems] = useLocalStorage<Product[]>("favoriteItems", []);
+  const [favoriteItems, setFavoriteItems] = useLocalStorage<Product[]>('favoriteItems', []);
   const [cartItems, setCartItems] = useLocalStorage<Product[]>('cartItems', []);
 
-  const dispatch = useDispatch();
-  const { data, error, isLoading, isFetching } = useGetProductsQuery(null);
-
+  const dispatch = useDispatch<AppDispatch>();
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
 
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-
-  useEffect(() => {
-    console.log("Data:", data);
-    if (data) {
-      dispatch(setProducts(data));
-    }
-  }, [data, dispatch]);
+  const allProducts: Product[] = useSelector((state: RootState) => state.products.products);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
+  const [filters, setFilters] = useState({
+    category: '',
+    minPrice: null,
+    maxPrice: null
+  });
 
   const handleCartItem = (item: Product) => {
     const existingItemCarrito = cartItems.find((_item) => _item._id === item._id);
@@ -62,22 +56,23 @@ const ProductList: React.FC = () => {
     }
   };
 
-  if (isLoading || isFetching) {
-    return <p>Cargando Productos...</p>;
-  }
-
-  if (error) {
-    return <p>Error fetching products</p>;
-  }
-
-  const products = data as Product[];
-  const filteredProducts = products.filter((product) => {
-    const price = parseFloat(product.price);
-    const min = minPrice !== "" ? parseFloat(minPrice) : Number.NEGATIVE_INFINITY;
-    const max = maxPrice !== "" ? parseFloat(maxPrice) : Number.POSITIVE_INFINITY;
-    const category = selectedCategory !== "" ? product.category === selectedCategory : true;
-    return price >= min && price <= max && category;
-  });
+  useEffect(() => {
+    let filteredProducts = allProducts;
+  
+    if (filters.minPrice !== null && filters.minPrice !== '') {
+      filteredProducts = filteredProducts.filter((product) => parseFloat(product.price) >= parseFloat(filters.minPrice!));
+    }
+  
+    if (filters.maxPrice !== null && filters.maxPrice !== '') {
+      filteredProducts = filteredProducts.filter((product) => parseFloat(product.price) <= parseFloat(filters.maxPrice!));
+    }
+  
+    if (filters.category !== '') {
+      filteredProducts = filteredProducts.filter((product) => product.category === filters.category);
+    }
+  
+    setFilteredProducts(filteredProducts);
+  }, [allProducts, filters]);
 
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
   const indexOfLastProduct = currentPage * productsPerPage;
