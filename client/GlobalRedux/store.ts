@@ -7,6 +7,7 @@ import productsReducer from "./features/productsSlice";
 import userSlice from './features/usersSlice';
 import carritoReducer from "./features/carritoSlice"
 import favoritosReducer from './features/favoritoSlice';
+import filterReducer from './features/filterSlice';
 
 
 const middleware = getDefaultMiddleware()
@@ -20,7 +21,8 @@ export const store = configureStore({
     items: carritoReducer,
     favoritos: favoritosReducer,
     user: userSlice,
-    [usersApi.reducerPath]: usersApi.reducer
+    [usersApi.reducerPath]: usersApi.reducer,
+    filter: filterReducer
   },
   middleware,
   devTools: process.env.NODE_ENV !== 'production',
