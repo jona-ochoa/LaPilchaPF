@@ -8,6 +8,8 @@ import userSlice from './features/usersSlice';
 import carritoReducer from "./features/carritoSlice"
 import favoritosReducer from './features/favoritoSlice';
 import searchQueryReducer from './features/searchQuerySlice';
+import filterReducer from './features/filterSlice';
+
 
 const reducer = combineReducers({
   [productsApi.reducerPath]: productsApi.reducer,
@@ -17,6 +19,7 @@ const reducer = combineReducers({
   user: userSlice,
   [usersApi.reducerPath]: usersApi.reducer,
   searchQuery: searchQueryReducer,
+  filter: filterReducer
 });
 
 const middleware = getDefaultMiddleware()
@@ -24,6 +27,7 @@ const middleware = getDefaultMiddleware()
   .concat(usersApi.middleware);
 
 export const store = configureStore({
+
   reducer,
   middleware,
   devTools: process.env.NODE_ENV !== 'production',

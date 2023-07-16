@@ -7,6 +7,8 @@ import { addToFavorites, removeFromFavorites } from "../GlobalRedux/features/fav
 import { setProducts } from '../GlobalRedux/features/productsSlice';
 import ProductCard from './ProductCard';
 import { RootState } from '../GlobalRedux/store';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../GlobalRedux/store';
 import { useLocalStorage } from '../hooks/useLocalstorage';
 import toast from 'react-hot-toast';
 import { addToCarrito, removeFromCarrito } from "../GlobalRedux/features/carritoSlice";
@@ -14,8 +16,9 @@ import { BsFillCartCheckFill, BsFillCartDashFill } from 'react-icons/bs';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
 
 const ProductList: React.FC = () => {
-  const [favoriteItems, setFavoriteItems] = useLocalStorage<Product[]>("favoriteItems", []);
+  const [favoriteItems, setFavoriteItems] = useLocalStorage<Product[]>('favoriteItems', []);
   const [cartItems, setCartItems] = useLocalStorage<Product[]>('cartItems', []);
+
 
   const dispatch = useAppDispatch();
   const searchQuery = useSelector((state: RootState) => state.searchQuery.query) as string;
@@ -23,9 +26,6 @@ const ProductList: React.FC = () => {
   const { data, error, isLoading, isFetching } = searchQuery
   ? useGetProductsByTitleQuery({ title: searchQuery })
   : useGetProductsQuery(null);
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 8;
 
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -36,6 +36,18 @@ const ProductList: React.FC = () => {
       dispatch(setProducts(data as Product[]));
     }
   }, [data, dispatch]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8;
+
+  const allProducts: Product[] = useSelector((state: RootState) => state.products.products);
+  const [filtrosProducts, setFiltrosProducts] = useState<Product[]>(allProducts);
+  const [filters, setFilters] = useState({
+    category: '',
+    minPrice: null,
+    maxPrice: null
+  });
+
 
   const handleCartItem = (item: Product) => {
     const existingItemCarrito = cartItems.find((_item) => _item._id === item._id);
@@ -66,6 +78,7 @@ const ProductList: React.FC = () => {
     }
   };
 
+
   if (isLoading || isFetching) {
     return <p>Cargando Productos...</p>;
   }
@@ -76,6 +89,24 @@ const ProductList: React.FC = () => {
 
   let filteredProducts = data
   
+
+  useEffect(() => {
+    let filtrosProducts = allProducts;
+  
+    if (filters.minPrice !== null && filters.minPrice !== '') {
+      filtrosProducts = filtrosProducts.filter((product) => parseFloat(product.price) >= parseFloat(filters.minPrice!));
+    }
+  
+    if (filters.maxPrice !== null && filters.maxPrice !== '') {
+      filtrosProducts = filtrosProducts.filter((product) => parseFloat(product.price) <= parseFloat(filters.maxPrice!));
+    }
+  
+    if (filters.category !== '') {
+      filtrosProducts = filtrosProducts.filter((product) => product.category === filters.category);
+    }
+  
+    setFiltrosProducts(filtrosProducts);
+  }, [allProducts, filters]);
 
 
   const totalPages = Math.ceil((filteredProducts?.length ?? 0) / productsPerPage);
