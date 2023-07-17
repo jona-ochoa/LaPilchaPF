@@ -6,6 +6,7 @@ import { removeFromCarrito } from '../GlobalRedux/features/carritoSlice';
 import { Product } from '../GlobalRedux/api/productsApi';
 import { useLocalStorage } from 'hooks/useLocalstorage';
 import { useSession } from 'next-auth/react';
+import axios from 'axios';
 
 interface Item extends Product {}
 
@@ -31,6 +32,36 @@ const CarritoDeCompras = () => {
   // Suma de los precios
   const total = cartItems.reduce((sum, item) => sum + Number(item.price), 0);
 
+
+  const handlePayment = async () => {
+    if (cartItems.length === 0) {
+      console.log('No hay artículos en el carrito');
+      return;
+    }
+    
+    try {
+      const buyerInfo = {
+        name: session.user?.name,
+        surname: session.user?.name,
+        email: session.user?.email,
+        buyOrder: cartItems.map(item => ({
+          id: item._id,
+          title: item.title,
+          unit_price: item.price,
+          quantity: 1, // Cantidad de este artículo en la orden (puedes ajustarlo según tus necesidades)
+        }))
+      };
+      
+      // Hacer la solicitud al backend para crear la orden de compra en Mercado Pago
+      const response = await axios.post("http://localhost:3002/pay/create-order", buyerInfo);
+      console.log('res del back: ', response.data)
+
+      // Redirigir al usuario a la página de pago de Mercado Pago
+      window.location.href = response.data.init_point;
+    } catch (error) {
+      console.error("Error al realizar el pago: ", error);
+    }
+  }
 
   return (
     <div>
@@ -74,7 +105,7 @@ const CarritoDeCompras = () => {
             <p className="text-sm text-gray-700">incluyendo VAT</p>
           </div>
         </div>
-        <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
+        <button onClick={handlePayment} className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
           Check out
         </button>
       </div>
