@@ -81,11 +81,11 @@ const Navbar: React.FC = () => {
   return (
     <nav>
       <div className="bg-gray-900 text-white mx-auto px-5 xl:px-12 py-6 flex items-center">
-      <Link href="/">
+      <a href="/">
           <div className="text-2xl font-bela mr-4" style={{ fontFamily: 'Belanosima' }}>
             LaPilcha
           </div>
-        </Link>
+        </a>
 
         <div className="flex-grow justify-center">
           <SearchBar />
@@ -126,7 +126,7 @@ const Navbar: React.FC = () => {
           </Link>
           <Link href="/carrito">
             <div>
-              <a className="flex items-center hover:text-gray-200" href="#">
+              <div className="flex items-center hover:text-gray-200" >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -147,7 +147,7 @@ const Navbar: React.FC = () => {
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
                   </span>
 
-              </a>
+              </div>
             </div>
           </Link>
 
