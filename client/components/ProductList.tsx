@@ -10,14 +10,30 @@ import toast from 'react-hot-toast'
 import { addToCarrito, removeFromCarrito } from "../GlobalRedux/features/carritoSlice"
 import { BsFillCartCheckFill, BsFillCartDashFill } from 'react-icons/bs'
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md'
+import { useAppDispatch } from "../GlobalRedux/hooks";
+import { useGetProductsByTitleQuery, useGetProductsQuery } from '../GlobalRedux/api/productsApi';
+
+
 
 const ProductList: React.FC = () => {
   const [favoriteItems, setFavoriteItems] = useLocalStorage<Product[]>('favoriteItems', []);
   const [cartItems, setCartItems] = useLocalStorage<Product[]>('cartItems', []);
 
-  const dispatch = useDispatch<AppDispatch>();
+
+  const dispatch = useAppDispatch();
+  const searchQuery = useSelector((state: RootState) => state.searchQuery.query) as string;
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
+
+  const { data, error, isLoading, isFetching } = searchQuery
+  ? useGetProductsByTitleQuery({ title: searchQuery })
+  : useGetProductsQuery(null);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setProducts(data as Product[]));
+    }
+  }, [data, dispatch]);
 
   const allProducts: Product[] = useSelector((state: RootState) => state.products.products);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
@@ -27,8 +43,10 @@ const ProductList: React.FC = () => {
     maxPrice: null
   });
 
+
   const handleCartItem = (item: Product) => {
     const existingItemCarrito = cartItems.find((_item) => _item._id === item._id);
+
 
     if (existingItemCarrito) {
       dispatch(removeFromCarrito(item._id))
@@ -41,6 +59,7 @@ const ProductList: React.FC = () => {
       toast.success('Agregado al Carrito.')
     }
   };
+
 
   const handleFavorite = (item: Product) => {
     const existingItem = favoriteItems.find((_item) => _item._id === item._id);
@@ -56,32 +75,38 @@ const ProductList: React.FC = () => {
     }
   };
 
+
   useEffect(() => {
     let filteredProducts = allProducts;
-  
+ 
     if (filters.minPrice !== null && filters.minPrice !== '') {
       filteredProducts = filteredProducts.filter((product) => parseFloat(product.price) >= parseFloat(filters.minPrice!));
     }
-  
+ 
     if (filters.maxPrice !== null && filters.maxPrice !== '') {
       filteredProducts = filteredProducts.filter((product) => parseFloat(product.price) <= parseFloat(filters.maxPrice!));
     }
-  
+ 
     if (filters.category !== '') {
       filteredProducts = filteredProducts.filter((product) => product.category === filters.category);
     }
-  
+ 
     setFilteredProducts(filteredProducts);
   }, [allProducts, filters]);
+
+
+
 
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
+
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+
 
   return (
     <div>
@@ -103,10 +128,11 @@ const ProductList: React.FC = () => {
               {cartItems.find((item) => item._id === product._id) ? <BsFillCartCheckFill className="w-[25px] h-[25px] text-green-500 transition-transform" /> : <BsFillCartDashFill className="w-[25px] h-[25px] text-gray-800 transition-transform opacity-75" />}
             </button>
             </div>
-          
+         
           </div>
         ))}
       </div>
+
 
       <div className="flex justify-center mt-6">
         {Array.from({ length: totalPages }, (_, index) => (
@@ -123,5 +149,6 @@ const ProductList: React.FC = () => {
     </div>
   );
 };
+
 
 export default ProductList;

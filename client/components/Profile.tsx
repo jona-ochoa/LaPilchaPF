@@ -28,7 +28,7 @@ const Profile = () => {
   return (
     <div className="text-center">
       <img
-        src={session.user?.image}
+        src={session.user?.image || undefined}
         alt="Foto de perfil"
         className="rounded-full mx-auto mb-4"
         width={150}

@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 const Footer: React.FC = () => {
@@ -8,9 +7,12 @@ const Footer: React.FC = () => {
         <div className="max-w-screen-xl px-4 py-8 mx-auto sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
       <div>
-      {/* <Image src="/logoBlack.png" alt="LaPilcha" width={70} height={20} /> */}
-            <p className="max-w-xs mt-4 text-sm text-gray-600">
+            <p className="text-2xl font-bela mr-4" style={{ fontFamily: 'Belanosima' }}>
               LaPilcha
+            </p>
+            <p className="max-w-xs mt-4 text-sm text-gray-600">
+            Unidos por la moda, impulsados por la pasión: 
+            ¡Bienvenidos a LaPilcha, donde el estilo y la excelencia se visten de equipo!
             </p>
             <div className="flex mt-6 space-x-6 text-gray-600">
           <a className="hover:opacity-75"  target="_blank" rel="noreferrer">
@@ -43,51 +45,36 @@ const Footer: React.FC = () => {
             <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="font-medium">
-            Company
+            Nosotros
           </p>
           <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
             <Link href='/about'>
               <div className="hover:opacity-75" > About </div>
             </Link>
-            <a className="hover:opacity-75" > Meet the Team </a>
-            <a className="hover:opacity-75" > History </a>
-            <a className="hover:opacity-75" > Careers </a>
           </nav>
         </div>
         <div>
           <p className="font-medium">
-            Helpful Links
+            Enlaces Útiles
           </p>
           <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
             <Link href='/FormContact'>
              <div className="hover:opacity-75" > Contact </div>
             </Link>
-            <a className="hover:opacity-75" > FAQs </a>
-            <a className="hover:opacity-75" > Live Chat </a>
           </nav>
         </div>
-        <div>
-          <p className="font-medium">
-            Legal
-          </p>
-          <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-            <a className="hover:opacity-75" > Privacy Policy </a>
-            <a className="hover:opacity-75" > Terms &amp; Conditions </a>
-            <a className="hover:opacity-75" > Returns Policy </a>
-            <a className="hover:opacity-75" > Accessibility </a>
-          </nav>
-        </div>
+      
           <div className="relative w-full h-80">
-          <iframe
-            className="absolute top-0 left-0 w-110 h-full"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.973409169303!2d-58.48099078474257!3d-34.57910318046118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca51a586c529%3A0x89b02bf38d7e2e9f!2sAv%20Triunvirato%204548%2C%20C1431%20CABA!5e0!3m2!1sen!2sus!4v1648482801994!5m2!1sen!2sus"
-            frameBorder="0"
-            style={{ border: 0 }}
-            allowFullScreen
-            aria-hidden="false"
-            tabIndex={0}
-          ></iframe>
-</div>
+            <iframe
+              className="absolute top-0 left-10 w-100 h-full"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.973409169303!2d-58.48099078474257!3d-34.57910318046118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca51a586c529%3A0x89b02bf38d7e2e9f!2sAv%20Triunvirato%204548%2C%20C1431%20CABA!5e0!3m2!1sen!2sus!4v1648482801994!5m2!1sen!2sus"
+              frameBorder="0"
+              style={{ border:0 }}
+              allowFullScreen
+              aria-hidden="false"
+              tabIndex={0}
+            ></iframe>
+          </div>
         </div>
       </div>
     </div>

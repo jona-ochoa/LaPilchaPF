@@ -23,7 +23,8 @@ export const productsApi = createApi({
       query: (id) => `/products/${id}`,
     }),
     getProductsByTitle: builder.query<Product[], { title: string }>({
-      query: ({ title }) => `/products/search?keyword=${title}`,
+      query: ({ title }: { title: string }) => `/products/search?keyword=${title}`,
+      transformResponse: (response: any) => response.products,
     }),
     postProducts: builder.mutation<Product, Partial<Product>>({
       query: (newProduct) => ({
