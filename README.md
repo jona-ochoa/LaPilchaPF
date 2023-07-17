@@ -62,7 +62,7 @@ Las contribuciones son bienvenidas. Si encuentras errores o mejoras en el proyec
 - Alejando Saturno
 - Malena Araceli Valdez
 - Juan Cruz Ruarte Tejada
-- Julian Maria Hary Beccar Varela
+- julianhary04@gmail.com
 - Tomas Balmaceda
 - alejoholmann99@gmail.com
 
