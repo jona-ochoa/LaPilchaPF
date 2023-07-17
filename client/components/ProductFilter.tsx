@@ -1,75 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../GlobalRedux/store';
-import { useGetProductsQuery } from '../GlobalRedux/api/productsApi';
-import { setProducts } from '../GlobalRedux/features/productsSlice';
-import { setCategory, setMinPrice, setMaxPrice, resetFilters } from '../GlobalRedux/features/filterSlice';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from "../GlobalRedux/hooks"
+import { RootState } from '../GlobalRedux/store';
+import { setCategory, setMinPrice, setMaxPrice, resetFilters, applyFilters } from '../GlobalRedux/features/filterSlice';
 import { Product } from '../GlobalRedux/api/productsApi';
 import { setSearchQuery } from '../GlobalRedux/features/searchQuerySlice';
-import { useAppDispatch } from '../GlobalRedux/hooks';
-
-
-
+import { setProducts } from '../GlobalRedux/features/productsSlice';
 
 const ProductFilter: React.FC = () => {
   const dispatch = useAppDispatch();
   const [minPrice, setMinPriceLocal] = useState('');
   const [maxPrice, setMaxPriceLocal] = useState('');
   const [category, setCategoryLocal] = useState('');
-  const { data, error, isLoading, isFetching } = useGetProductsQuery(null);
 
   const allProducts: Product[] = useSelector((state: RootState) => state.products.products);
   const categories: string[] = Array.from(new Set(allProducts.map((product) => product.category)));
 
-  
-
-
-  useEffect(() => {
-    if (data) {
-      dispatch(setProducts(data));
-    }
-  }, [data, dispatch]);
-
   const handleResetSearch = () => {
-    dispatch(setSearchQuery('')); // Establecer la búsqueda vacía
+    dispatch(setSearchQuery('')); 
   };
 
-const handleResetFilters = () => {
-  setMinPriceLocal('');
-  setMaxPriceLocal('');
-  setCategoryLocal('');
-  dispatch(resetFilters());
-  dispatch(setProducts(allProducts)); // Restablecer todos los productos
-  handleResetSearch(); // Restablecer la búsqueda
-};
+  const handleResetFilters = () => {
+    setMinPriceLocal('');
+    setMaxPriceLocal('');
+    setCategoryLocal('');
+    dispatch(resetFilters());
+    dispatch(setProducts(allProducts)); 
+    handleResetSearch(); 
+  };
 
   const handleFilterProducts = () => {
-    let filteredProducts = allProducts;
-
-    if (minPrice !== '') {
-      filteredProducts = filteredProducts.filter((product) => parseFloat(product.price) >= parseFloat(minPrice));
-    }
-
-    if (maxPrice !== '') {
-      filteredProducts = filteredProducts.filter((product) => parseFloat(product.price) <= parseFloat(maxPrice));
-    }
-
-    if (category !== '') {
-      filteredProducts = filteredProducts.filter((product) => product.category === category);
-    }
-
-    dispatch(setProducts(filteredProducts)); // Aplicar los filtros
+    dispatch(setCategory(category));
+    dispatch(setMinPrice(minPrice !== '' ? parseFloat(minPrice) : null));
+    dispatch(setMaxPrice(maxPrice !== '' ? parseFloat(maxPrice) : null));
+    dispatch(applyFilters(allProducts)); 
   };
-
-  
-
-  if (isLoading || isFetching) {
-    return <p>Cargando Productos...</p>;
-  }
-
-  if (error) {
-    return <p>Error al obtener los productos</p>;
-  }
 
   return (
     <div className="flex justify-between items-center mb-4">
