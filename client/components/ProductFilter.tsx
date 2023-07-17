@@ -5,9 +5,14 @@ import { useGetProductsQuery } from '../GlobalRedux/api/productsApi';
 import { setProducts } from '../GlobalRedux/features/productsSlice';
 import { setCategory, setMinPrice, setMaxPrice, resetFilters } from '../GlobalRedux/features/filterSlice';
 import { Product } from '../GlobalRedux/api/productsApi';
+import { setSearchQuery } from '../GlobalRedux/features/searchQuerySlice';
+import { useAppDispatch } from '../GlobalRedux/hooks';
+
+
+
 
 const ProductFilter: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const [minPrice, setMinPriceLocal] = useState('');
   const [maxPrice, setMaxPriceLocal] = useState('');
   const [category, setCategoryLocal] = useState('');
@@ -25,13 +30,18 @@ const ProductFilter: React.FC = () => {
     }
   }, [data, dispatch]);
 
-  const handleResetFilters = () => {
-    setMinPriceLocal('');
-    setMaxPriceLocal('');
-    setCategoryLocal('');
-    dispatch(resetFilters());
-    dispatch(setProducts(allProducts)); // Restablecer todos los productos
+  const handleResetSearch = () => {
+    dispatch(setSearchQuery('')); // Establecer la búsqueda vacía
   };
+
+const handleResetFilters = () => {
+  setMinPriceLocal('');
+  setMaxPriceLocal('');
+  setCategoryLocal('');
+  dispatch(resetFilters());
+  dispatch(setProducts(allProducts)); // Restablecer todos los productos
+  handleResetSearch(); // Restablecer la búsqueda
+};
 
   const handleFilterProducts = () => {
     let filteredProducts = allProducts;
@@ -51,6 +61,7 @@ const ProductFilter: React.FC = () => {
     dispatch(setProducts(filteredProducts)); // Aplicar los filtros
   };
 
+  
 
   if (isLoading || isFetching) {
     return <p>Cargando Productos...</p>;
