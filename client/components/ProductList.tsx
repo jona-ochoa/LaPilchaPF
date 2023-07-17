@@ -92,6 +92,7 @@ const ProductList: React.FC = () => {
     }
  
     setFilteredProducts(filteredProducts);
+    setCurrentPage(1);
   }, [allProducts, filters]);
 
 
