@@ -1,12 +1,12 @@
-'use client'
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { RootState } from '../GlobalRedux/store';
-import { removeFromCarrito } from '../GlobalRedux/features/carritoSlice';
-import { Product } from '../GlobalRedux/api/productsApi';
-import { useLocalStorage } from 'hooks/useLocalstorage';
-import { useSession } from 'next-auth/react';
-import axios from 'axios';
+"use client";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { RootState } from "../GlobalRedux/store";
+import { removeFromCarrito } from "../GlobalRedux/features/carritoSlice";
+import { Product } from "../GlobalRedux/api/productsApi";
+import { useLocalStorage } from "hooks/useLocalstorage";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 
 interface Item extends Product {}
 
@@ -21,7 +21,7 @@ const CarritoDeCompras = () => {
     dispatch(removeFromCarrito(_id));
   };
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return <p>Cargando...</p>;
   }
 
@@ -32,36 +32,38 @@ const CarritoDeCompras = () => {
   // Suma de los precios
   const total = cartItems.reduce((sum, item) => sum + Number(item.price), 0);
 
-
   const handlePayment = async () => {
     if (cartItems.length === 0) {
-      console.log('No hay artículos en el carrito');
+      console.log("No hay artículos en el carrito");
       return;
     }
-    
+
     try {
       const buyerInfo = {
         name: session.user?.name,
         surname: session.user?.name,
         email: session.user?.email,
-        buyOrder: cartItems.map(item => ({
+        buyOrder: cartItems.map((item) => ({
           id: item._id,
           title: item.title,
           unit_price: item.price,
           quantity: 1, // Cantidad de este artículo en la orden (puedes ajustarlo según tus necesidades)
-        }))
+        })),
       };
-      
+
       // Hacer la solicitud al backend para crear la orden de compra en Mercado Pago
-      const response = await axios.post("http://localhost:3002/pay/create-order", buyerInfo);
-      console.log('res del back: ', response.data)
+      const response = await axios.post(
+        "http://localhost:3002/pay/create-order",
+        buyerInfo
+      );
+      console.log("res del back: ", response.data);
 
       // Redirigir al usuario a la página de pago de Mercado Pago
       window.location.href = response.data.init_point;
     } catch (error) {
       console.error("Error al realizar el pago: ", error);
     }
-  }
+  };
 
   return (
     <div className="mt-8 mb-8">
@@ -73,6 +75,7 @@ const CarritoDeCompras = () => {
           </div>
         </div>
       ) : (
+
         <div>
           <ul className="space-y-4">
             {cartItems.map((item: Product) => (
@@ -116,6 +119,7 @@ const CarritoDeCompras = () => {
           </div>
         </div>
       )}
+
     </div>
   );
   

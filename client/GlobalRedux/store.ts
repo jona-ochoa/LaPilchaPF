@@ -3,7 +3,10 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { useDispatch } from 'react-redux';
 import { productsApi } from './api/productsApi';
 import { usersApi } from './api/usersApi';
+import { nodemailerApi } from './api/nodemailerApi';
 import productsReducer from "./features/productsSlice";
+import mailerSlice from "./features/nodemailerSlice";
+
 import userSlice from './features/usersSlice';
 import carritoReducer from "./features/carritoSlice"
 import favoritosReducer from './features/favoritoSlice';
@@ -17,6 +20,8 @@ const reducer = combineReducers({
   items: carritoReducer,
   favoritos: favoritosReducer,
   user: userSlice,
+  [nodemailerApi.reducerPath]: nodemailerApi.reducer,
+  mailer: mailerSlice,
   [usersApi.reducerPath]: usersApi.reducer,
   searchQuery: searchQueryReducer,
   filter: filterReducer
@@ -24,8 +29,9 @@ const reducer = combineReducers({
 
 const middleware = getDefaultMiddleware()
   .concat(productsApi.middleware)
-  .concat(usersApi.middleware);
-
+  .concat(usersApi.middleware)
+  .concat(nodemailerApi.middleware)
+  
 export const store = configureStore({
 
   reducer,

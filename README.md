@@ -59,11 +59,10 @@ Las contribuciones son bienvenidas. Si encuentras errores o mejoras en el proyec
 
 - jonatan.c.ochoa@gmail.com
 - arielnbloise@gmail.com
-- Alejando Saturno
-- Malena Araceli Valdez
-- Juan Cruz Ruarte Tejada
+- alesaturno64@gmail.com
+- malevaldezok@gmail.com
+- balmacedatomas123@gmail.com
 - julianhary04@gmail.com
-- Tomas Balmaceda
 - alejoholmann99@gmail.com
 
 ##
