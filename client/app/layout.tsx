@@ -19,7 +19,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <Toaster position="bottom-right" reverseOrder={false}/>
       <Navbar />
        {children}
+       <footer className="mt-auto">
       <Footer />
+       </footer>
        </body> 
       </Providers>
       </SessionProvider>
