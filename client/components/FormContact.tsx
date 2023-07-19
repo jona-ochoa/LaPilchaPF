@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import {
   Formik, Form, Field, ErrorMessage,
@@ -63,7 +64,7 @@ const FormContact: React.FC = () => {
 
 
   return (
-    <div className="w-full h-full bg-gray-900 text-gray-900 p-20 m-20">
+    <div className="w-full h-full bg-gray-500 text-gray-900 p-10">
       <Formik initialValues={{
         name: '',
         email: '',
@@ -72,7 +73,7 @@ const FormContact: React.FC = () => {
       }} validationSchema={validationSchema} onSubmit={handleSubmitMailer}>
         <Form
           // onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))} 
-          className="max-w-xl mx-auto p-4 md:p-6 my-6 bg-gray-800 rounded-lg shadow-md"
+          className="max-w-xl mx-auto p-4 md:p-6 my-0 bg-gray-800 rounded-lg shadow-md"
         >
 
           <ErrorMessage name="name" component="div" className="text-red-500" />
