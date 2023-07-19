@@ -99,7 +99,7 @@ const CarritoDeCompras = () => {
           <div className="mt-6 bg-white p-4 rounded-lg shadow-md">
             <div className="flex justify-between mb-2">
               <p className="text-gray-700">Subtotal:</p>
-              <p className="text-gray-700">${total}</p>
+              <p className="text-gray-700">${total.toFixed(2)}</p>
             </div>
             <div className="flex justify-between">
               <p className="text-gray-700">Shipping:</p>
@@ -114,7 +114,7 @@ const CarritoDeCompras = () => {
               </div>
             </div>
             <button onClick={handlePayment} className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
-              Check out
+              Checkout
             </button>
           </div>
         </div>
