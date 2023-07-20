@@ -4,7 +4,8 @@ interface User {
     _id: string,
     name: string,
     lastname: string,
-    email: string
+    email: string,
+    isBanned: boolean;
 }
 
 interface UserState {

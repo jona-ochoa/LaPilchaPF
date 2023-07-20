@@ -95,6 +95,7 @@ const ProductForm: React.FC = () => {
       category,
       image: image || '', // Si image es null, asignar una cadena vacía
       rating: null,
+      isDeactivated: false,
     };
 
     postProduct(newProduct)

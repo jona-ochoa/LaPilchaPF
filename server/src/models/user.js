@@ -11,15 +11,27 @@ const userSchema = mongoose.Schema({
   },
   email: {
     type: String,
-    requires: true,
+    required: true,
   },
   password: {
+    type: String,
+    required: true,
+  },
+  image: {
     type: String,
     required: true,
   },
   buyhistory: {
     type: Array,
     required: false,
+  },
+  isAdmin: {  // Nueva propiedad para indicar si el usuario es admin
+    type: Boolean,
+    default: false,
+  },
+  isBanned: {  // Nueva propiedad para indicar si el usuario está baneado
+    type: Boolean,
+    default: false,
   },
 });
 

@@ -8,6 +8,7 @@ export type Product = {
   image: string;
   category: string;
   rating: any;
+  isDeactivated: boolean;
 };
 
 export const productsApi = createApi({
