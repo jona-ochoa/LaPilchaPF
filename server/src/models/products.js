@@ -5,7 +5,7 @@ const productSchema = mongoose.Schema({
     type: String,
     allowNull: false,
     primaryKey: true,
-    unique:true
+    unique: true,
   },
   title: {
     type: String,
@@ -22,7 +22,7 @@ const productSchema = mongoose.Schema({
   category: {
     type: String,
     required: true,
-  }, 
+  },
   image: {
     type: String,
     required: true,
@@ -31,7 +31,12 @@ const productSchema = mongoose.Schema({
     type: Array,
     required: false,
   },
+  isDeactivated: {  // Nueva propiedad para indicar si el producto está desactivado
+    type: Boolean,
+    default: false,
+  },
 });
+
 productSchema.index({ title: "text" }); // Definir índice de texto en el campo "title"
 
 module.exports = mongoose.model("Product", productSchema);

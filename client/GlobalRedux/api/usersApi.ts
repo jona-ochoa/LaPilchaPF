@@ -7,6 +7,8 @@ export type User = {
     email: string;
     password: string;
     image: string | null;
+    isAdmin: boolean;
+    isBanned: boolean;
 };
 
 export const usersApi = createApi({
