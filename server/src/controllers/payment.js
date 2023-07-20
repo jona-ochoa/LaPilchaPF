@@ -37,7 +37,7 @@ const createOrder = async (req, res) => {
       back_urls: {
         pending: "http://localhost:3002/pay/pending",
         success: "http://localhost:3000/success",
-        failure: "http://localhost:3002/pay/failure",
+        failure: "http://localhost:3000/failure",
       },
       notification_url: "https://44c8-179-0-233-162.ngrok-free.app/pay/webhook",
       payment_methods: {

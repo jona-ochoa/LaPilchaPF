@@ -70,21 +70,33 @@ const CarritoDeCompras = () => {
       {!cartItems.length ? (
         <div className="mt-8 mb-8 flex justify-center items-center h-screen">
           <div className="text-center">
-            <p className="text-gray-500 italic">No has agregado prendas al carrito</p>
-            <a href="/" className="mt-4 text-blue-500 hover:underline">Volver a comprar</a>
+            <p className="text-gray-500 italic">
+              No has agregado prendas al carrito
+            </p>
+            <a href="/" className="mt-4 text-blue-500 hover:underline">
+              Volver a comprar
+            </a>
           </div>
         </div>
       ) : (
-
         <div>
           <ul className="space-y-4">
             {cartItems.map((item: Product) => (
-              <li key={item._id} className="border border-gray-300 shadow-sm rounded-md p-4 hover:bg-gray-100 text-center">
+              <li
+                key={item._id}
+                className="border border-gray-300 shadow-sm rounded-md p-4 hover:bg-gray-100 text-center"
+              >
                 <div className="p-4 flex justify-center items-center">
-                  <img src={item.image} alt={item.title} style={{ width: '100px' }} />
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    style={{ width: "100px" }}
+                  />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900">{item.title}</h3>
+                  <h3 className="text-lg font-bold text-gray-900">
+                    {item.title}
+                  </h3>
                   <p className="text-sm text-gray-700">Precio: ${item.price}</p>
                   <button
                     onClick={() => handleRemoveFromCart(item._id)}
@@ -109,20 +121,23 @@ const CarritoDeCompras = () => {
             <div className="flex justify-between">
               <p className="text-lg font-bold">Total:</p>
               <div>
-                <p className="mb-1 text-lg font-bold">${(total + 4.99).toFixed(2)} USD</p>
-                <p className="text-sm text-gray-700">incluyendo VAT</p>
+                <p className="mb-1 text-lg font-bold">
+                  ${(total + 4.99).toFixed(2)} USD
+                </p>
+                <p className="text-sm text-gray-700">*** incluye IVA</p>
               </div>
             </div>
-            <button onClick={handlePayment} className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
+            <button
+              onClick={handlePayment}
+              className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
+            >
               Checkout
             </button>
           </div>
         </div>
       )}
-
     </div>
   );
-  
 };
 
 export default CarritoDeCompras;
