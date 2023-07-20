@@ -18,7 +18,7 @@ const ProductList: React.FC = () => {
 
   const searchQuery: string = useSelector((state: RootState) => state.searchQuery.query);
 
-  const allProducts: Product[] = useSelector((state: RootState) => state.products.products);
+  const allProducts: Product[] = useSelector((state: RootState) => state.products.activatedProducts);
   const { category, minPrice, maxPrice } = useSelector((state: RootState) => state.filter);
 
   const [favoriteItems, setFavoriteItems] = useLocalStorage<Product[]>('favoriteItems', []);
