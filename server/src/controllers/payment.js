@@ -32,25 +32,11 @@ const createOrder = async (req, res) => {
       email: email,
     };
 
-    /* [
-        {
-          title: "Laptop DELL",
-          unit_price: 150,
-          currency_id: "ARS",
-          quantity: 1,
-        },
-        {
-          title: "Televison samsung",
-          unit_price: 40,
-          currency_id: "ARS",
-          quantity: 2,
-        },
-      ]*/
     const result = await mercadopago.preferences.create({
       items: orderItems,
       back_urls: {
         pending: "http://localhost:3002/pay/pending",
-        success: "http://localhost:3000/",
+        success: "http://localhost:3000/success",
         failure: "http://localhost:3002/pay/failure",
       },
       notification_url: "https://44c8-179-0-233-162.ngrok-free.app/pay/webhook",
