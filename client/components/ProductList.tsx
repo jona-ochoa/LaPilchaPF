@@ -113,7 +113,9 @@ const ProductList: React.FC = () => {
 
       ) : (
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 xl:gap-y-10">
-          {currentProducts.map((product) => (
+          {currentProducts
+          .filter((product) => !product.isDeactivated)
+          .map((product) => (
             <div key={product._id} className="product-card relative">
               <ProductCard product={product} />
               <div className="absolute top-2 right-7 flex flex-col bg-gray-200 p-1 rounded-sm">

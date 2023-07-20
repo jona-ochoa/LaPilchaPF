@@ -72,7 +72,7 @@ router.put("/:id", (req, res) => {
   const productId = req.params.id;
 
   // Obtener los datos actualizados del producto desde el cuerpo de la solicitud
-  const { title, price, description, category, image, rating } = req.body;
+  const { title, price, description, category, image, rating, isDeactivated } = req.body;
 
   // Construir el objeto con los campos actualizados
   const updatedProduct = {
@@ -82,6 +82,7 @@ router.put("/:id", (req, res) => {
     category,
     image,
     rating,
+    isDeactivated,
   };
 
   // Actualizar el producto en la base de datos
