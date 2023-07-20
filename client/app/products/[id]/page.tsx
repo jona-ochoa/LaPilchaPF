@@ -31,6 +31,7 @@ console.log(product)
     description={product.description}
     rating={product.rating}
     category={product.category}
+    isDeactivated={product.isDeactivated}
     />}
     {!product && <h1>no se encontro el producto</h1>}
     </>

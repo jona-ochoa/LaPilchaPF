@@ -16,6 +16,7 @@ interface DetailProps {
     count: number;
   };
   category: string;
+  isDeactivated: boolean;
 }
 
 
@@ -27,6 +28,7 @@ const Detail: React.FC<DetailProps> = ({
   description,
   rating,
   category,
+  isDeactivated,
 }) => {
   const dispatch = useDispatch();
   const [cartItems, setCartItems] = useLocalStorage<Product[]>('cartItems', []);
@@ -40,6 +42,7 @@ const Detail: React.FC<DetailProps> = ({
       description,
       rating,
       category,
+      isDeactivated,
     };
     toast.success('Producto agregado correctamente')
     setCartItems([...cartItems, item]);
@@ -105,7 +108,7 @@ const Detail: React.FC<DetailProps> = ({
             </div>
             <div className="flex">
               <span className="title-font font-medium text-2xl text-gray-900">${price}</span>
-              <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded" onClick={handleOnClick}>AGREGAR AL CARRITO</button>
+              {isDeactivated ? (<span className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">DESACTIVADO</span>):(<button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded" onClick={handleOnClick}>AGREGAR AL CARRITO</button>)}
             </div>
           </div>
         </div>
@@ -113,4 +116,4 @@ const Detail: React.FC<DetailProps> = ({
     </section>
   );
     }
-export default Detail 
+export default Detail

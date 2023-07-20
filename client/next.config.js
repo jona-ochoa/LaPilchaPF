@@ -9,7 +9,9 @@ const nextConfig = {
       'avatars.githubusercontent.com',
       'i.pinimg.com',
       'static.wikia.nocookie.net',
-      'res.cloudinary.com'
+      'res.cloudinary.com',
+      'fakestoreapi.com',
+      'cdn.mukama.com'
     ],
   },
 };
