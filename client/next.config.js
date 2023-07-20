@@ -8,7 +8,8 @@ const nextConfig = {
       'lh3.googleusercontent.com',
       'avatars.githubusercontent.com',
       'i.pinimg.com',
-      'static.wikia.nocookie.net'
+      'static.wikia.nocookie.net',
+      'res.cloudinary.com'
     ],
   },
 };
