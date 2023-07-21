@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import Link from 'next/link'
 import { useDispatch } from 'react-redux';
 import { RootState } from '../GlobalRedux/store';
 import { removeFromCarrito } from '../GlobalRedux/features/carritoSlice';
@@ -7,15 +8,34 @@ import { Product } from '../GlobalRedux/api/productsApi';
 import { useLocalStorage } from 'hooks/useLocalstorage';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
+
+// Nodemailer
+import { useCreateMailerOrderMutation, MailerOrder } from 'GlobalRedux/api/nodemailerOrder';
+import { addMailerOrder } from "GlobalRedux/features/mailerOrderSlice";
 
 interface Item extends Product {
   count: number;
+}
+
+interface IMailerOrder {
+  name: string;
+  email: string;
+  subject: string;
+  buyOrder: Array<{
+    id: string;
+    title: string;
+    unit_price: string;
+    quantity: number;
+  }> | string;
 }
 
 const CarritoDeCompras = () => {
   const { data: session } = useSession();
   const [cartItems, setCartItems] = useLocalStorage<Product[]>('cartItems', []);
   const dispatch = useDispatch();
+
+  const [createMailerOrderMutation, { data }] = useCreateMailerOrderMutation();
 
   // Agrupar los productos por el título
   const groupedCartItems: Item[] = cartItems.reduce((acc, item) => {
@@ -34,18 +54,20 @@ const CarritoDeCompras = () => {
     dispatch(removeFromCarrito(_id));
   };
 
-  if (status === 'loading') {
-    return <p>Cargando...</p>;
-  }
 
   if (!session) {
-    return <p>Debes iniciar sesión para ver el carrito de compras</p>;
+    return (
+      <div className="w-full h-[500px] flex bg-gray-200 justify-center items-center text-center flex-col">
+        <p className="text-4xl text-gray-800 font-bold font-mono mb-5">Debes iniciar sesión para ver el carrito de compras</p>
+        <Link href="/login" className="py-4 px-4 bg-gray-700 hover:bg-gray-200 text-gray-300 hover:text-gray-900 font-bold rounded-xl transition-colors">Iniciar Sesión</Link>
+      </div>
+    );
   }
 
   // Suma de los precios
   const total = cartItems.reduce((sum, item) => sum + Number(item.price), 0);
 
-  const handlePayment = async () => {
+  const handlePayment = async (values: IMailerOrder,) => {
     if (cartItems.length === 0) {
       console.log('No hay artículos en el carrito');
       return;
@@ -60,13 +82,29 @@ const CarritoDeCompras = () => {
           id: item._id,
           title: item.title,
           unit_price: item.price,
-          quantity: 1, // Cantidad de este artículo en la orden (puedes ajustarlo según tus necesidades)
+          quantity: 1,
         })),
       };
 
       // Hacer la solicitud al backend para crear la orden de compra en Mercado Pago
       const response = await axios.post('http://localhost:3002/pay/create-order', buyerInfo);
       console.log('res del back: ', response.data);
+
+      const newMailerOrder: Partial<MailerOrder> = {
+        name: `${buyerInfo.name}`,
+        email: `${buyerInfo.email}`,
+        subject: `Order de compra del cliente: ${buyerInfo.name}`,
+        buyOrder: JSON.stringify(buyerInfo.buyOrder),
+      }
+
+      const result = await createMailerOrderMutation(newMailerOrder);
+
+      if ('data' in result) {
+        const { data } = result;
+        const jsonData = JSON.stringify(data);
+        dispatch(addMailerOrder(data))
+        toast.success('Mensaje de la orden de compra enviado con éxito')
+      }
 
       // Redirigir al usuario a la página de pago de Mercado Pago
       window.location.href = response.data.init_point;
@@ -129,7 +167,12 @@ const CarritoDeCompras = () => {
               </div>
             </div>
             <button
-              onClick={handlePayment}
+              onClick={() => handlePayment({
+                name: ``,
+                email: ``,
+                subject: ``,
+                buyOrder: [],
+              })}
               className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
             >
               Checkout
