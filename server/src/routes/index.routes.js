@@ -16,6 +16,6 @@ routes.use("/orders", buyOrderRouter);
 routes.use("/admins", adminRouter);
 routes.use("/pay", paymenRoutes);
 routes.use("/filters", productFilter);
-routes.use("/email", nodemailerRoutes);
+routes.use("/nodemailer", nodemailerRoutes);
 
 module.exports = routes;
