@@ -26,12 +26,19 @@ reducers: {
   updateActivatedProducts: (state) => {
     state.activatedProducts = state.products.filter((product) => !product.isDeactivated);
   },
+  updateProductRating: (state, action: PayloadAction<{productId: string ; newRating: number}>) => {
+    const {productId, newRating} = action.payload;
+    const productToUpdate = state.products.find((p) => p._id === productId);
+    if(productToUpdate) {
+      productToUpdate.rating.push({ rate: newRating, count: 1})
+    }
+  }
 },
 });
 
 export const selectProducts = (state: RootState) => state.products.filteredProducts; // Usar la lista de productos filtrados en el selector
 
-export const { setProducts } = productsSlice.actions;
+export const { setProducts, updateProductRating } = productsSlice.actions;
 
 export default productsSlice.reducer;
 

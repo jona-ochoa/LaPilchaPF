@@ -1,9 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Product } from '../GlobalRedux/api/productsApi';
 import { useDispatch, useSelector } from "react-redux";
 import { addToCarrito } from "../GlobalRedux/features/carritoSlice"
 import { useLocalStorage } from 'hooks/useLocalstorage';
-import toast from 'react-hot-toast'
+import toast from 'react-hot-toast';
+import StarRatings from 'react-star-ratings'
+import { updateProductRating } from 'GlobalRedux/features/productsSlice';
+
+interface RatingData {
+  rate: number,
+  count: number,
+}
 
 interface DetailProps {
   _id: string;
@@ -11,12 +18,11 @@ interface DetailProps {
   price: string;
   image: string;
   description: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
+  rating: RatingData[];
   category: string;
   isDeactivated: boolean;
+  averageRating: number,
+  ratingCount: number,
 }
 
 
@@ -29,9 +35,26 @@ const Detail: React.FC<DetailProps> = ({
   rating,
   category,
   isDeactivated,
+  averageRating,
+  ratingCount
 }) => {
   const dispatch = useDispatch();
   const [cartItems, setCartItems] = useLocalStorage<Product[]>('cartItems', []);
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const [hasVoted, setHasVoted] = useState<boolean>(false);
+
+  const [product, setProduct] = useState<DetailProps>({
+    _id: '',
+    title: '',
+    price: '',
+    image: '',
+    description: '',
+    rating: [{ rate: 4.1, count: 122}],
+    category: '',
+    isDeactivated: false,
+    averageRating: 0,
+    ratingCount: 0
+  })
 
   const handleOnClick = () => {
     const item: Product = {
@@ -42,18 +65,63 @@ const Detail: React.FC<DetailProps> = ({
       description,
       rating,
       category,
-      isDeactivated,
+      isDeactivated
     };
     toast.success('Producto agregado correctamente')
     setCartItems([...cartItems, item]);
     dispatch(addToCarrito(item));
   };
+
+  const calculateAverageRating = (ratingData: RatingData[]): number => {
+    if(ratingData.length === 0) return 0;
+    const totalRating = ratingData.reduce((acc, curr) => acc + curr.rate, 0);
+    return totalRating / ratingData.length;
+  }
+
+  const calculateRatingCount = (ratingData: RatingData[]) : number => {
+    return ratingData.reduce((acc, curr) => acc + curr.count, 0)
+  }
+
+  const handleRatingChange = (rating: number) => {
+    if(hasVoted) {
+      toast.error("Ya has votado este producto.");
+      return;
+    }
+    const updatedRating: RatingData[] = [
+      ...product.rating,
+      { rate: rating, count: 1 }
+    ];
+    const updatedProduct: DetailProps = {
+      ...product,
+      rating: updatedRating,
+      averageRating:  calculateAverageRating(updatedRating),
+      ratingCount: calculateRatingCount(updatedRating)      
+    }
+
+    setProduct(updatedProduct)
+    setSelectedRating(rating);
+    setHasVoted(true);
+
+    dispatch(updateProductRating({ productId: _id, newRating: rating }))
+    toast.success("Gracias por tu calificación!")
+  }
+
   
 
   return (
   
     <section className="text-gray-700 body-font overflow-hidden bg-white" key={_id}>
       <div className="container px-5 py-24 mx-auto">
+      <div>
+        <a href='/products'>
+          <button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center text-center gap-x-2 mr-2 mb-2"> 
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-arrow-left-short" viewBox="0 0 16 16"> 
+            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/> 
+            </svg>
+          Volver al catálogo</button>
+          </a>
+      </div>
+
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <img alt="ecommerce" className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src={image} />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
@@ -61,22 +129,14 @@ const Detail: React.FC<DetailProps> = ({
             <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{title}</h1>
             <div className="flex mb-4">
               <span className="flex items-center">
-                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-red-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-red-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-red-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-red-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-red-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <span className="text-gray-600 ml-3">Rating:{rating?.rate} Votes Submitted: {rating?.count}</span>
+
+              <StarRatings rating={selectedRating || product.averageRating } 
+              starRatedColor="gold" starEmptyColor="gray" starHoverColor="gold"
+              changeRating={handleRatingChange} numberOfStars={5}
+              name="rating" starDimension="20px" starSpacing="2px" />
+
+            <span className="text-gray-600 ml-3">Rating:{product.averageRating.toFixed(1)} Votes Submitted: {product.ratingCount}</span>
+
 
               </span>
               
