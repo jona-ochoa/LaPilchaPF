@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
+    required: false,
   },
   buyhistory: {
     type: Array,

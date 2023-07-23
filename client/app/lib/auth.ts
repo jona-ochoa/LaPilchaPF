@@ -42,10 +42,29 @@ export const authOptions: NextAuthOptions = {
       }
     }),
   ],
+  callbacks: {
+    async signIn({ user, account, profile }) {
+      console.log("sign in function");
+      const email = user?.email || (profile?.email && profile.email);
+      console.log("user email", email);
+      if (!email) {
+        return false;
+      }
+      const existingUser = await verifyUserByEmail(email);
+      if (!existingUser && account) {
+        console.log("account provider: ", account.provider);
+        if (account.provider === 'github' || account.provider === 'google') {
+          await createUserIfNotExists(profile);
+        } else {
+          await createUser(user);
+        }
+      }
+      return true;
+    }
+  }
 };
 
 //funcion para verificar las credenciales en la bdd
-
 const verifyCredentials = async (email: string, password: string) => {
   try {
     //consultar la bdd para buscar el user por nombre de user
@@ -66,3 +85,75 @@ const verifyCredentials = async (email: string, password: string) => {
   return null;    
   }
 }
+
+const verifyUserByEmail = async (email: string) => {
+  try {
+    const response = await axios.get("http://localhost:3002/users");
+    const users = response.data;
+
+    if (!Array.isArray(users) || users.length === 0) {
+      console.log("No hay usuarios registrados en la base de datos.");
+      return null;
+    }
+    const emailLowercase = email.toLowerCase();
+    const user = users.find((user: any) => user.email.toLowerCase() === emailLowercase);
+    if (!user) {
+      console.log("No se encontró ningún usuario con el correo electrónico proporcionado.");
+      return null;
+    }
+    console.log("Usuario encontrado por correo electrónico: ", user);
+    return user;
+  } catch (error) {
+    console.error("Error al verificar el usuario por email: ", error);
+    return null;
+  }
+};
+
+const createUser = async (user) => {
+  try {
+    const newUser = {
+      name: user.name,
+      email: user.email,
+      image: user.image || null,
+      password: 'prueba_password',
+      buyHistory: [],
+      isAdmin: false,
+      isBanned: false,
+    };
+    const response = await axios.post("http://localhost:3002/user", newUser);
+    const createdUser = response.data; 
+    console.log("new user created: ", createdUser);
+    return createdUser; 
+  } catch (error) {
+    console.error("error al crearlo: ", error);
+    throw error; 
+};
+}
+
+//crear un nuevo usuario en la db si el user autenticado con google o github no existe
+const createUserIfNotExists = async (profile) => {
+  console.log("profile data: ", profile);
+  if (!profile || !profile.email) {
+    console.error("no se pudo obtener el email del perfil");
+    return;
+  }
+  const email = profile.email.toLowerCase();
+  const existingUser = await verifyUserByEmail(email);
+  if (!existingUser) {
+    console.log("creando new user");
+    try {
+      const newUser = await createUser({
+        name: profile.name || profile.login,
+        email: profile.email,
+        image: profile.picture || null,
+        password: 'prueba_password',
+        buyHistory: [],
+        isAdmin: false,
+        isBanned: false,
+      });
+      console.log("new user created!!!", newUser);
+    } catch (error) {
+      console.error("error al crearlo:", error);
+    }
+  }
+};
