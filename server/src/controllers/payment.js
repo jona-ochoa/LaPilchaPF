@@ -10,7 +10,7 @@ const createOrder = async (req, res) => {
   });
   try {
     const { name, email, surname, buyOrder } = req.body;
-
+    console.log(req.body);
     const items = buyOrder;
     const orderItems = [];
 
@@ -39,7 +39,7 @@ const createOrder = async (req, res) => {
         success: "http://localhost:3000/success",
         failure: "http://localhost:3000/failure",
       },
-      notification_url: "https://44c8-179-0-233-162.ngrok-free.app/pay/webhook",
+      notification_url: "https://f3df-179-0-236-172.ngrok-free.app/pay/webhook",
       payment_methods: {
         installments: 3, //hasta 3 cuotas
       },
@@ -65,10 +65,12 @@ const reciveWebhook = async (req, res) => {
         date: body.date_approved,
         amount: body.transaction_amount,
         paymentType: body.payment_type_id,
+        description: body.description,
       };
 
-      const usuarioId = body.additional_info.payer.last_name;
+      console.log(body);
 
+      const usuarioId = body.additional_info.payer.last_name;
       const usuarioObjectId = new ObjectId(usuarioId);
       const usuario = await User.findById(usuarioObjectId);
       if (usuario) {

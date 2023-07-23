@@ -1,12 +1,12 @@
 "use client";
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { RootState } from '../GlobalRedux/store';
-import { removeFromCarrito } from '../GlobalRedux/features/carritoSlice';
-import { Product } from '../GlobalRedux/api/productsApi';
-import { useLocalStorage } from 'hooks/useLocalstorage';
-import { useSession } from 'next-auth/react';
-import axios from 'axios';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { removeFromCarrito } from "../GlobalRedux/features/carritoSlice";
+import { Product } from "../GlobalRedux/api/productsApi";
+import { useLocalStorage } from "hooks/useLocalstorage";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 interface Item extends Product {
   count: number;
@@ -14,12 +14,17 @@ interface Item extends Product {
 
 const CarritoDeCompras = () => {
   const { data: session } = useSession();
-  const [cartItems, setCartItems] = useLocalStorage<Product[]>('cartItems', []);
+  const [cartItems, setCartItems] = useLocalStorage<Product[]>("cartItems", []);
   const dispatch = useDispatch();
+
+  const [finalUser, setFinalUser] = useState<any | null>(null);
+  let email = session?.user?.email ?? "";
 
   // Agrupar los productos por el título
   const groupedCartItems: Item[] = cartItems.reduce((acc, item) => {
-    const existingItem = acc.find((groupedItem) => groupedItem.title === item.title);
+    const existingItem = acc.find(
+      (groupedItem) => groupedItem.title === item.title
+    );
     if (existingItem) {
       existingItem.count += 1;
     } else {
@@ -34,7 +39,7 @@ const CarritoDeCompras = () => {
     dispatch(removeFromCarrito(_id));
   };
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return <p>Cargando...</p>;
   }
 
@@ -42,19 +47,39 @@ const CarritoDeCompras = () => {
     return <p>Debes iniciar sesión para ver el carrito de compras</p>;
   }
 
+  /******** conseguir id */
+  useEffect(() => {
+    const searchBuyHistory = async (email: string) => {
+      try {
+        const response = await axios.get("http://localhost:3002/users");
+        const users = response.data;
+        const user = users.find((user: any) => user.email === email);
+        if (user) {
+          setFinalUser(user);
+        } else {
+          setFinalUser(null);
+        }
+      } catch (error) {
+        console.error("Error: ", error);
+        setFinalUser(null);
+      }
+    };
+    searchBuyHistory(email);
+  }, [email]);
+
   // Suma de los precios
   const total = cartItems.reduce((sum, item) => sum + Number(item.price), 0);
 
   const handlePayment = async () => {
     if (cartItems.length === 0) {
-      console.log('No hay artículos en el carrito');
+      console.log("No hay artículos en el carrito");
       return;
     }
 
     try {
       const buyerInfo = {
         name: session.user?.name,
-        surname: session.user?.name,
+        surname: finalUser._id,
         email: session.user?.email,
         buyOrder: cartItems.map((item) => ({
           id: item._id,
@@ -65,13 +90,16 @@ const CarritoDeCompras = () => {
       };
 
       // Hacer la solicitud al backend para crear la orden de compra en Mercado Pago
-      const response = await axios.post('http://localhost:3002/pay/create-order', buyerInfo);
-      console.log('res del back: ', response.data);
+      const response = await axios.post(
+        "http://localhost:3002/pay/create-order",
+        buyerInfo
+      );
+      console.log("res del back: ", response.data);
 
       // Redirigir al usuario a la página de pago de Mercado Pago
       window.location.href = response.data.init_point;
     } catch (error) {
-      console.error('Error al realizar el pago: ', error);
+      console.error("Error al realizar el pago: ", error);
     }
   };
 
@@ -80,7 +108,9 @@ const CarritoDeCompras = () => {
       {!cartItems.length ? (
         <div className="mt-8 mb-8 flex justify-center items-center h-screen">
           <div className="text-center">
-            <p className="text-gray-500 italic">No has agregado prendas al carrito</p>
+            <p className="text-gray-500 italic">
+              No has agregado prendas al carrito
+            </p>
             <a href="/" className="mt-4 text-blue-500 hover:underline">
               Volver a comprar
             </a>
@@ -95,12 +125,22 @@ const CarritoDeCompras = () => {
                 className="border border-gray-300 shadow-sm rounded-md p-4 hover:bg-gray-100 text-center"
               >
                 <div className="p-4 flex justify-center items-center">
-                  <img src={item.image} alt={item.title} style={{ width: '100px' }} />
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    style={{ width: "100px" }}
+                  />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900">{item.title}</h3>
-                  <p className="text-sm text-gray-700">Precio unitario: ${item.price}</p>
-                  <p className="text-sm text-gray-700">Cantidad: {item.count}</p>
+                  <h3 className="text-lg font-bold text-gray-900">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-gray-700">
+                    Precio unitario: ${item.price}
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    Cantidad: {item.count}
+                  </p>
                   <button
                     onClick={() => handleRemoveFromCart(item._id)}
                     className="inline-block bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-lg text-sm"
@@ -124,7 +164,9 @@ const CarritoDeCompras = () => {
             <div className="flex justify-between">
               <p className="text-lg font-bold">Total:</p>
               <div>
-                <p className="mb-1 text-lg font-bold">${(total + 4.99).toFixed(2)} USD</p>
+                <p className="mb-1 text-lg font-bold">
+                  ${(total + 4.99).toFixed(2)} USD
+                </p>
                 <p className="text-sm text-gray-700">*** incluye IVA</p>
               </div>
             </div>
