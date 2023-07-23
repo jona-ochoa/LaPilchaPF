@@ -65,6 +65,7 @@ const reciveWebhook = async (req, res) => {
         date: body.date_approved,
         amount: body.transaction_amount,
         paymentType: body.payment_type_id,
+        description: body.description,
       };
 
       const usuarioId = body.additional_info.payer.last_name;
