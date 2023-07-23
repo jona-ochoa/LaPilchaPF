@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { User } from "GlobalRedux/api/usersApi";
 
-interface User {
-    _id: string,
-    name: string,
-    lastname: string,
-    email: string,
-    isBanned: boolean;
-}
 
 interface UserState {
     users: User[];
@@ -22,9 +16,11 @@ const userSlice = createSlice({
     reducers: {
         addUser: (state, action: PayloadAction<User>) => {
             state.users.push(action.payload)
-        }
-    }
-})
+        },
+        setUsers: (state, action: PayloadAction<User[]>) => {
+            state.users = action.payload;
+        },
+}})
 
-export const { addUser } = userSlice.actions;
+export const { addUser, setUsers } = userSlice.actions;
 export default userSlice.reducer;

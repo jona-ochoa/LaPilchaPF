@@ -1,4 +1,5 @@
 'use client'
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../GlobalRedux/store';
 import { removeFromFavorites, addToFavorites } from '../GlobalRedux/features/favoritoSlice';
@@ -41,39 +42,24 @@ const TarjetasFavoritas = () => {
   }
 
   return (
-    <div className="mt-8 mb-8">
-        {!favoriteItems.length ? (
-          <div className="mt-8 mb-8 flex justify-center items-center h-screen">
-    <div className="text-center">
-      <p className="text-gray-500 italic">No has seleccionado productos favoritos</p>
-      <a href="/" className="mt-4 text-blue-500 hover:underline">Volver a comprar</a>
-    </div>
-  </div>
-  
-       
-          
-        ) : (
-          favoriteItems.map((item: Product) => (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            
-            
-            <div key={item._id} className="bg-gray-100 rounded-lg p-4 flex flex-col items-center">
-              <ProductCard product={item} />
-             
-             
-              <button
-  onClick={() => handleRemoveFromFavorites(item._id)}
-  className="mt-4 text-3xl"
->
-  ❤️
-</button>
-            </div>
-      </div>
-          ))
-
-        )
-        
-        }
+    <div className="mt-8 mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {!favoriteItems.length ? (
+        <div className="mt-8 mb-8 flex justify-center items-center h-screen">
+          <div className="text-center">
+            <p className="text-gray-500 italic">No has seleccionado productos favoritos</p>
+            <a href="/" className="mt-4 text-blue-500 hover:underline">Volver a comprar</a>
+          </div>
+        </div>
+      ) : (
+        favoriteItems.map((item: Product) => (
+          <div key={item._id} className="bg-gray-100 rounded-lg p-4 flex flex-col items-center">
+            <ProductCard product={item} />
+            <button onClick={() => handleRemoveFromFavorites(item._id)} className="mt-4 text-3xl">
+              ❤️
+            </button>
+          </div>
+        ))
+      )}
     </div>
   );
 };
