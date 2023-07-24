@@ -150,6 +150,7 @@ const CarritoDeCompras = () => {
 
       // Redirigir al usuario a la página de pago de Mercado Pago
       window.location.href = response.data.init_point;
+      setCartItems([])
     } catch (error) {
       console.error("Error al realizar el pago: ", error);
     }
