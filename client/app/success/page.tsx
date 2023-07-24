@@ -1,12 +1,28 @@
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import logoanimado from "../../public/LaPilcha_animada.gif";
+import { useEffect } from "react";
+import { setCarrito } from "../../GlobalRedux/features/carritoSlice";
+import { Product } from "../../GlobalRedux/api/productsApi";
+import { useLocalStorage } from "hooks/useLocalstorage";
+import { useAppDispatch } from "../../GlobalRedux/hooks"
 
 const ThankYouPage = () => {
+  
+  const [, setCartItems] = useLocalStorage<Product[]>("cartItems", []);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    // Limpiar el carrito de compras (establecerlo como un array vacío) cuando el componente se monta
+    setCartItems([]);
+    dispatch(setCarrito([]))
+  }, []);                          
+  
   return (
     <div className="flex flex-col justify-center justify-items-center py-1.5 bg-cyan-100">
       <div className="flex flex-row flex-wrap justify-center justify-items-center mx-2.5">
-        <div
+        <div       
           className="w-1/4"
           style={{ textAlign: "center", margin: "20px 0" }}
         >
