@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useCallback } from "react";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { removeFromCarrito } from "../GlobalRedux/features/carritoSlice";
@@ -45,6 +45,29 @@ const CarritoDeCompras = () => {
   const [finalUser, setFinalUser] = useState<any | null>(null);
   let email = session?.user?.email ?? "";
 
+  const searchBuyHistory = useCallback(
+    async (email: string) => {
+      try {
+        const response = await axios.get("http://localhost:3002/users");
+        const users = response.data;
+        const user = users.find((user: any) => user.email === email);
+        if (user) {
+          setFinalUser(user);
+        } else {
+          setFinalUser(null);
+        }
+      } catch (error) {
+        console.error("Error: ", error);
+        setFinalUser(null);
+      }
+    },
+    [email]
+  );
+
+  useEffect(() => {
+    searchBuyHistory(email); // Call the useCallback function here
+  }, [searchBuyHistory, email]);
+
   // Agrupar los productos por el título
   const groupedCartItems: Item[] = cartItems.reduce((acc, item) => {
     const existingItem = acc.find(
@@ -79,25 +102,6 @@ const CarritoDeCompras = () => {
       </div>
     );
   }
-
-  useEffect(() => {
-    const searchBuyHistory = async (email: string) => {
-      try {
-        const response = await axios.get("http://localhost:3002/users");
-        const users = response.data;
-        const user = users.find((user: any) => user.email === email);
-        if (user) {
-          setFinalUser(user);
-        } else {
-          setFinalUser(null);
-        }
-      } catch (error) {
-        console.error("Error: ", error);
-        setFinalUser(null);
-      }
-    };
-    searchBuyHistory(email);
-  }, [email]);
 
   // Suma de los precios
   const total = cartItems.reduce((sum, item) => sum + Number(item.price), 0);

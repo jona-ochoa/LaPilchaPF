@@ -3,7 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const Profile = () => {
   const { data: session, status } = useSession();
@@ -11,6 +11,27 @@ const Profile = () => {
 
   const email = session?.user?.email ?? "";
   const [finalUser, setFinalUser] = useState<any | null>(null);
+
+  const searchBuyHistory = useCallback(async (email: string) => {
+    try {
+      const response = await axios.get("http://localhost:3002/users");
+      const users = response.data;
+      const user = users.find((user: any) => user.email === email);
+
+      if (user) {
+        setFinalUser(user);
+      } else {
+        setFinalUser(null);
+      }
+    } catch (error) {
+      console.error("Error: ", error);
+      setFinalUser(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    searchBuyHistory(email);
+  }, [searchBuyHistory, email]);
 
   // Redirigir a la página de inicio de sesión si el usuario no está autenticado
   if (status === "loading") {
@@ -29,26 +50,6 @@ const Profile = () => {
   const handleChangeAccount = () => {
     // Lógica para cambiar de cuenta
   };
-
-  useEffect(() => {
-    const searchBuyHistory = async (email: string) => {
-      try {
-        const response = await axios.get("http://localhost:3002/users");
-        const users = response.data;
-        const user = users.find((user: any) => user.email === email);
-        console.log("User found: ", user);
-        if (user) {
-          setFinalUser(user);
-        } else {
-          setFinalUser(null);
-        }
-      } catch (error) {
-        console.error("Error: ", error);
-        setFinalUser(null);
-      }
-    };
-    searchBuyHistory(email);
-  }, [email]);
 
   return (
     <div className="text-center">
