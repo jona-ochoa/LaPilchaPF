@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
     required: false,
   },
   buyhistory: {
-    type: Array,
+    type: [Object],
     required: false,
   },
   isAdmin: {  // Nueva propiedad para indicar si el usuario es admin

@@ -40,18 +40,20 @@ const ProductList: React.FC = () => {
 
   const handleCartItem = (item: Product) => {
     const existingItemCarrito = cartItems.find((_item) => _item._id === item._id);
-
+  
     if (existingItemCarrito) {
       dispatch(removeFromCarrito(item._id));
       const updatedCarrito = cartItems.filter((carrito) => carrito._id !== item._id);
       setCartItems(updatedCarrito);
       toast.error('Eliminado del Carrito.');
     } else {
-      dispatch(addToCarrito(item));
-      setCartItems([...cartItems, item]);
+      const newItemWithCount = { ...item, count: 1 };
+      dispatch(addToCarrito(newItemWithCount));
+      setCartItems([...cartItems, newItemWithCount]);
       toast.success('Agregado al Carrito.');
     }
   };
+  
 
   const handleFavorite = (item: Product) => {
     const existingItem = favoriteItems.find((_item) => _item._id === item._id);

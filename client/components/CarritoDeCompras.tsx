@@ -7,14 +7,6 @@ import { Product } from "../GlobalRedux/api/productsApi";
 import { useLocalStorage } from "hooks/useLocalstorage";
 import { useSession } from "next-auth/react";
 import axios from "axios";
-import toast from "react-hot-toast";
-
-// Nodemailer
-import {
-  useCreateMailerOrderMutation,
-  MailerOrder,
-} from "GlobalRedux/api/nodemailerOrder";
-import { addMailerOrder } from "GlobalRedux/features/mailerOrderSlice";
 
 interface Item extends Product {
   count: number;
@@ -39,9 +31,6 @@ const CarritoDeCompras = () => {
   const [cartItems, setCartItems] = useLocalStorage<Product[]>("cartItems", []);
   const [total, setTotal] = useState<number>(0);
   const dispatch = useDispatch();
-
-  const [createMailerOrderMutation, { data }] = useCreateMailerOrderMutation();
-
   const [finalUser, setFinalUser] = useState<any | null>(null);
   let email = session?.user?.email ?? "";
 
@@ -134,28 +123,14 @@ const CarritoDeCompras = () => {
         })),
       };
 
+      console.log(buyerInfo)
+
       // Hacer la solicitud al backend para crear la orden de compra en Mercado Pago
       const response = await axios.post(
         "http://localhost:3002/pay/create-order",
         buyerInfo
       );
       console.log("res del back: ", response.data);
-
-      const newMailerOrder: Partial<MailerOrder> = {
-        name: `${buyerInfo.name}`,
-        email: `${buyerInfo.email}`,
-        subject: `Order de compra del cliente: ${buyerInfo.name}`,
-        buyOrder: JSON.stringify(buyerInfo.buyOrder),
-      };
-
-      const result = await createMailerOrderMutation(newMailerOrder);
-
-      if ("data" in result) {
-        const { data } = result;
-        const jsonData = JSON.stringify(data);
-        dispatch(addMailerOrder(data));
-        toast.success("Mensaje de la orden de compra enviado con éxito");
-      }
 
       // Redirigir al usuario a la página de pago de Mercado Pago
       window.location.href = response.data.init_point;
