@@ -22,12 +22,15 @@ export const carritoSlice = createSlice({
       state.items = state.items.filter((item) => item._id !== action.payload);
     },
     addToCarrito: (state, action: PayloadAction<Product> ) =>{
-        state.items = state.items.concat(action.payload)
+        state.items = state.items.concat(action.payload);
+    },
+    setCarrito: (state, action: PayloadAction<Product[]>) => {
+      state.items = action.payload;
     }
     },
   });
 
 
 
-export const { removeFromCarrito, addToCarrito } = carritoSlice.actions;
+export const { removeFromCarrito, addToCarrito, setCarrito } = carritoSlice.actions;
 export default carritoSlice.reducer;

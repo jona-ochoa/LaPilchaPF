@@ -46,7 +46,12 @@ const ProductFilter: React.FC = () => {
           type="number"
           id="minPrice"
           value={minPrice}
-          onChange={(e) => setMinPriceLocal(e.target.value)}
+          min="0"
+          onChange={(e) => {
+            if (e.target.valueAsNumber >= 0) {
+              setMinPriceLocal(e.target.value)
+            }
+          }}
           className="border border-gray-300 rounded px-3 py-2 mb-2"
         />
       </div>
@@ -58,7 +63,12 @@ const ProductFilter: React.FC = () => {
           type="number"
           id="maxPrice"
           value={maxPrice}
-          onChange={(e) => setMaxPriceLocal(e.target.value)}
+          min="0"
+          onChange={(e) => {
+            if (e.target.valueAsNumber >= 0) {
+              setMaxPriceLocal(e.target.value)
+            }
+          }}
           className="border border-gray-300 rounded px-3 py-2 mb-2"
         />
       </div>
@@ -91,3 +101,4 @@ const ProductFilter: React.FC = () => {
 };
 
 export default ProductFilter;
+

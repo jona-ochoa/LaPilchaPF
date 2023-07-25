@@ -2,13 +2,20 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 import Image from 'next/image';
+import {RootState} from "../GlobalRedux/store"
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { useSelector } from 'react-redux';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
+import { User, useGetUsersQuery } from 'GlobalRedux/api/usersApi';
 
 const Navbar: React.FC = () => {
+  const {data: userList} = useGetUsersQuery()
+ 
+  console.log(userList);
+
   const { data: session, status } = useSession();
+  const isAdminUser = userList?.find((user) => user.email === session?.user?.email)?.isAdmin;
 
   const handleLogout = async () => {
     await signOut();
@@ -90,7 +97,7 @@ const Navbar: React.FC = () => {
         </div>
 
         <div className="flex items-center ml-auto space-x-4">
-          {session && (
+          {isAdminUser  && (
             <>
               <Link href="/admin">
                 <div className="cursor-pointer">
@@ -99,7 +106,7 @@ const Navbar: React.FC = () => {
               </Link>
             </>
           )}
-          {session && (
+          {isAdminUser  && (
             <Link href="/formProduct">
               <button
                 type="button"
