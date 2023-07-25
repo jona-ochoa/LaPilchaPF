@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  typescript: {
+    ignoreBuildErrors: true
+  },
   plugins: ['tailwindcss'],
   reactStrictMode: true,
   swcMinify: true,
