@@ -118,7 +118,7 @@ const Login = () => {
                   Google
                 </div>
               </button>
-              <button
+              {/* <button
                 className="bg-black hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline ml-2"
                 type="button"
                 onClick={() => handleLogin('github')}
@@ -127,7 +127,7 @@ const Login = () => {
                   <Image src={githubLogo} alt="GitHub Logo" width={16} height={16} className="mr-2" />
                   GitHub
                 </div>
-              </button>
+              </button> */}
             </div>
           </div>
         </form>
