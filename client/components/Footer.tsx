@@ -3,18 +3,18 @@ import Link from 'next/link';
 
 const Footer: React.FC = () => {
     return (
-        <footer className="bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100 mt-auto">
+        <footer className="bg-gradient-to-r from-gray-500 via-[#4c687d] to-gray-500 mt-auto">
         <div className="max-w-screen-xl px-4 py-8 mx-auto sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
       <div>
-            <p className="text-2xl font-bela mr-4" style={{ fontFamily: 'Belanosima' }}>
+            <p className="text-2xl font-bela mr-4  text-gray-100"  style={{ fontFamily: 'Belanosima' }}>
               LaPilcha
             </p>
-            <p className="max-w-xs mt-4 text-sm text-gray-600">
+            <p className="max-w-xs mt-4 text-sm text-gray-100">
             Unidos por la moda, impulsados por la pasión: 
             ¡Bienvenidos a LaPilcha, donde el estilo y la excelencia se visten de equipo!
             </p>
-            <div className="flex mt-6 space-x-6 text-gray-600">
+            <div className="flex mt-6 space-x-6 text-gray-100">
           <a className="hover:opacity-75"  target="_blank" rel="noreferrer">
             <span className="sr-only"> Facebook </span>
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -41,13 +41,13 @@ const Footer: React.FC = () => {
           </a>
         </div>
       </div>
-      <div className="col-span-3">
+      <div className="col-span-3  text-gray-100">
             <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="font-medium">
             Nosotros
           </p>
-          <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
+          <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-100">
             <Link href='/about'>
               <div className="hover:opacity-75" > About </div>
             </Link>
@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
           <p className="font-medium">
             Enlaces Útiles
           </p>
-          <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
+          <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-100">
             <Link href='/FormContact'>
              <div className="hover:opacity-75" > Contact </div>
             </Link>
@@ -78,7 +78,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
     </div>
-    <p className="mt-6 text-xs text-gray-800 text-center">
+    <p className="mt-6 text-xs text-gray-100 text-center">
       © 2023 La Pilcha | Todos los derechos reservados
     </p>
   </div>

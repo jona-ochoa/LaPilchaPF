@@ -118,7 +118,7 @@ const Detail: React.FC<DetailProps> = ({
 
   return (
 
-    <section className="text-gray-700 body-font overflow-hidden bg-white" key={_id}>
+    <section key={_id}>
       <div className="container px-5 py-24 mx-auto">
         <div>
           <a href='/products'>
@@ -134,7 +134,7 @@ const Detail: React.FC<DetailProps> = ({
           <img alt="ecommerce" className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src={image} />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">{category}</h2>
-            <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{title}</h1>
+            <h1 className="text-3xl title-font font-medium mb-1">{title}</h1>
             <div className="flex mb-4">
               <span className="flex items-center">
 
@@ -143,7 +143,7 @@ const Detail: React.FC<DetailProps> = ({
                   changeRating={handleRatingChange} numberOfStars={5}
                   name="rating" starDimension="20px" starSpacing="2px" />
 
-                <span className="text-gray-600 ml-3">Rating:{product.averageRating.toFixed(1)} Votes Submitted: {product.ratingCount}</span>
+                <span className="text-gray-400 ml-3">Rating:{product.averageRating.toFixed(1)} Votes Submitted: {product.ratingCount}</span>
               </span>
 
             </div>
@@ -173,7 +173,7 @@ const Detail: React.FC<DetailProps> = ({
               </div>      
             </div>
             <div className="flex">
-              <span className="title-font font-medium text-2xl text-gray-900">${price}</span>
+              <span className="title-font font-medium text-2xl">${price}</span>
               {isDeactivated ? (<span className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">DESACTIVADO</span>) : (<button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded" onClick={handleOnClick}>
                 {isProductInCart ? 'ELIMINAR DEL CARRITO' : 'AGREGAR AL CARRITO'}
               </button>)}

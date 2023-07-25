@@ -39,12 +39,10 @@ const ProductFilter: React.FC = () => {
   return (
     <div className="flex justify-between items-center mb-4">
       <div className="flex flex-col">
-        <label htmlFor="minPrice" className="mb-2">
-          Precio Mínimo:
-        </label>
         <input
           type="number"
           id="minPrice"
+          placeholder='Precio Mínimo'
           value={minPrice}
           min="0"
           onChange={(e) => {
@@ -52,16 +50,16 @@ const ProductFilter: React.FC = () => {
               setMinPriceLocal(e.target.value)
             }
           }}
-          className="border border-gray-300 rounded px-3 py-2 mb-2"
+          className="border border-gray-300 rounded px-3 py-2 "
         />
       </div>
       <div className="flex flex-col">
-        <label htmlFor="maxPrice" className="mb-2">
-          Precio Máximo:
+        <label htmlFor="maxPrice" className="">  
         </label>
         <input
           type="number"
           id="maxPrice"
+          placeholder='Precio Máximo'
           value={maxPrice}
           min="0"
           onChange={(e) => {
@@ -69,18 +67,15 @@ const ProductFilter: React.FC = () => {
               setMaxPriceLocal(e.target.value)
             }
           }}
-          className="border border-gray-300 rounded px-3 py-2 mb-2"
+          className="border border-gray-300 rounded px-3 py-2 "
         />
       </div>
       <div className="flex flex-col">
-        <label htmlFor="category" className="mb-2">
-          Categoría:
-        </label>
         <select
           id="category"
           value={category}
           onChange={(e) => setCategoryLocal(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 mb-2"
+          className="border border-gray-300 rounded px-3 py-2"
         >
           <option value="">Todas las categorías</option>
           {categories.map((category: string, index: number) => (
