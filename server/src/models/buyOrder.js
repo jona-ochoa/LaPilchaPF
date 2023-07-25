@@ -18,11 +18,16 @@ const buyOrderSchema = mongoose.Schema({
     required: true,
   },
   items: {
-    type: [String],
+    type: [Object],
     required: true
   },
+  userId:{
+    type: String,
+    ref: 'User',
+    required: true,
+  }
 },{
-  tymestamps: true, 
+  timestamps: true, 
   versionKey: false
 });
 

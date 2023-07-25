@@ -23,6 +23,7 @@ interface DetailProps {
   isDeactivated: boolean;
   averageRating: number,
   ratingCount: number,
+  count: number
 }
 
 
@@ -53,7 +54,8 @@ const Detail: React.FC<DetailProps> = ({
     category: '',
     isDeactivated: false,
     averageRating: 0,
-    ratingCount: 0
+    ratingCount: 0,
+    count: 1
   })
 
   const isProductInCart = cartItems.some((item) => item._id === _id);
@@ -72,7 +74,8 @@ const Detail: React.FC<DetailProps> = ({
         description,
         rating,
         category,
-        isDeactivated
+        isDeactivated,
+        count: 1
       };
       toast.success('Producto agregado correctamente')
       setCartItems([...cartItems, item]);

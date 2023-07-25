@@ -9,6 +9,7 @@ export type Product = {
   category: string;
   rating: any;
   isDeactivated: boolean;
+  count: number;
 };
 
 export const productsApi = createApi({
