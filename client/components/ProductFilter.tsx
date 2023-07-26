@@ -39,12 +39,10 @@ const ProductFilter: React.FC = () => {
   return (
     <div className="flex flex-col md:flex-row justify-between items-center mb-4">
     <div className="flex flex-col mb-2 md:mb-0 md:mr-4">
-      <label htmlFor="minPrice" className="mb-2">
-        Precio Mínimo:
-      </label>
       <input
         type="number"
         id="minPrice"
+        placeholder='Precio Mínimo'
         value={minPrice}
         min="0"
         onChange={(e) => {
@@ -56,12 +54,10 @@ const ProductFilter: React.FC = () => {
       />
     </div>
     <div className="flex flex-col mb-2 md:mb-0 md:mr-4">
-      <label htmlFor="maxPrice" className="mb-2">
-        Precio Máximo:
-      </label>
       <input
         type="number"
         id="maxPrice"
+        placeholder='Precio Máximo'
         value={maxPrice}
         min="0"
         onChange={(e) => {
@@ -73,9 +69,6 @@ const ProductFilter: React.FC = () => {
       />
     </div>
     <div className="flex flex-col mb-2 md:mb-0 md:mr-4">
-      <label htmlFor="category" className="mb-2">
-        Categoría:
-      </label>
       <select
         id="category"
         value={category}

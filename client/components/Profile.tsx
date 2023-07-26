@@ -81,9 +81,9 @@ const Profile = () => {
           </button>
         </div>
       </div>
-      <div className=" m-6 bg-cyan-100 py-6 px-14 border-black rounded-10 flex-1">
+      <div className=" m-6 bg-cyan-500 py-6 px-14 border-black rounded-10 flex-1">
         {finalUser?.buyhistory && (
-          <div className="text-left bg-cyan-100">
+          <div className="text-left bg-cyan-500">
             <h3 className="text-xl">Historial de Compra:</h3>
             <ol className="list-disc">
               {finalUser.buyhistory.map((orderId: string) => (
