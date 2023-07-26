@@ -72,9 +72,9 @@ const FormContact: React.FC = () => {
   }
 
   return (
-    <div className="w-full h-full pb-12 text-center bg-gray-500 text-gray-900 flex flex-col justify-center">
+    <div className="w-full h-full pb-12 text-center   flex flex-col justify-center">
       <div className="px-auto py-10">
-        <h2 className="text-gray-200 text-5xl text-center font-extrabold">Formulario de contacto</h2>
+        <h2 className=" text-5xl text-center font-extrabold">Formulario de contacto</h2>
       </div>
       <div>
         <Formik initialValues={{
@@ -97,7 +97,7 @@ const FormContact: React.FC = () => {
               name="name"
               type="text"
               placeholder="Nombre"
-              className="w-full px-3 py-2 mb-3 text-gray-900 border-white border rounded-lg focus:outline-none" />
+              className="w-full px-3 py-2 mb-3 border-white border rounded-lg focus:outline-none" />
 
             <label htmlFor="email" className="text-white font-extrabold tracking-widest mb-2">Email</label>
             <ErrorMessage name="email" component="div" className="text-red-500" />
@@ -113,7 +113,7 @@ const FormContact: React.FC = () => {
               id="subject"
               name="subject"
               type="text"
-              placeholder="Asunto" className="w-full px-3 py-2 mb-3 text-gray-900 border-white border rounded-lg focus:outline-none" />
+              placeholder="Asunto" className="w-full px-3 py-2 mb-3  border-white border rounded-lg focus:outline-none" />
 
             <label htmlFor="message" className="text-white font-extrabold tracking-widest mb-2">Mensaje</label>
             <ErrorMessage name="message" component="div" className="text-red-500" />
@@ -121,7 +121,7 @@ const FormContact: React.FC = () => {
               id="message"
               as="textarea"
               name="message"
-              placeholder="Deja Tú Mensaje" className="w-full px-3 py-2 mb-3 text-gray-900 border-white border rounded-lg focus:outline-none" />
+              placeholder="Deja Tú Mensaje" className="w-full px-3 py-2 mb-3  border-white border rounded-lg focus:outline-none" />
             <button type="submit"
               className={`w-full py-2 px-3 text-white rounded-lg font-medium tracking-wide transition duration-200 bg-indigo-500 hover:bg-indigo-600 cursor-pointer'}`}>Enviar</button>
           </Form>

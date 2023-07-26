@@ -43,7 +43,7 @@ const SearchBar: React.FC = () => {
         </div>
 
         <input
-          className="peer h-full w-full outline-none text-sm text-gray-400 pr-2"
+          className="peer h-full w-full outline-none text-sm text-gray-500 pr-2"
           type="text"
           id="search"
           placeholder=" Buscar Producto..."
