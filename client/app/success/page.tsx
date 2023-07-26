@@ -124,12 +124,9 @@ const ThankYouPage = () => {
   }, [session, orderCreated, cartItems]);
 
   useEffect(() => {
-    if (orderCreated) {
-      // Limpiar el carrito de compras (establecerlo como un array vacío) cuando el componente se monta
       setCartItems([]);
       dispatch(setCarrito([]));
-    }
-  }, [orderCreated]);                            
+    }, []);                            
   
   return (
     <div className="flex flex-col justify-center justify-items-center py-1.5 bg-cyan-900">
