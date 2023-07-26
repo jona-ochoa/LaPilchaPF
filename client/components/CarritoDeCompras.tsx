@@ -1,21 +1,12 @@
 "use client";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { removeFromCarrito } from "../GlobalRedux/features/carritoSlice";
+import { removeFromCarrito, setCarrito } from "../GlobalRedux/features/carritoSlice";
 import { Product } from "../GlobalRedux/api/productsApi";
 import { useLocalStorage } from "hooks/useLocalstorage";
 import { useSession } from "next-auth/react";
 import axios from "axios";
-import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
-
-// Nodemailer
-import {
-  useCreateMailerOrderMutation,
-  MailerOrder,
-} from "GlobalRedux/api/nodemailerOrder";
-import { addMailerOrder } from "GlobalRedux/features/mailerOrderSlice";
 
 interface Item extends Product {
   count: number;
@@ -38,10 +29,8 @@ interface IMailerOrder {
 const CarritoDeCompras = () => {
   const { data: session } = useSession();
   const [cartItems, setCartItems] = useLocalStorage<Product[]>("cartItems", []);
+  const [total, setTotal] = useState<number>(0);
   const dispatch = useDispatch();
-
-  const [createMailerOrderMutation, { data }] = useCreateMailerOrderMutation();
-
   const [finalUser, setFinalUser] = useState<any | null>(null);
   let email = session?.user?.email ?? "";
 
@@ -65,26 +54,37 @@ const CarritoDeCompras = () => {
   );
 
   useEffect(() => {
-    searchBuyHistory(email); // Call the useCallback function here
+    searchBuyHistory(email);
   }, [searchBuyHistory, email]);
-
-  // Agrupar los productos por el título
-  const groupedCartItems: Item[] = cartItems.reduce((acc, item) => {
-    const existingItem = acc.find(
-      (groupedItem) => groupedItem.title === item.title
-    );
-    if (existingItem) {
-      existingItem.count += 1;
-    } else {
-      acc.push({ ...item, count: 1 });
-    }
-    return acc;
-  }, [] as Item[]);
 
   const handleRemoveFromCart = (_id: string) => {
     const updatedItems = cartItems.filter((item) => item._id !== _id);
     setCartItems(updatedItems);
     dispatch(removeFromCarrito(_id));
+  };
+
+  useEffect(() => {
+    const newTotal = cartItems.reduce(
+      (sum, item: Item) => sum + Number(item.price) * item.count,
+      0
+    );
+    setTotal(newTotal);
+  }, [cartItems]);
+
+  const handleIncreaseCount = (_id: string) => {
+    const updatedItems = cartItems.map((item: Item) =>
+      item._id === _id ? { ...item, count: item.count + 1 } : item
+    );
+    setCartItems(updatedItems);
+    dispatch(setCarrito(updatedItems));
+  };
+
+  const handleDecreaseCount = (_id: string) => {
+    const updatedItems = cartItems.map((item: Item) =>
+      item._id === _id && item.count > 1 ? { ...item, count: item.count - 1 } : item
+    );
+    setCartItems(updatedItems);
+    dispatch(setCarrito(updatedItems));
   };
 
   if (!session) {
@@ -103,8 +103,6 @@ const CarritoDeCompras = () => {
     );
   }
 
-  // Suma de los precios
-  const total = cartItems.reduce((sum, item) => sum + Number(item.price), 0);
 
   const handlePayment = async (values: IMailerOrder) => {
     if (cartItems.length === 0) {
@@ -117,13 +115,15 @@ const CarritoDeCompras = () => {
         name: session.user?.name,
         surname: finalUser._id,
         email: session.user?.email,
-        buyOrder: cartItems.map((item) => ({
+        buyOrder: cartItems.map((item: Item) => ({
           id: item._id,
           title: item.title,
           unit_price: item.price,
-          quantity: 1,
+          quantity: item.count,
         })),
       };
+
+      console.log(buyerInfo)
 
       // Hacer la solicitud al backend para crear la orden de compra en Mercado Pago
       const response = await axios.post(
@@ -132,22 +132,6 @@ const CarritoDeCompras = () => {
       );
       console.log("res del back: ", response.data);
 
-      const newMailerOrder: Partial<MailerOrder> = {
-        name: `${buyerInfo.name}`,
-        email: `${buyerInfo.email}`,
-        subject: `Order de compra del cliente: ${buyerInfo.name}`,
-        buyOrder: JSON.stringify(buyerInfo.buyOrder),
-      };
-
-      const result = await createMailerOrderMutation(newMailerOrder);
-
-      if ("data" in result) {
-        const { data } = result;
-        const jsonData = JSON.stringify(data);
-        dispatch(addMailerOrder(data));
-        toast.success("Mensaje de la orden de compra enviado con éxito");
-      }
-
       // Redirigir al usuario a la página de pago de Mercado Pago
       window.location.href = response.data.init_point;
     } catch (error) {
@@ -155,12 +139,13 @@ const CarritoDeCompras = () => {
     }
   };
 
+
   return (
     <div className="mt-8 mb-8">
       {!cartItems.length ? (
         <div className="mt-8 mb-8 flex justify-center items-center h-screen">
           <div className="text-center">
-            <p className="text-gray-500 italic">
+            <p className=" italic">
               No has agregado prendas al carrito
             </p>
             <a href="/" className="mt-4 text-blue-500 hover:underline">
@@ -171,10 +156,10 @@ const CarritoDeCompras = () => {
       ) : (
         <div>
           <ul className="space-y-4">
-            {groupedCartItems.map((item: Item) => (
+            {cartItems.map((item: Item) => (
               <li
                 key={item._id}
-                className="border border-gray-300 shadow-sm rounded-md p-4 hover:bg-gray-100 text-center"
+                className="border border-gray-300 shadow-sm rounded-md p-4 hover:bg-gray-600 text-center"
               >
                 <div className="p-4 flex justify-center items-center">
                   <img
@@ -184,18 +169,30 @@ const CarritoDeCompras = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900">
+                  <h3 className="text-lg font-bold">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-gray-700">
-                    Precio unitario: ${item.price}
+                  <p className="text-sm">
+                    Precio por unidad: ${item.price}
                   </p>
-                  <p className="text-sm text-gray-700">
-                    Cantidad: {item.count}
-                  </p>
+                  <div className="flex justify-center mt-2">
+                    <button
+                      onClick={() => handleDecreaseCount(item._id)}
+                      className="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-lg text-sm mr-2"
+                    >
+                      -
+                    </button>
+                    <span >{item.count}</span>
+                    <button
+                      onClick={() => handleIncreaseCount(item._id)}
+                      className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded-lg text-sm ml-2"
+                    >
+                      +
+                    </button>
+                  </div>
                   <button
                     onClick={() => handleRemoveFromCart(item._id)}
-                    className="inline-block bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-lg text-sm"
+                    className="inline-block bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-lg text-sm mt-2"
                   >
                     Eliminar
                   </button>
@@ -214,10 +211,10 @@ const CarritoDeCompras = () => {
             </div>
             <hr className="my-4" />
             <div className="flex justify-between">
-              <p className="text-lg font-bold">Total:</p>
+              <p className="text-lg font-bold text-gray-700">Total:</p>
               <div>
-                <p className="mb-1 text-lg font-bold">
-                  ${(total + 4.99).toFixed(2)} USD
+                <p className="mb-1 text-lg font-bold text-gray-700">
+                  ${(total + 4.99).toFixed(2)} ARS
                 </p>
                 <p className="text-sm text-gray-700">*** incluye IVA</p>
               </div>

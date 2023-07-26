@@ -4,6 +4,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
+import OrderDetails from "./OrderDetail";
 
 const Profile = () => {
   const { data: session, status } = useSession();
@@ -80,24 +81,13 @@ const Profile = () => {
           </button>
         </div>
       </div>
-      <div className=" m-6 bg-cyan-100 py-6 px-14 border-black rounded-10 flex-1">
+      <div className=" m-6 bg-cyan-500 py-6 px-14 border-black rounded-10 flex-1">
         {finalUser?.buyhistory && (
-          <div className="text-left bg-cyan-100">
+          <div className="text-left bg-cyan-500">
             <h3 className="text-xl">Historial de Compra:</h3>
             <ol className="list-disc">
-              {finalUser.buyhistory.map((item) => (
-                <li key={item.idPay}>
-                  Producto: {item.description || "Desconocido"}
-                  <br />
-                  Monto: $ {item.amount}
-                  <br />
-                  Fecha: {item.date.slice(0, 10)}
-                  <br />
-                  Forma de Pago:{" "}
-                  {item.paymentType === "account_money" &&
-                    "Dinero en la cuenta"}
-                  <hr />
-                </li>
+              {finalUser.buyhistory.map((orderId: string) => (
+                <OrderDetails key={orderId} orderId={orderId} />
               ))}
             </ol>
           </div>

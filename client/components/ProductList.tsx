@@ -40,18 +40,20 @@ const ProductList: React.FC = () => {
 
   const handleCartItem = (item: Product) => {
     const existingItemCarrito = cartItems.find((_item) => _item._id === item._id);
-
+  
     if (existingItemCarrito) {
       dispatch(removeFromCarrito(item._id));
       const updatedCarrito = cartItems.filter((carrito) => carrito._id !== item._id);
       setCartItems(updatedCarrito);
       toast.error('Eliminado del Carrito.');
     } else {
-      dispatch(addToCarrito(item));
-      setCartItems([...cartItems, item]);
+      const newItemWithCount = { ...item, count: 1 };
+      dispatch(addToCarrito(newItemWithCount));
+      setCartItems([...cartItems, newItemWithCount]);
       toast.success('Agregado al Carrito.');
     }
   };
+  
 
   const handleFavorite = (item: Product) => {
     const existingItem = favoriteItems.find((_item) => _item._id === item._id);
@@ -112,27 +114,27 @@ const ProductList: React.FC = () => {
         </div>
 
       ) : (
-        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 xl:gap-y-10">
-          {currentProducts
+        <div className="border-solid border-blue-900 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 xl:gap-y-10">
+          {currentProducts        
           .filter((product) => !product.isDeactivated)
           .map((product) => (
             <div key={product._id} className="product-card relative">
-              <ProductCard product={product} />
-              <div className="absolute top-2 right-7 flex flex-col bg-gray-200 p-1 rounded-sm">
                 <button onClick={() => handleFavorite(product)} className="">
                   {favoriteItems.find((item) => item._id === product._id) ? (
                     <MdFavorite className="w-[25px] h-[25px] text-red-500 transition-transform" />
-                  ) : (
-                    <MdFavoriteBorder className="w-[25px] h-[25px] text-gray-800 transition-transform opacity-75" />
-                  )}
+                    ) : (
+                      <MdFavoriteBorder className="w-[25px] h-[25px]  transition-transform opacity-75" />
+                      )}
                 </button>
                 <button onClick={() => handleCartItem(product)} className="">
                   {cartItems.find((item) => item._id === product._id) ? (
                     <BsFillCartCheckFill className="w-[25px] h-[25px] text-green-500 transition-transform" />
-                  ) : (
-                    <BsFillCartDashFill className="w-[25px] h-[25px] text-gray-800 transition-transform opacity-75" />
-                  )}
+                    ) : (
+                      <BsFillCartDashFill className="w-[25px] h-[25px] transition-transform opacity-75" />
+                      )}
                 </button>
+                      <ProductCard product={product} />
+                <div className="absolute top-2 right-7 flex flex-col bg-gray-200 p-1 rounded-sm">
               </div>
             </div>
           ))}
