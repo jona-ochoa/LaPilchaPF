@@ -6,7 +6,7 @@ const BuyOrderList: React.FC = () => {
   const { data, error, isLoading, isFetching } = useGetOrdersQuery(null);
 
   if (isLoading) {
-    return <div>Loading...</div>; // Puedes mostrar un indicador de carga mientras se obtienen los datos.
+    return <div>Cargando...</div>; // Puedes mostrar un indicador de carga mientras se obtienen los datos.
   }
 
   if (error) {

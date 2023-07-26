@@ -12,7 +12,6 @@ import { User, useGetUsersQuery } from 'GlobalRedux/api/usersApi';
 const Navbar: React.FC = () => {
   const {data: userList} = useGetUsersQuery()
  
-  console.log(userList);
 
   const { data: session, status } = useSession();
   const isAdminUser = userList?.find((user) => user.email === session?.user?.email)?.isAdmin;
@@ -72,7 +71,7 @@ const Navbar: React.FC = () => {
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path
+          <path     
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="2"
@@ -118,7 +117,7 @@ const Navbar: React.FC = () => {
             </Link>
           )}
 
-          <div className="hidden xl:flex items-center space-x-5">
+          <div className="xl:flex items-center space-x-5">
             <Link href="/favoritos">
               <div className="hover:text-gray-200">
                 <svg
@@ -155,10 +154,6 @@ const Navbar: React.FC = () => {
                     />
                   </svg>
 
-                  <span className="flex absolute -mt-5 ml-4">
-                    <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
-                  </span>
                 </div>
               </div>
             </Link>
