@@ -33,7 +33,7 @@ const OrderDetails = ({ orderId }: { orderId: string }) => {
     <li>
       <h4>Detalles de la orden:</h4>
       <p>Productos: {orderDetails.items.map((product: any) => product.title).join(", ")}</p>
-      <p>Monto: $ {orderDetails.total}</p>
+      <p>Monto: $ {orderDetails.total.toFixed(2)}</p>
       <p>Fecha: {new Date(orderDetails.createdAt).toLocaleDateString()}</p>
       <p>Forma de Pago: {orderDetails.paymentType === "account_money" ? "Dinero en la cuenta" : "Otra forma de pago"}</p>
       <hr />
