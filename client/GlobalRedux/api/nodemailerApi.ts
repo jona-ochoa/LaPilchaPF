@@ -15,7 +15,7 @@ export const nodemailerApi = createApi({
   endpoints: (builder) => ({
     createMailer: builder.mutation<Mailer, Partial<Mailer>>({
       query: (newMailer) => ({
-        url: "/email/purchase",
+        url: "/nodemailer/contacto",
         method: "POST",
         body: newMailer,
       }),

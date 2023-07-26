@@ -1,4 +1,5 @@
 const express = require("express");
+const http = require('http');
 const mongoose = require("mongoose");
 require("dotenv").config();
 const morgan = require("morgan");
@@ -15,14 +16,17 @@ app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
 
 //routes
-app.use(routes);
+app.use("/", routes);
 
+const server = http.createServer(app);
 //mongodb connection
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => console.log("Connected to MongoDB Atlas"))
+  .then(() => {
+    server.listen(port, () => {
+      console.log(`Server listen on port ${port}`);
+    });
+    console.log("Connected to MongoDB Atlas")
+  })
   .catch((error) => console.log(console.error(error)));
-
-app.listen(port, () => {
-  console.log(`Server listen on port ${port}`);
-});
+  
