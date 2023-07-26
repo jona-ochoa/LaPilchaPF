@@ -101,7 +101,7 @@ const UserForm: React.FC = () => {
   };
 
   return (
-    <div className="border-b bg-gradient-to-r from-slate-300 to-slate-500 min-h-screen flex items-center justify-center border-gray-900/10 pb-12">
+    <div className="border-b bg-gradient-to-r min-h-screen flex items-center justify-center border-gray-900/10 pb-12">
       {showSuccessAlert && (
         <div className="fixed inset-0 flex items-center justify-center z-10">
           <div className="bg-green-300 rounded-lg shadow-lg p-6 max-w-xl text-center">
@@ -122,7 +122,7 @@ const UserForm: React.FC = () => {
       <div className={!showSuccessAlert ? "block" : "hidden"}>
         <div className="max-w-xl mx-auto py-12">
           <div className="flex flex-col items-center">
-            <h1 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-gray-800">User form</h1>
+            <h1 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight ">Formulario de usuario</h1>
             <Formik
               initialValues={{
                 name: '',
@@ -137,17 +137,17 @@ const UserForm: React.FC = () => {
               <Form className="mt-6">
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-sm leading-6 font-semibold text-gray-800" htmlFor="name">Name: </label>
+                    <label className="block text-sm leading-6 font-semibold" htmlFor="name">Nombre: </label>
                     <Field
                       type="text"
                       id="name"
                       name="name"
-                      className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder: focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                     />
                     <ErrorMessage name="name" component="div" className="text-red-500" />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold leading-6 text-gray-800 " htmlFor="lastname">Lastname: </label>
+                    <label className="block text-sm font-semibold leading-6" htmlFor="lastname">Apellido: </label>
                     <Field
                       type="text"
                       id="lastname"
@@ -157,7 +157,7 @@ const UserForm: React.FC = () => {
                     <ErrorMessage name="lastname" component="div" className="text-red-500" />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold leading-6 text-gray-800 " htmlFor="email">Email: </label>
+                    <label className="block text-sm font-semibold leading-6" htmlFor="email">Email: </label>
                     <Field
                       type="text"
                       id="email"
@@ -167,7 +167,7 @@ const UserForm: React.FC = () => {
                     <ErrorMessage name="email" component="div" className="text-red-500" />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold leading-6 text-gray-800 " htmlFor="password">Password: </label>
+                    <label className="block text-sm font-semibold leading-6  " htmlFor="password">Contraseña: </label>
                     <div className="relative">
                       <Field
                         type={showPassword ? "text" : "password"}
@@ -196,7 +196,7 @@ const UserForm: React.FC = () => {
                   </div>
 
                   <div className="col-span-full">
-                    <label htmlFor="image" className="block text-sm font-semibold leading-6 text-gray-900">Profile image: </label>
+                    <label htmlFor="image" className="block text-sm font-semibold leading-6">Imagen de perfil: </label>
                     <div className="mt-2" >
                       {/* ... */}
                       <div className='sm:col-span-2'>
@@ -207,7 +207,7 @@ const UserForm: React.FC = () => {
                             name='image'
                             accept='image/*'
                             onChange={handleImageChange}
-                            className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                            className='block w-full rounded-md border-0 px-3.5 py-2  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                           />
                         </div>
                         <ErrorMessage name='image' component='div' className='text-red-600' />
@@ -220,7 +220,7 @@ const UserForm: React.FC = () => {
                       type="submit"
                       className="rounded-md bg-blue-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
-                      Submit
+                      Enviar
                     </button>
                   </div>
                 </div>

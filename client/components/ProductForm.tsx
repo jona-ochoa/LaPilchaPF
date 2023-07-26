@@ -131,12 +131,12 @@ const ProductForm: React.FC = () => {
       onSubmit={handleSubmit}
     >
       {({ setFieldValue }) => (
-        <div className="flex justify-center items-center isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+        <div className="flex justify-center items-center isolate px-6 py-24 sm:py-32 lg:px-8">
           <div className="flex justify-center">
             <div className="max-w-lg">
               <div className="p-6">
                 <div className="mx-auto max-w-2xl text-center">
-                  <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl pb-10">
+                  <h2 className="text-3xl font-bold tracking-tight sm:text-5xl pb-10">
                     Cargar Producto
                   </h2>
                 </div>
@@ -144,12 +144,12 @@ const ProductForm: React.FC = () => {
                 <Form className='max-w-xl mx-auto' encType='multipart/form-data'>
                 <div className='grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2'>
                   <div>
-                    <label className='block text-sm font-semibold leading-6 text-gray-900' htmlFor='title'>
+                    <label className='block text-sm font-semibold leading-6' htmlFor='title'>
                       Nombre del Producto:
                     </label>
                     <div className='mt-2.5'>
                       <Field
-                        className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'
+                        className='block w-full rounded-md border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder: focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'
                         type='text'
                         id='title'
                         name='title'
@@ -159,7 +159,7 @@ const ProductForm: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className='block text-sm font-semibold leading-6 text-gray-900' htmlFor='price'>
+                    <label className='block text-sm font-semibold leading-6' htmlFor='price'>
                       Precio:
                     </label>
                     <div className='mt-2.5'>
@@ -168,14 +168,14 @@ const ProductForm: React.FC = () => {
                         id='price'
                         name='price'
                         placeholder='$'
-                        className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'
+                        className='block w-full rounded-md border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder: focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'
                       />
                     </div>
                     <ErrorMessage name='price' component='div' className='text-red-600' />
                   </div>
 
                   <div className='sm:col-span-2'>
-                    <label className='block text-sm font-semibold leading-6 text-gray-600' htmlFor='description'>
+                    <label className='block text-sm font-semibold leading-6' htmlFor='description'>
                       Descripción:{' '}
                     </label>
                     <div className='mt-2.5'>
@@ -183,14 +183,14 @@ const ProductForm: React.FC = () => {
                         type='text'
                         id='description'
                         name='description'
-                        className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'
+                        className='block w-full rounded-md border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder: focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'
                       />
                     </div>
                     <ErrorMessage name='description' component='div' className='text-red-600' />
                   </div>
 
                   <div className='sm-col-span-2'>
-                    <label className='block text-sm font-semibold leading-6 text-gray-600' htmlFor='category'>
+                    <label className='block text-sm font-semibold leading-6' htmlFor='category'>
                       Categoría:{' '}
                     </label>
                     <div className='mt-2.5'>
@@ -198,7 +198,7 @@ const ProductForm: React.FC = () => {
                         as='select'
                         id='category'
                         name='category'
-                        className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'
+                        className='block w-full rounded-md border-0 px-3.5 py-2  shadow-sm ring-1 ring-inset ring-gray-300 placeholder: focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'
                       >
                         <option value=''></option>
                         <option value="women's clothing">women's clothing</option>
@@ -208,8 +208,8 @@ const ProductForm: React.FC = () => {
                   </div>
 
                   <div className='sm:col-span-2'>
-                    <label htmlFor='image' className='block text-sm font-semibold leading-6 text-gray-600'>
-                      Product image:
+                    <label htmlFor='image' className='block text-sm font-semibold leading-6'>
+                    Imagen del producto:
                     </label>
                     <div>
                       <input
@@ -218,7 +218,7 @@ const ProductForm: React.FC = () => {
                         name='image'
                         accept='image/*'
                         onChange={(e) => setFieldValue('image', e.currentTarget.files?.[0])}
-                        className='block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                        className='block w-full rounded-md border-0 px-3.5 py-2  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                       />
                     </div>
                     <ErrorMessage name='image' component='div' className='text-red-600' />
