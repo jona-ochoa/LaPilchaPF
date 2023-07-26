@@ -10,7 +10,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <div className="bg-gray-100 rounded-lg p-4 flex flex-col items-center w-64 h-auto">
+    <div className="bg-gray-100 rounded-lg p-4 flex flex-col items-center w-64 h-auto hover:scale-105 duration-500">
     <Link href={`/products/${product._id}`}>
       <div className="w-full overflow-hidden rounded-lg bg-gray-200 flex items-center">
         <img

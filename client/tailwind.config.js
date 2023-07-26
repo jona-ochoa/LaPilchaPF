@@ -9,7 +9,24 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
-  },
-  plugins: [],
-}
+     extend: {
+       keyframes: {
+         "fade-in-y": {
+          "0%": { opacity: 0, transform: "translateY(25px)" },
+          "100%": { opacity: 1, transform: "translateY(0px)" },
+          },
+          "fade-up-x": {
+            "0%": { opacity: 0, transform: "translateX(25px)" },
+            "100%": { opacity: 1, transform: "translateX(0px)" },
+          }
+       },
+       animation: {
+         "fade-in-y": "fade-in-y 2s linear",
+         "fade-up-x": "fade-up-x 2s linear"
+       },
+     },
+   },
+   safelist:
+    ['animate-[fade-in_1s_ease-in-out]', 'animate-[fade-in-down_1s_ease-in-out]'],
+   plugins: [],
+ };
