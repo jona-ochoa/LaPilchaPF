@@ -14,7 +14,7 @@ const ProductDetailPage = () => {
   
   const { data, error, isLoading, isFetching } = useGetProductsByIdQuery(id);
 
-  if (isLoading || isFetching) return <p>Loading...</p>;
+  if (isLoading || isFetching) return <p>Cargando...</p>;
 
 
 const product = data?.product

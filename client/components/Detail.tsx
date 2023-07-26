@@ -152,13 +152,13 @@ const Detail: React.FC<DetailProps> = ({
             </div>
             <p className="leading-relaxed">{description}</p>
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-              <div className="flex">
+              {/* <div className="flex">
                 <span className="mr-3">Color</span>
                 <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
                 <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
                 <button className="border-2 border-gray-300 ml-1 bg-red-500 rounded-full w-6 h-6 focus:outline-none"></button>
-              </div>
-              <div className="flex ml-6 items-center">
+              </div> */}
+              {/* <div className="flex ml-6 items-center">
                 <span className="mr-3">Size</span>
                 <div className="relative">
                   <select className="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-red-500 text-base pl-3 pr-10">
@@ -173,7 +173,7 @@ const Detail: React.FC<DetailProps> = ({
                     </svg>
                   </span>
                 </div>
-              </div>      
+              </div>       */}
             </div>
             <div className="flex">
               <span className="title-font font-medium text-2xl">${price}</span>

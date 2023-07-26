@@ -60,7 +60,7 @@ const members: Member[] = [
 
 const AboutCard: React.FC = () => {
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 mx-auto">
       {members.map((member) => {
         const githubUsername = member.github.split("/").pop() || "";
 
@@ -121,6 +121,7 @@ const AboutCard: React.FC = () => {
           </div>
         );
       })}
+      <br />
     </div>
   );
 };
