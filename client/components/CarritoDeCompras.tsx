@@ -145,7 +145,7 @@ const CarritoDeCompras = () => {
       {!cartItems.length ? (
         <div className="mt-8 mb-8 flex justify-center items-center h-screen">
           <div className="text-center">
-            <p className="text-gray-500 italic">
+            <p className=" italic">
               No has agregado prendas al carrito
             </p>
             <a href="/" className="mt-4 text-blue-500 hover:underline">
@@ -159,7 +159,7 @@ const CarritoDeCompras = () => {
             {cartItems.map((item: Item) => (
               <li
                 key={item._id}
-                className="border border-gray-300 shadow-sm rounded-md p-4 hover:bg-gray-100 text-center"
+                className="border border-gray-300 shadow-sm rounded-md p-4 hover:bg-gray-600 text-center"
               >
                 <div className="p-4 flex justify-center items-center">
                   <img
@@ -169,10 +169,10 @@ const CarritoDeCompras = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900">
+                  <h3 className="text-lg font-bold">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-gray-700">
+                  <p className="text-sm">
                     Precio por unidad: ${item.price}
                   </p>
                   <div className="flex justify-center mt-2">
@@ -182,7 +182,7 @@ const CarritoDeCompras = () => {
                     >
                       -
                     </button>
-                    <span className="text-gray-700">{item.count}</span>
+                    <span >{item.count}</span>
                     <button
                       onClick={() => handleIncreaseCount(item._id)}
                       className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded-lg text-sm ml-2"
@@ -211,9 +211,9 @@ const CarritoDeCompras = () => {
             </div>
             <hr className="my-4" />
             <div className="flex justify-between">
-              <p className="text-lg font-bold">Total:</p>
+              <p className="text-lg font-bold text-gray-700">Total:</p>
               <div>
-                <p className="mb-1 text-lg font-bold">
+                <p className="mb-1 text-lg font-bold text-gray-700">
                   ${(total + 4.99).toFixed(2)} ARS
                 </p>
                 <p className="text-sm text-gray-700">*** incluye IVA</p>

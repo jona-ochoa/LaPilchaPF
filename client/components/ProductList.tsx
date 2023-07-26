@@ -123,14 +123,14 @@ const ProductList: React.FC = () => {
                   {favoriteItems.find((item) => item._id === product._id) ? (
                     <MdFavorite className="w-[25px] h-[25px] text-red-500 transition-transform" />
                     ) : (
-                      <MdFavoriteBorder className="w-[25px] h-[25px] text-gray-800 transition-transform opacity-75" />
+                      <MdFavoriteBorder className="w-[25px] h-[25px]  transition-transform opacity-75" />
                       )}
                 </button>
                 <button onClick={() => handleCartItem(product)} className="">
                   {cartItems.find((item) => item._id === product._id) ? (
                     <BsFillCartCheckFill className="w-[25px] h-[25px] text-green-500 transition-transform" />
                     ) : (
-                      <BsFillCartDashFill className="w-[25px] h-[25px] text-gray-800 transition-transform opacity-75" />
+                      <BsFillCartDashFill className="w-[25px] h-[25px] transition-transform opacity-75" />
                       )}
                 </button>
                       <ProductCard product={product} />

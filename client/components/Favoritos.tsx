@@ -69,7 +69,7 @@ const FavoritosCards: React.FC = () => {
       {!favoriteItems.length ? (
         <div className="mt-8 mb-8 flex justify-center items-center h-screen">
           <div className="text-center">
-            <p className="text-gray-500 italic">No has seleccionado productos favoritos</p>
+            <p className="italic">No has seleccionado productos favoritos</p>
             <a href="/" className="mt-4 text-blue-500 hover:underline">Volver a comprar</a>
           </div>
         </div>
@@ -80,7 +80,7 @@ const FavoritosCards: React.FC = () => {
             <button onClick={() => handleRemoveFromFavorites(item._id)} className="mt-4 text-3xl">
               ❤️
             </button>
-            <button onClick={() => handleCartItem(item)} className="mt-4 text-3xl">
+            <button onClick={() => handleCartItem(item)} className="mt-4 text-3xl text-black">
              <IconCart/>
             </button>
           </div>
