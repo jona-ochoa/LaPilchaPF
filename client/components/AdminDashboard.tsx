@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useAppDispatch } from '../GlobalRedux/hooks';
 import { addUser, setUsers } from 'GlobalRedux/features/usersSlice';
 import { setProducts } from 'GlobalRedux/features/productsSlice';
+import BuyOrderList from "../components/buyOrderList"
 
 import { useSession } from 'next-auth/react';
 import { Product } from '../GlobalRedux/api/productsApi';
@@ -25,6 +26,8 @@ const AdminDashboard: React.FC = () => {
   const isAuthenticated = session;
 
   const { data, error, isLoading, isFetching } = useGetUsersQuery();
+
+  
 
   useEffect(() => {
     if (data) {
@@ -117,6 +120,15 @@ const AdminDashboard: React.FC = () => {
           >
             Productos
           </button>
+          <button
+            className={`mx-2 px-4 py-2 rounded ${
+              selectedTab === 'orders' ? 'bg-pink-500 text-white' : 'bg-gray-200 text-gray-800'
+            }`}
+            onClick={() => setSelectedTab('orders')}
+          >
+            Ordenes
+          </button>
+
         </div>
 
         {selectedTab === 'users' && (
@@ -200,6 +212,13 @@ const AdminDashboard: React.FC = () => {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+        {selectedTab === 'orders' && (
+          <div>
+
+          <BuyOrderList/>
+
           </div>
         )}
       </div>
