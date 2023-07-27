@@ -2,7 +2,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { removeFromCarrito, setCarrito } from "../GlobalRedux/features/carritoSlice";
+import {
+  removeFromCarrito,
+  setCarrito,
+} from "../GlobalRedux/features/carritoSlice";
 import { Product } from "../GlobalRedux/api/productsApi";
 import { useLocalStorage } from "hooks/useLocalstorage";
 import { useSession } from "next-auth/react";
@@ -81,7 +84,9 @@ const CarritoDeCompras = () => {
 
   const handleDecreaseCount = (_id: string) => {
     const updatedItems = cartItems.map((item: Item) =>
-      item._id === _id && item.count > 1 ? { ...item, count: item.count - 1 } : item
+      item._id === _id && item.count > 1
+        ? { ...item, count: item.count - 1 }
+        : item
     );
     setCartItems(updatedItems);
     dispatch(setCarrito(updatedItems));
@@ -103,7 +108,6 @@ const CarritoDeCompras = () => {
     );
   }
 
-
   const handlePayment = async (values: IMailerOrder) => {
     if (cartItems.length === 0) {
       console.log("No hay artículos en el carrito");
@@ -123,7 +127,7 @@ const CarritoDeCompras = () => {
         })),
       };
 
-      console.log(buyerInfo)
+      console.log(buyerInfo);
 
       // Hacer la solicitud al backend para crear la orden de compra en Mercado Pago
       const response = await axios.post(
@@ -139,15 +143,12 @@ const CarritoDeCompras = () => {
     }
   };
 
-
   return (
     <div className="mt-8 mb-8">
       {!cartItems.length ? (
         <div className="mt-8 mb-8 flex justify-center items-center h-screen">
           <div className="text-center">
-            <p className=" italic">
-              No has agregado prendas al carrito
-            </p>
+            <p className=" italic">No has agregado prendas al carrito</p>
             <a href="/" className="mt-4 text-blue-500 hover:underline">
               Volver a comprar
             </a>
@@ -169,12 +170,8 @@ const CarritoDeCompras = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm">
-                    Precio por unidad: ${item.price}
-                  </p>
+                  <h3 className="text-lg font-bold">{item.title}</h3>
+                  <p className="text-sm">Precio por unidad: ${item.price}</p>
                   <div className="flex justify-center mt-2">
                     <button
                       onClick={() => handleDecreaseCount(item._id)}
@@ -182,7 +179,7 @@ const CarritoDeCompras = () => {
                     >
                       -
                     </button>
-                    <span >{item.count}</span>
+                    <span>{item.count}</span>
                     <button
                       onClick={() => handleIncreaseCount(item._id)}
                       className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded-lg text-sm ml-2"
@@ -205,16 +202,16 @@ const CarritoDeCompras = () => {
               <p className="text-gray-700">Subtotal:</p>
               <p className="text-gray-700">${total.toFixed(2)}</p>
             </div>
-            <div className="flex justify-between">
+            {/*  <div className="flex justify-between">
               <p className="text-gray-700">Shipping:</p>
               <p className="text-gray-700">$4.99</p>
-            </div>
+            </div>*/}
             <hr className="my-4" />
             <div className="flex justify-between">
               <p className="text-lg font-bold text-gray-700">Total:</p>
               <div>
                 <p className="mb-1 text-lg font-bold text-gray-700">
-                  ${(total + 4.99).toFixed(2)} ARS
+                  ${total.toFixed(2)} ARS
                 </p>
                 <p className="text-sm text-gray-700">*** incluye IVA</p>
               </div>
@@ -230,7 +227,7 @@ const CarritoDeCompras = () => {
               }
               className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
             >
-              Checkout
+              Comprar!
             </button>
           </div>
         </div>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -22,13 +22,13 @@ interface Item extends Product {
 }
 
 const ThankYouPage = () => {
-  
   const { data: session } = useSession();
   const [cartItems, setCartItems] = useLocalStorage<Product[]>("cartItems", []);
   const dispatch = useDispatch();
   const [finalUser, setFinalUser] = useState<any | null>(null);
   const [createMailerOrderMutation, { data }] = useCreateMailerOrderMutation();
-  const [orderCreated, setOrderCreated] = useState(false); 
+  const [orderCreated, setOrderCreated] = useState(false);
+  const [ejecutado, setEjecutado] = useState(false);
 
   useEffect(() => {
     if (!session) return;
@@ -37,7 +37,9 @@ const ThankYouPage = () => {
       try {
         const response = await axios.get("http://localhost:3002/users");
         const users = response.data;
-        const user = users.find((user: any) => user.email === session.user?.email);
+        const user = users.find(
+          (user: any) => user.email === session.user?.email
+        );
         if (user) {
           setFinalUser(user);
         } else {
@@ -51,6 +53,7 @@ const ThankYouPage = () => {
 
     fetchData();
   }, [session]);
+  //dependencia session ahi arriba
 
   const handleBuyOrder = async () => {
     if (cartItems.length === 0 || !session || !finalUser) {
@@ -74,7 +77,7 @@ const ThankYouPage = () => {
       };
 
       const buyOrder = {
-        status: 'created',
+        status: "created",
         total: total,
         items: cartItems.map((item) => ({
           id: item._id,
@@ -82,17 +85,20 @@ const ThankYouPage = () => {
           unit_price: item.price,
           quantity: 1,
         })),
-        userId: finalUser._id
+        userId: finalUser._id,
       };
       console.log(buyOrder);
 
-      const newBuyOrder = await axios.post('http://localhost:3002/orders', buyOrder);
+      const newBuyOrder = await axios.post(
+        "http://localhost:3002/orders",
+        buyOrder
+      );
 
-      if ('data' in newBuyOrder) {
+      if ("data" in newBuyOrder) {
         const { data } = newBuyOrder;
         const jsonData = JSON.stringify(data);
         dispatch(addMailerOrder(data));
-        toast.success('Orden de compra creada con éxito');
+        toast.success("Orden de compra creada con éxito");
       }
       const newMailerOrder: Partial<MailerOrder> = {
         name: `${buyerInfo.name}`,
@@ -100,12 +106,12 @@ const ThankYouPage = () => {
         subject: `Order de compra del cliente: ${buyerInfo.name}`,
         buyOrder: JSON.stringify(buyerInfo.buyOrder),
       };
-      
+
       const result = await createMailerOrderMutation(newMailerOrder);
-      
+
       if ("data" in result) {
-          const { data } = result;
-          const jsonData = JSON.stringify(data);
+        const { data } = result;
+        const jsonData = JSON.stringify(data);
         dispatch(addMailerOrder(data));
         toast.success("Mensaje de la orden de compra enviado con éxito");
       }
@@ -115,19 +121,30 @@ const ThankYouPage = () => {
       console.error("Error al realizar el pago: ", error);
     }
   };
-
+  /*
   useEffect(() => {
     if (!session || cartItems.length === 0) return;
     if (!orderCreated) {
       handleBuyOrder();
     }
-  }, [session]);
+  }, [finalUser]);*/
+
+  useEffect(() => {
+    if (finalUser && !ejecutado) {
+      if (!session || cartItems.length === 0) return;
+      if (!orderCreated) {
+        handleBuyOrder();
+      }
+      setEjecutado(true);
+    }
+  }, [finalUser]);
+  //dependencia session ahi arriba
 
   // useEffect(() => {
   //     setCartItems([]);
   //     dispatch(setCarrito([]));
-  //   }, []);              
-  
+  //   }, []);
+
   useEffect(() => {
     if (orderCreated) {
       // Limpiar el carrito de compras (establecerlo como un array vacío) cuando el componente se monta
@@ -136,12 +153,10 @@ const ThankYouPage = () => {
     }
   }, [orderCreated]);
 
-  console.log(orderCreated)
-  
   return (
     <div className="flex flex-col justify-center justify-items-center py-1.5 ">
       <div className="flex flex-row flex-wrap justify-center justify-items-center mx-2.5">
-        <div       
+        <div
           className="w-1/4"
           style={{ textAlign: "center", margin: "20px 0" }}
         >
@@ -159,7 +174,7 @@ const ThankYouPage = () => {
         </div>
       </div>
       <Link
-        href="/"
+        href="/products"
         className="mx-auto m-3 w-44 h-20 mt-6  rounded-md bg-blue-500 py-2.5 text-lg font-medium text-blue-50 hover:bg-blue-600 flex justify-center items-center"
       >
         <button>Seguir comprando</button>
