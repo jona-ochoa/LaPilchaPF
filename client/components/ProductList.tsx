@@ -12,6 +12,7 @@ import { useLocalStorage } from '../hooks/useLocalstorage';
 import toast from 'react-hot-toast';
 import { BsFillCartCheckFill, BsFillCartDashFill } from 'react-icons/bs';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
+import Carousel from './Carousel';
 
 const ProductList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -103,6 +104,7 @@ const ProductList: React.FC = () => {
 
   return (
     <div>
+      <Carousel />
       {isLoading ? (
 
         <div role="status" className="flex flex-col text-center justify-center">

@@ -25,7 +25,7 @@ const BuyOrderList: React.FC = () => {
       <h2 className="text-3xl font-semibold mb-4">Historial de ordenes de compra</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {ordersList.map((order: BuyOrder) => (
-          <div key={order._id} className="bg-white shadow-lg rounded-md p-4">
+          <div key={order._id} className="bg-white shadow-lg rounded-md p-4 text-black">
             <p className="text-lg font-semibold mb-2">ID: {order._id}</p>
             <p className="text-sm mb-2">Estado: {order.status}</p>
             <p className="text-sm mb-2">Fecha de Creación: {order.createdAt}</p>

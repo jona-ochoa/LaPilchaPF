@@ -49,7 +49,7 @@ const Profile = () => {
   };
 
   const handleChangeAccount = () => {
-    // Lógica para cambiar de cuenta
+    router.push("/login")
   };
 
   return (

@@ -143,7 +143,7 @@ const CONTACT_MESSAGE_FIELDS = {
                                   "
                                   class="padding message-content"
                                 >
-                                  <h2>New Contact Message</h2>
+                                  <h2>Nuevo mensaje de Contacto</h2>
                                   <div class="form-container">${htmlData}</div>
                                 </td>
                               </tr>
@@ -175,7 +175,7 @@ const sendEmail = async (req, res) => {
 
   const mailOptions = {
     from: email,
-    to: email,
+    to: `${data.email}, ${email}`,
   };
 
   if (!data.name || !data.email || !data.subject || !data.message) {
