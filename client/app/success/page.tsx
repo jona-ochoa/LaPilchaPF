@@ -139,7 +139,7 @@ const ThankYouPage = () => {
   console.log(orderCreated)
   
   return (
-    <div className="flex flex-col justify-center justify-items-center py-1.5 ">
+    <div className="flex flex-col justify-center justify-items-center py-1.5 bg-cyan-900">
       <div className="flex flex-row flex-wrap justify-center justify-items-center mx-2.5">
         <div       
           className="w-1/4"
