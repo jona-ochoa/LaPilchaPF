@@ -29,8 +29,8 @@ const members: Member[] = [
     {
         name: "Tomas Balmaceda",
         rol: "Back-End",
-        github: "https://github.com/tomasbalmaceda",
-        linkedin: "https://www.linkedin.com/in/tom%C3%A1s-balmaceda-357328234/",
+        github: "https://github.com/tombal03",
+        linkedin: "https://www.linkedin.com/in/tom%C3%A1s-balmaceda-7016b2235/",
     },
     {
         name: "Ariel Nicolas Bloise",
