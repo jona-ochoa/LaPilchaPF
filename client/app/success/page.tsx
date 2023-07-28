@@ -87,7 +87,6 @@ const ThankYouPage = () => {
         })),
         userId: finalUser._id,
       };
-      console.log(buyOrder);
 
       const newBuyOrder = await axios.post(
         "http://localhost:3002/orders",
@@ -100,11 +99,43 @@ const ThankYouPage = () => {
         dispatch(addMailerOrder(data));
         toast.success("Orden de compra creada con éxito");
       }
+
+      const orderDetailsHTML = `<table>
+      <thead>
+        <tr>
+          <th>Item ID</th>
+          <th>Title</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${buyOrder.items
+          .map(
+            (item) => `
+            <tr>
+              <td>${item.id}</td>
+              <td>${item.title}</td>
+              <td>${item.unit_price}</td>
+              <td>${item.quantity}</td>
+            </tr>
+          `
+          )
+          .join("")}
+          </tbody>
+          <tbody>
+          <th>
+          ${buyOrder.total}
+          </th>
+          </tbody>
+    </table>`;
+
       const newMailerOrder: Partial<MailerOrder> = {
         name: `${buyerInfo.name}`,
         email: `${buyerInfo.email}`,
         subject: `Order de compra del cliente: ${buyerInfo.name}`,
-        buyOrder: JSON.stringify(buyerInfo.buyOrder),
+        buyOrder: orderDetailsHTML,
       };
 
       const result = await createMailerOrderMutation(newMailerOrder);

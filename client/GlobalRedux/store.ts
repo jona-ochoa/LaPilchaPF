@@ -15,12 +15,15 @@ import filterReducer from './features/filterSlice';
 import { nodemailerOrder } from './api/nodemailerOrder';
 import mailerOrderSlice from './features/mailerOrderSlice';
 import buyOrdersReducer from './features/buyOrdersSlice'; 
+import { nodemailerRegister } from './api/nodemailerRegister';
+import nodemailerRegisterSlice from './features/nodemailerRegisterSlice';
 
 const reducer = combineReducers({
   [productsApi.reducerPath]: productsApi.reducer,
   [buyOrderApi.reducerPath]: buyOrderApi.reducer,
   [nodemailerApi.reducerPath]: nodemailerApi.reducer,
   [nodemailerOrder.reducerPath]: nodemailerOrder.reducer,
+  [nodemailerRegister.reducerPath]: nodemailerRegister.reducer,
   [usersApi.reducerPath]: usersApi.reducer,
   products: productsReducer,
   orders: buyOrdersReducer,
@@ -29,6 +32,7 @@ const reducer = combineReducers({
   user: userSlice,
   mailer: mailerSlice,
   mailerOrder: mailerOrderSlice,
+  nodemailers: nodemailerRegisterSlice,
   searchQuery: searchQueryReducer,
   filter: filterReducer
 });
@@ -39,6 +43,7 @@ const middleware = getDefaultMiddleware()
   .concat(buyOrderApi.middleware)
   .concat(nodemailerApi.middleware)
   .concat(nodemailerOrder.middleware)
+  .concat(nodemailerRegister.middleware)
   
 export const store = configureStore({
 

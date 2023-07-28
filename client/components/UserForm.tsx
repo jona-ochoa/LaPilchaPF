@@ -8,20 +8,23 @@ import Link from 'next/link';
 import { useAppDispatch } from "GlobalRedux/store";
 import { useCreateUserMutation, User } from "GlobalRedux/api/usersApi";
 import { addUser } from "GlobalRedux/features/usersSlice";
+import { addMailerRegister } from "GlobalRedux/features/nodemailerRegisterSlice"
+import { useCreateMailerRegisterMutation, MailerRegister } from "GlobalRedux/api/nodemailerRegister"
 //
 import { useRouter } from "next/navigation";
+import toast from 'react-hot-toast';
 
-interface UserForm {
+interface Nodemailer {
   name: string;
-  lastname: string;
   email: string;
-  password: string;
-  image: File | null;
+  subject: string;
+  lastname: string;
 }
 
 const UserForm: React.FC = () => {
   const router = useRouter();
   const [createUserMutation, { data }] = useCreateUserMutation();
+  const [createMailerRegisterMutation] = useCreateMailerRegisterMutation();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -59,8 +62,27 @@ const UserForm: React.FC = () => {
           const { data } = result;
           console.log("User created: ", data);
           dispatch(addUser(data));
-          setShowSuccessAlert(true);
         }
+
+        const newMailerRegister: Partial<MailerRegister> = {
+          name: `${newUser.name}`,
+          lastname: `${newUser.lastname}`,
+          email: `${newUser.email}`,
+          subject: `${newUser.name}`,
+        }
+
+        const resultRegister = await createMailerRegisterMutation(newMailerRegister);
+        if ('data' in resultRegister) {
+          const { data } = resultRegister;
+          const jsonData = JSON.stringify(data);
+          dispatch(addMailerRegister(data))
+          toast.success('Usuario creado con exito!!!')
+          setShowSuccessAlert(true);
+        } else {
+          console.log("Error al enviar el formulario.")
+          toast.error('Error al completar el formulario.')
+        }
+
       }
     } catch (error) {
       console.error("Error creating user: ", error);
