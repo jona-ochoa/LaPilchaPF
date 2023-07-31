@@ -79,20 +79,24 @@ const Login = () => {
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="password">
-              Password
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
+
+          <div>
+            <div className='flex items-center justify-between'>
+              <label htmlFor='password' className="text-gray-400 text-sm font-bold"> Password </label>
+              <div className='text-xs'>
+                <a href='/forgotPassword' className='font- text-gray-300 hover:text-blue-200'> ¿Olvidaste la contraseña? </a>
+              </div>
+            </div>
+            <div className='mb-4'>
+              <input className="shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
               name='password'
               placeholder="Ingresa tu password"
               value={formValues.password}
               onChange={(e) => handleChange(e)}
-              required
-            />
+              required />
+            </div>
           </div>
           <div className="flex items-center justify-between">
             <button
@@ -102,7 +106,7 @@ const Login = () => {
               {loading ? 'Ingresando...' : 'Ingresar'}
             </button>
             <p className="text-sm text-white">
-              Soy nuevo, {''} <a href="/userForm" className="text-blue-500">Registrarse</a>
+              Soy nuevo, {''} <a href="/userForm" className="text-blue-500 hover:text-blue-200"> registrarse</a>
             </p>
           </div>
           <div className="mt-4 text-center">
