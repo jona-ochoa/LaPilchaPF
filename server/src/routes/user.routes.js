@@ -1,5 +1,6 @@
 const express = require("express");
 const userSchema = require("../models/user");
+const resetPassword = require("../controllers/resetPassword")
 
 const router = express.Router();
 
@@ -44,5 +45,9 @@ router.delete("/user/:id", (req, res) => {
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
+
+//ruta para reestablecer el password de un user
+router.post("/reset-password", resetPassword);
+
 
 module.exports = router;
