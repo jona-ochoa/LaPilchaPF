@@ -16,10 +16,12 @@ type itemBuyOrder = {
     quantity: number;
 }
 
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002";
+
 export const buyOrderApi = createApi({
     reducerPath: "buyOrderApi",
     baseQuery: fetchBaseQuery({
-      baseUrl: "http://localhost:3002",
+      baseUrl: apiURL,
     }),
     endpoints: (builder) => ({
       getOrders: builder.query<BuyOrder[], null>({

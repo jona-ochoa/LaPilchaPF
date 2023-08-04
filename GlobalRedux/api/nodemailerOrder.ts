@@ -12,10 +12,12 @@ export type MailerOrder = {
   }>;
 };
 
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002"
+
 export const nodemailerOrder = createApi({
   reducerPath: "nodemailerOrder",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3002",
+    baseUrl: apiURL
   }),
   endpoints: (builder) => ({
     createMailerOrder: builder.mutation<MailerOrder, Partial<MailerOrder>>({

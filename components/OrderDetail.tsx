@@ -9,13 +9,15 @@ interface Order {
   paymentType: string;
 }
 
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002";
+
 const OrderDetails = ({ orderId }: { orderId: string }) => {
   const [orderDetails, setOrderDetails] = useState<Order | null>(null);
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get<Order>(`http://localhost:3002/orders/${orderId}`);
+        const response = await axios.get<Order>(`${apiURL}/orders/${orderId}`);
         setOrderDetails(response.data);
       } catch (error) {
         console.error("Error fetching order details: ", error);

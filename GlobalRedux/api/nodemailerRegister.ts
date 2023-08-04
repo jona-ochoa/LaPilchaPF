@@ -7,10 +7,12 @@ export type MailerRegister = {
   lastname: string;
 };
 
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002"
+
 export const nodemailerRegister = createApi({
   reducerPath: "nodemailerRegister",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3002",
+    baseUrl: apiURL
   }),
   endpoints: (builder) => ({
     createMailerRegister: builder.mutation<MailerRegister, Partial<MailerRegister>>({
