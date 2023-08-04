@@ -51,7 +51,6 @@ const AdminDashboard: React.FC = () => {
 
   const handleToggleBanUser = async (userId: string, isBanned: boolean) => {
     try {
-      // const response = await axios.put(`http://localhost:3002/user/${userId}`, { isBanned }); desarrollo local
       const response = await axios.put(`${apiURL}/user/${userId}`, { isBanned });
       console.log(response.data.message);
 

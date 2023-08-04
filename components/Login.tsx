@@ -17,7 +17,7 @@ const Login = () => {
     const [error, setError] = useState("");
   
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get("callbackUrl") || "/";
+    const callbackUrl = searchParams.get("callbackUrl") || "/products";
   
     const onSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
@@ -55,7 +55,7 @@ const Login = () => {
     };
 
     const handleLogin = (provider: string) => {
-    signIn(provider, { callbackUrl: '/' });
+    signIn(provider, { callbackUrl: '/products' });
   };
   
     return (

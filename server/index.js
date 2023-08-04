@@ -13,12 +13,12 @@ const urlPublic = process.env.PUBLIC_URL || "http://localhost:3000"
 
 //middleware
 app.use(morgan("dev"));
-app.use(cors({ origin: urlPublic }));
+app.use(cors({ origin: `${urlPublic}` }));
 
 app.use(express.json());
 
 //routes
-app.use("/", routes);
+app.use("/api/v1", routes);
 
 const server = http.createServer(app);
 //mongodb connection
