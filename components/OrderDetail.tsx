@@ -9,7 +9,7 @@ interface Order {
   paymentType: string;
 }
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002";
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002/api/v1";
 
 const OrderDetails = ({ orderId }: { orderId: string }) => {
   const [orderDetails, setOrderDetails] = useState<Order | null>(null);

@@ -11,7 +11,7 @@ export type User = {
     isBanned: boolean;
 };
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002/api/v1";
 
 export const usersApi = createApi({
     reducerPath: 'usersApi',

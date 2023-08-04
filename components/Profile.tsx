@@ -13,7 +13,7 @@ const Profile = () => {
   const email = session?.user?.email ?? "";
   const [finalUser, setFinalUser] = useState<any | null>(null);
 
-  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
+  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002/api/v1";
 
   const searchBuyHistory = useCallback(async (email: string) => {
     try {

@@ -12,7 +12,7 @@ export type MailerOrder = {
   }>;
 };
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002"
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002/api/v1"
 
 export const nodemailerOrder = createApi({
   reducerPath: "nodemailerOrder",

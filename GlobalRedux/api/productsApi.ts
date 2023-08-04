@@ -12,7 +12,7 @@ export type Product = {
   count: number;
 };
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002"
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002/api/v1"
 
 export const productsApi = createApi({
   reducerPath: "productsApi",

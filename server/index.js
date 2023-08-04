@@ -9,11 +9,12 @@ const cors = require("cors");
 
 const app = express();
 const port = process.env.PORT || 3002;
-const urlPublic = process.env.PUBLIC_URL || "http://localhost:3000"
+// const urlPublic = "https://lapilchapf.vercel.app" || "http://localhost:3000"
 
 //middleware
 app.use(morgan("dev"));
-app.use(cors({ origin: `${urlPublic}` }));
+app.use(cors({ origin: "https://lapilchapf.vercel.app" }));
+// app.use(cors({ origin: "http://localhost:3000" }));
 
 app.use(express.json());
 

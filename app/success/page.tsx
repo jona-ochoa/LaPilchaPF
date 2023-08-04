@@ -30,7 +30,7 @@ const ThankYouPage = () => {
   const [orderCreated, setOrderCreated] = useState(false);
   const [ejecutado, setEjecutado] = useState(false);
 
-  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
+  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002/api/v1";
 
   useEffect(() => {
     if (!session) return;
