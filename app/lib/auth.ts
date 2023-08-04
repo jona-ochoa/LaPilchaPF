@@ -68,7 +68,8 @@ export const authOptions: NextAuthOptions = {
 const verifyCredentials = async (email: string, password: string) => {
   try {
     //consultar la bdd para buscar el user por nombre de user
-    const response = await axios.get("http://localhost:3002/users");
+    // const response = await axios.get("http://localhost:3002/users"); desarrollo local
+    const response = await axios.get("http://lapilcha-api.vercel.app/users");
     const users = response.data
     console.log('Users from db: ', users)
     const user = users.find(
@@ -88,7 +89,8 @@ const verifyCredentials = async (email: string, password: string) => {
 
 const verifyUserByEmail = async (email: string) => {
   try {
-    const response = await axios.get("http://localhost:3002/users");
+    // const response = await axios.get("http://localhost:3002/users"); desarrollo local
+    const response = await axios.get("https://lapilcha-api.vercel.app/users");
     const users = response.data;
 
     if (!Array.isArray(users) || users.length === 0) {
@@ -119,7 +121,8 @@ const createUser = async (user) => {
       isAdmin: false,
       isBanned: false,
     };
-    const response = await axios.post("http://localhost:3002/user", newUser);
+    // const response = await axios.post("http://localhost:3002/user", newUser); desarrollo local
+    const response = await axios.post("https://lapilcha-api.vercel.app/user", newUser);
     const createdUser = response.data; 
     console.log("new user created: ", createdUser);
     return createdUser; 

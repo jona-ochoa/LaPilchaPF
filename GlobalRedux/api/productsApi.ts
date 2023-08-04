@@ -12,10 +12,12 @@ export type Product = {
   count: number;
 };
 
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002"
+
 export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3002",
+    baseUrl: apiURL,
   }),
   endpoints: (builder) => ({
     getProducts: builder.query<Product[], null>({

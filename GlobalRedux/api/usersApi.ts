@@ -11,10 +11,12 @@ export type User = {
     isBanned: boolean;
 };
 
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
+
 export const usersApi = createApi({
     reducerPath: 'usersApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3002',
+        baseUrl: apiURL,
     }),
     endpoints: (builder) => ({
         getUsers: builder.query<User[], void>({

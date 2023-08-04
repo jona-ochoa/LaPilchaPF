@@ -3,6 +3,8 @@ require("dotenv").config();
 const MERCADOPAGO_TOKEN = process.env.MERCADOPAGO_TOKEN;
 const User = require("../models/user");
 const { ObjectId } = require("mongodb");
+const apiURL = process.env.PUBLIC_API_URL || "http:localhost:3002"
+const publicURL = process.env.PUBLIC_URL || "http:localhost:3000"
 
 const createOrder = async (req, res) => {
   mercadopago.configure({
@@ -35,9 +37,9 @@ const createOrder = async (req, res) => {
     const result = await mercadopago.preferences.create({
       items: orderItems,
       back_urls: {
-        pending: "http://localhost:3002/pay/pending",
-        success: "http://localhost:3000/success",
-        failure: "http://localhost:3000/failure",
+        pending: `${apiURL}/pay/pending`,
+        success: `${publicURL}/success`,
+        failure: `${publicURL}/failure`,
       },
       notification_url: "https://44c8-179-0-233-162.ngrok-free.app/pay/webhook",
       payment_methods: {
