@@ -64,7 +64,7 @@ export const authOptions: NextAuthOptions = {
   }
 };
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002/api/v1/users";
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002/api/v1";
 
 //funcion para verificar las credenciales en la bdd
 const verifyCredentials = async (email: string, password: string) => {

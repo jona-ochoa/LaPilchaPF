@@ -92,7 +92,7 @@ const ThankYouPage = () => {
 
       const newBuyOrder = await axios.post(
         // "http://localhost:3002/orders",
-        "https://lapilcha-api.vercel.app/orders",
+        `${apiURL}/orders`,
         buyOrder
       );
 
