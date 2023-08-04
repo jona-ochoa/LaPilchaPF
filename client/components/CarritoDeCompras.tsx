@@ -76,7 +76,9 @@ const CarritoDeCompras = () => {
 
   const handleIncreaseCount = (_id: string) => {
     const updatedItems = cartItems.map((item: Item) =>
-      item._id === _id ? { ...item, count: item.count + 1 } : item
+      item._id === _id && item.count < 10
+        ? { ...item, count: item.count + 1 }
+        : item
     );
     setCartItems(updatedItems);
     dispatch(setCarrito(updatedItems));
@@ -160,7 +162,7 @@ const CarritoDeCompras = () => {
             {cartItems.map((item: Item) => (
               <li
                 key={item._id}
-                className="border border-gray-300 shadow-sm rounded-md p-4 hover:bg-gray-600 text-center"
+                className="border border-gray-300 shadow-sm rounded-md p-4 hover:bg-gray-600 text-center group"
               >
                 <div className="p-4 flex justify-center items-center">
                   <img
@@ -187,6 +189,14 @@ const CarritoDeCompras = () => {
                       +
                     </button>
                   </div>
+                  {item.count === 10 && (
+                    <>
+                      <span className="text-red-600 text-[12px] group-hover:text-red-400">
+                        Máximo 10 unidades
+                      </span>
+                      <br />
+                    </>
+                  )}
                   <button
                     onClick={() => handleRemoveFromCart(item._id)}
                     className="inline-block bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded-lg text-sm mt-2"
@@ -222,7 +232,7 @@ const CarritoDeCompras = () => {
                   name: ``,
                   email: ``,
                   subject: ``,
-                  buyOrder: '',
+                  buyOrder: "",
                 })
               }
               className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
