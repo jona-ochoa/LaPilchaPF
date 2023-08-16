@@ -40,7 +40,8 @@ const AdminDashboard: React.FC = () => {
 
   const getProductsData = async () => {
     try {
-      const response = await axios.get(`${apiURL}/products`);
+      // const response = await axios.get(`${apiURL}/products`);
+      const response = await axios.get(`http://localhost:3002/api/v1/products`);
       const products = response.data;
       dispatch(setProducts(products));
       setProductsData(products);
@@ -65,7 +66,7 @@ const AdminDashboard: React.FC = () => {
 
   const handleToggleDeactivateProduct = async (productId: string, isDeactivated: boolean) => {
     try {
-      const response = await axios.put(`${apiURL}/products/${productId}`, { isDeactivated })
+      const response = await axios.put(`http://localhost:3002/api/v1/products/${productId}`, { isDeactivated })
       console.log(response.data.message);
 
       // Actualizar el estado local con el cambio realizado
@@ -79,7 +80,7 @@ const AdminDashboard: React.FC = () => {
 
   const handleToggleAdmin = async (userId: string, isAdmin: boolean) => {
     try {
-      const response = await axios.put(`${apiURL}/user/${userId}`, { isAdmin });
+      const response = await axios.put(`http://localhost:3002/api/v1/user/${userId}`, { isAdmin });
       console.log(response.data.message);
 
       // Actualizar el estado local con el cambio realizado

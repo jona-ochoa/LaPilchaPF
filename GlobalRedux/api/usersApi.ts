@@ -1,4 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export type User = {
     _id: string;
@@ -16,7 +19,7 @@ const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002/api/v1"
 export const usersApi = createApi({
     reducerPath: 'usersApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: apiURL,
+        baseUrl: "http://localhost:3002/api/v1",
     }),
     endpoints: (builder) => ({
         getUsers: builder.query<User[], void>({
