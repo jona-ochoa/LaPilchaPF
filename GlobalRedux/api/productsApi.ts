@@ -24,18 +24,18 @@ export const productsApi = createApi({
   }),
   endpoints: (builder) => ({
     getProducts: builder.query<Product[], null>({
-      query: () => "/api/v1/products",
+      query: () => "/products",
     }),
     getProductsById: builder.query<Product, { id: string }>({
-      query: (id) => `/api/v1/products/${id}`,
+      query: (id) => `/products/${id}`,
     }),
     getProductsByTitle: builder.query<Product[], { title: string }>({
-      query: ({ title }: { title: string }) => `/api/v1/products/search?keyword=${title}`,
+      query: ({ title }: { title: string }) => `/products/search?keyword=${title}`,
       transformResponse: (response: any) => response.products,
     }),
     postProducts: builder.mutation<Product, Partial<Product>>({
       query: (newProduct) => ({
-        url: "/api/v1/products",
+        url: "/products",
         method: "POST",
         body: newProduct,
       }),
