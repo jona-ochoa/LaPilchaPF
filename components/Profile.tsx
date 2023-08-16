@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import OrderDetails from "./OrderDetail";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const Profile = () => {
   const { data: session, status } = useSession();
@@ -13,11 +16,11 @@ const Profile = () => {
   const email = session?.user?.email ?? "";
   const [finalUser, setFinalUser] = useState<any | null>(null);
 
-  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002/api/v1";
+  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
 
   const searchBuyHistory = useCallback(async (email: string) => {
     try {
-      const response = await axios.get(`${apiURL}/users`);
+      const response = await axios.get(`${apiURL}/api/v1/users`);
       const users = response.data;
       const user = users.find((user: any) => user.email === email);
 

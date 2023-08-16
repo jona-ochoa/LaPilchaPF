@@ -16,6 +16,9 @@ import {
   MailerOrder,
 } from "GlobalRedux/api/nodemailerOrder";
 import { addMailerOrder } from "GlobalRedux/features/mailerOrderSlice";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 interface Item extends Product {
   count: number;
@@ -30,14 +33,14 @@ const ThankYouPage = () => {
   const [orderCreated, setOrderCreated] = useState(false);
   const [ejecutado, setEjecutado] = useState(false);
 
-  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002/api/v1";
+  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
 
   useEffect(() => {
     if (!session) return;
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiURL}/users`);
+        const response = await axios.get(`${apiURL}/api/v1/users`);
         const users = response.data;
         const user = users.find(
           (user: any) => user.email === session.user?.email
@@ -92,7 +95,7 @@ const ThankYouPage = () => {
 
       const newBuyOrder = await axios.post(
         // "http://localhost:3002/orders",
-        `${apiURL}/orders`,
+        `${apiURL}api/v1/orders`,
         buyOrder
       );
 

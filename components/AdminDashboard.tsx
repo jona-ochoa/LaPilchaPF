@@ -13,6 +13,10 @@ import { useGetUsersQuery } from '../GlobalRedux/api/usersApi';
 import Image from 'next/image';
 import axios from 'axios';
 
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const AdminDashboard: React.FC = () => {
   const dispatch = useAppDispatch();
   const fallbackImageSrc =
@@ -41,7 +45,6 @@ const AdminDashboard: React.FC = () => {
   const getProductsData = async () => {
     try {
       const response = await axios.get(`${apiURL}api/v1/products`);
-      // const response = await axios.get(`http://localhost:3002/api/v1/products`);
       const products = response.data;
       dispatch(setProducts(products));
       setProductsData(products);
@@ -52,7 +55,7 @@ const AdminDashboard: React.FC = () => {
 
   const handleToggleBanUser = async (userId: string, isBanned: boolean) => {
     try {
-      const response = await axios.put(`${apiURL}/user/${userId}`, { isBanned });
+      const response = await axios.put(`${apiURL}/api/v1/user/${userId}`, { isBanned });
       console.log(response.data.message);
 
       // Actualizar el estado local con el cambio realizado

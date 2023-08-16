@@ -3,6 +3,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { default as axios } from 'axios';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const authOptions: NextAuthOptions = {
   pages: {

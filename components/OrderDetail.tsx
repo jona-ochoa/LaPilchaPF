@@ -1,6 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import dotenv from "dotenv";
+
+dotenv.config();
+
 interface Order {
   _id: string;
   items: { title: string }[];
@@ -9,7 +13,7 @@ interface Order {
   paymentType: string;
 }
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002/api/v1";
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002";
 
 const OrderDetails = ({ orderId }: { orderId: string }) => {
   const [orderDetails, setOrderDetails] = useState<Order | null>(null);
@@ -17,7 +21,7 @@ const OrderDetails = ({ orderId }: { orderId: string }) => {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get<Order>(`${apiURL}/orders/${orderId}`);
+        const response = await axios.get<Order>(`${apiURL}/api/v1/orders/${orderId}`);
         setOrderDetails(response.data);
       } catch (error) {
         console.error("Error fetching order details: ", error);

@@ -11,6 +11,10 @@ import { useLocalStorage } from "hooks/useLocalstorage";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 
+import dotenv from "dotenv";
+
+dotenv.config();
+
 interface Item extends Product {
   count: number;
 }
@@ -38,12 +42,12 @@ const CarritoDeCompras = () => {
   let email = session?.user?.email ?? "";
 
 
-  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002/api/v1";
+  const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
 
   const searchBuyHistory = useCallback(
     async (email: string) => {
       try {
-        const response = await axios.get(`${apiURL}/users`);
+        const response = await axios.get(`${apiURL}/api/v1/users`);
         const users = response.data;
         const user = users.find((user: any) => user.email === email);
         if (user) {
