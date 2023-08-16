@@ -19,7 +19,7 @@ type itemBuyOrder = {
     quantity: number;
 }
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002/api/v1";
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002";
 
 export const buyOrderApi = createApi({
     reducerPath: "buyOrderApi",
@@ -28,10 +28,10 @@ export const buyOrderApi = createApi({
     }),
     endpoints: (builder) => ({
       getOrders: builder.query<BuyOrder[], null>({
-        query: () => "/orders",
+        query: () => "/api/v1/orders",
       }),
       getOrdersById: builder.query<BuyOrder, { _id: any }>({
-        query: (id) => `/orders/${id}`,
+        query: (id) => `/api/v1/orders/${id}`,
       }),
       
     }),

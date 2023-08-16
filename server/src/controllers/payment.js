@@ -3,7 +3,7 @@ require("dotenv").config();
 const MERCADOPAGO_TOKEN = process.env.MERCADOPAGO_TOKEN;
 const User = require("../models/user");
 const { ObjectId } = require("mongodb");
-const apiURL = "https://lapilchapf-api.vercel.app/api/v1" || "http:localhost:3002/api/v1"
+const apiURL = "https://lapilchapf-api.vercel.app" || "http:localhost:3002"
 const publicURL = process.env.URL_CODE || "http:localhost:3000"
 
 const createOrder = async (req, res) => {
@@ -37,7 +37,7 @@ const createOrder = async (req, res) => {
     const result = await mercadopago.preferences.create({
       items: orderItems,
       back_urls: {
-        pending: `${apiURL}/pay/pending`,
+        pending: `${apiURL}/api/v1/pay/pending`,
         success: `${publicURL}/success`,
         failure: `${publicURL}/failure`,
       },

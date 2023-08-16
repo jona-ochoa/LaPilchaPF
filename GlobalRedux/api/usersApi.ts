@@ -14,7 +14,7 @@ export type User = {
     isBanned: boolean;
 };
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002/api/v1";
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3002";
 
 export const usersApi = createApi({
     reducerPath: 'usersApi',
@@ -23,11 +23,11 @@ export const usersApi = createApi({
     }),
     endpoints: (builder) => ({
         getUsers: builder.query<User[], void>({
-            query: () => '/users',
+            query: () => '/api/v1/users',
         }),
         createUser: builder.mutation<User, Partial<User>>({
             query: (newUser) => ({
-                url: '/user',
+                url: '/api/v1/user',
                 method: 'POST',
                 body: newUser,
             })

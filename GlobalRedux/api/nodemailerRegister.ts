@@ -10,7 +10,7 @@ export type MailerRegister = {
   lastname: string;
 };
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002/api/v1"
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http:localhost:3002"
 
 export const nodemailerRegister = createApi({
   reducerPath: "nodemailerRegister",
@@ -20,7 +20,7 @@ export const nodemailerRegister = createApi({
   endpoints: (builder) => ({
     createMailerRegister: builder.mutation<MailerRegister, Partial<MailerRegister>>({
       query: (newMailerRegister) => ({
-        url: "/nodemailer/register",
+        url: "/api/v1/nodemailer/register",
         method: "POST",
         body: newMailerRegister,
       }),
